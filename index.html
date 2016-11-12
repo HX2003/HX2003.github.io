@@ -455,11 +455,6 @@ text-shadow: 0px 1px 0px #999,0px 0px 4px #000 !important;
 	position:absolute;
 	bottom:5px;
 }
-@media only screen  and (max-width: 580px) {
-	#bottomcontainer{
-
-	}
-}
 @media only screen  and (min-width: 581px) {
 	
 }
@@ -605,7 +600,7 @@ text-shadow: 0px 1px 0px #999,0px 0px 4px #000 !important;
  position: relative; 
  width:16.666%;
  text-decoration: none; 
- transition: all 0.1s ease-in-out;
+ transition: background-color 0.1s ease-in-out;
  float:left;
  font-size:22px;
  text-align:center;
@@ -629,6 +624,10 @@ text-shadow: 0px 1px 0px #999,0px 0px 4px #000 !important;
 	position:relative;
 	
 }
+#span2{
+position:absolute;
+left:200px;
+}
 .energyGoals{
 	width:100%;
 	height:49px;
@@ -640,6 +639,83 @@ text-shadow: 0px 1px 0px #999,0px 0px 4px #000 !important;
 	color:#FFFFFF;
 	text-align:center;
 }
+@media only screen  and (max-width: 1100px) {
+ .tabbar  p { 
+ font-size:19px;
+ }
+}
+@media only screen  and (max-width: 950px) {
+ .tabbar  p { 
+ font-size:18px;
+ }
+}
+@media only screen  and (max-width: 900px) {
+ .tabbar  p { 
+   width:33.333%;
+ }
+.tabbar li:nth-child(1) p{
+    border-width:1px;
+	border-color:#000000;
+	border-right-style:solid;
+	border-bottom-style:solid;
+}
+.tabbar li:nth-child(2) p{
+    border-width:1px;
+	border-color:#000000;
+	border-right-style:solid;
+	border-bottom-style:solid;
+}
+.tabbar li:nth-child(3) p{
+    border-width:1px;
+	border-color:#000000;
+	border-right-style:none;
+	border-bottom-style:solid;
+}
+.tabbar li:nth-child(4) p{
+    border-width:1px;
+	border-color:#000000;
+	border-right-style:solid;
+}
+.tabbar li:nth-child(5) p{
+    border-width:1px;
+	border-color:#000000;
+	border-right-style:solid;
+}
+}
+  @media only screen  and (max-width: 475px) {
+  .tabbar  p { 
+ font-size:16px;
+ }
+ #resourcebar {
+	font-size:18px;
+}
+ 
+  }
+   @media only screen  and (max-width: 450px) {
+  .tabbar  p { 
+ font-size:14px;
+ }
+ #span2{
+	left:175px;
+ }
+  }
+     @media only screen  and (max-width: 375px) {
+  .tabbar  p { 
+  font-size:12px;
+ }
+ #span2{
+	left:125px;
+ }
+  #resourcebar {
+	font-size:16px;
+}
+  }
+      @media only screen  and (max-width: 330px) {
+  .tabbar  p { 
+  font-size:11px;
+ }
+
+  }
 </style>
  
 <script type="text/javascript" src="/minigame2.js"></script>
@@ -662,9 +738,9 @@ Do you really want to delete this save?
 <!-- Resource Bar!-->
 <div id="resourcebar">
 <b>
-<span style="position:absolute;left:5px;">Energy: <span class="thetotal" style=""></span></span>
+<span id="span1" style="position:absolute;left:5px;">Energy: <span class="thetotal" style=""></span></span>
  
-<span style="position:absolute;left:200px;">Research points:<span class="thetotalresearchpoint" style=""></span></span>
+<span id="span2" style="">Research points:<span class="thetotalresearchpoint" style=""></span></span>
 </b>
 </div>
 <!-- TABS -->
