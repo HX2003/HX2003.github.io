@@ -23,6 +23,14 @@ function setCookie(cname, cvalue) {
     document.cookie = cname + "=" + cvalue + ";";
 }
 
+function setCookieJson(name, value) {
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate() + 30);
+	 
+	var cookie = [name, '=', JSON.stringify(value),';'].join('');
+	document.cookie = cookie;
+}
+ 
 function cookietoviarble(cname){
 	 newcookie = getCookie(cname);
 	 eval(cname + "=" + newcookie + ";");
@@ -37,6 +45,12 @@ function doCookie(cname,initial) {
 	 cookietoviarble(cname);
         }
     }
+function setVar(variable,value){
+	if(variable !== "undefined"){
+		eval(""+variable+" = "+value+";");
+	}
+	
+}
  function deleteallcookies(){
     var cookies = document.cookie.split(";");
         for (var i = 0; i < cookies.length; i++){   
@@ -50,152 +64,224 @@ function move() {
 
 
   elem = document.getElementById("bar1");  
- doCookie("upgradeenergy1init","true");
- doCookie("upgradeenergy2init","true");
- doCookie("upgradeprobarenergy1init","true")
- doCookie("upgradeprobarenergy2init","true");
- 
- doCookie("achievementstatus1","true");
- doCookie("achievementstatus2","true");
- doCookie("achievementstatus3","true");
- doCookie("achievementstatus4","true");
- doCookie("achievementstatus5","true");
- doCookie("achievementstatus6","true");
- 
- doCookie("resolution","2");
- doCookie("width1","10");
- doCookie("time",eval(1000/200));
- doCookie("init1","true");
- //related to probar
- doCookie("probarcounter","0");
- doCookie("widthpercentage","0");
- doCookie("ProbarpercentageA","0");
- doCookie("Probarpercentage","0");
- doCookie("probarstartdate","0");
- doCookie("probarstartdateI","0");
- doCookie("probarreduction","0");
- doCookie("timesprobarcompleted","0");
   
- doCookie("totalenergyed","0");
-
-
-  //orginal total gain for each building
- doCookie("epcgaintotal1","0");
- doCookie("epcgaintotal2","0");
-
- doCookie("epsgaintotal1","0");
- doCookie("epsgaintotal2","0");
- doCookie("epsgaintotal3","0");
+  //Init VARAIABLES starting game 
+    InitVar1 = {
+		time:10,
+		totalenergyed:0,
+		probarcounter:0,
+		widthpercentage:0,
+		ProbarpercentageA:0,
+		Probarpercentage:0,
+		probarstartdate:0,
+		probarstartdateI:0,
+		probarreduction:0,
+		timesprobarcompleted:0,
+		epcgaintotal1:0,
+		epcgaintotal2:0,
+		epsgaintotal1:0,
+		epsgaintotal2:0,
+		epsgaintotal3:0,
+		BuildingClickNumber0000:0,
+		BuildingClickNumber0001:0,
+		BuildingClickNumber0002:0,
+		BuildingAutoNumber0000:0,
+		BuildingAutoNumber0001:0,
+		BuildingAutoNumber0002:0
+	}
  
-  //orginal number of buildings
- doCookie("BuildingClickNumber0000","0");
- doCookie("BuildingClickNumber0001","0");
- doCookie("BuildingClickNumber0002","0");
+ InitVar2 = {
+		 BuildingClickOriginalCost0000:5,
+		 BuildingClickOriginalCost0001:50,
+		 BuildingClickOriginalCost0002:400,
+		 BuildingAutoOriginalCost0000:100,
+		 BuildingAutoOriginalCost0001:1000,
+		 BuildingAutoOriginalCost0002:7500,
+		 clicked:0,
+		 clickenergy:0,
+		 emultiply:1,
+		 epcmultiply1:1,
+		 epcmultiply2:1,
+		 epcmultiply3:1,
+		 egmultiply1:1,
+		 egmultiply2:1,
+		 egmultiply3:1,
+		 BuildingClickOrginalValue0000:0.75,
+		 BuildingClickOrginalValue0001:4,
+		 BuildingClickOrginalValue0002:25,
+		 BuildingAutoOrginalValue0000:0.75,
+		 BuildingAutoOrginalValue0001:5,
+		 BuildingAutoOrginalValue0002:20
+	}
+  InitVar3 = {
+    orginalgain:1,
+	orginalepsgain:0,
+	thetotal:0,
+	achievementstatus1:true,
+	achievementstatus2:true,
+	achievementstatus3:true,
+	achievementstatus4:true,
+	achievementstatus5:true,
+	achievementstatus6:true,
+	EnergyGoalLevel:0,
+	EnergyGoalStart:50,
+	ResearchPoints:0,
+	
+ }
+ InitVar4 = {
+ cost9000E:50,
+ cost9000R:0,
+ cost8000E:125,
+ cost8000R:0.75,
+ cost8081E:400,
+ cost8081R:1.25,
+ cost8001E:500,
+ cost8001R:1.25,
+ cost8002E:10000,
+ cost8002R:4,
+ cost8091E:1500,
+ cost8091R:2,
+ unqID9000lvl:0,
+ unqID8000lvl:0,
+ unqID8001lvl:0,
+ unqID8081lvl:0,
+ unqID8091lvl:0
  
- doCookie("BuildingAutoNumber0000","0");
- doCookie("BuildingAutoNumber0001","0");
- doCookie("BuildingAutoNumber0002","0");
-  //orginal costs
- doCookie("BuildingClickOriginalCost0000","5");
- doCookie("BuildingClickOriginalCost0001","50");
- doCookie("BuildingClickOriginalCost0002","400");
-  
- doCookie("BuildingAutoOriginalCost0000","100");
- doCookie("BuildingAutoOriginalCost0001","1000");
- doCookie("BuildingAutoOriginalCost0002","7500");
-  
- // cost1 = orginalcost1;
- // cost2 = orginalcost2;
-   
- // egcost1 = orginalegcost1;
- // egcost2 = orginalegcost2;
- // egcost3 = orginalegcost3;
-  
-  //upgrade costs
- doCookie("upgradeenergy1cost","200");
- doCookie("upgradeenergy2cost","1500");
- doCookie("upgradeprobarenergy1cost","200");
- doCookie("upgradeprobarenergy2cost","400");
-  //orginal click 
- doCookie("clicked","0");
- doCookie("clickenergy","0");
+ }
  
-  //multiplyier 
- doCookie("emultiply","1");
-
-  //individual multiplyier 
- doCookie("epcmultiply1","1");
- doCookie("epcmultiply2","1");
- doCookie("epcmultiply3","1");
+ Cookieresult = getCookie("Var1");
+ if(Cookieresult!=""){
+	 loadCookies("Var1","1");
+ }else{
+	 //not found 
+	 console.log("Cookie Var1 not found, creating Var1");
+	 setCookieJson("Var1",InitVar1);
+	 loadCookies("Var1","1");
+ }
  
- doCookie("egmultiply1","1");
- doCookie("egmultiply2","1");
- doCookie("egmultiply3","1");
-  //orginal individual energy gain
-  //not needed as these value are re calculated every time
- /*
- doCookie("epcgain1","0");
- doCookie("epcgain2","0");
- doCookie("epsgain1","0");
- doCookie("epsgain2","0");
- doCookie("epsgain3","0");
- */
-  //orginal increment energy for individual (starting value)
- doCookie("BuildingClickOrginalValue0000","0.75");
- doCookie("BuildingClickOrginalValue0001","4");
- doCookie("BuildingClickOrginalValue0002","25");
+ Cookieresult = getCookie("Var2");
+ if(Cookieresult!=""){
+	 loadCookies("Var2","2");
+ }else{
+	 console.log("Cookie Var2 not found, creating Var2");
+	 setCookieJson("Var2",InitVar2);
+	 loadCookies("Var2","2");
+ }
  
- doCookie("BuildingAutoOrginalValue0000","0.75");
- doCookie("BuildingAutoOrginalValue0001","5");
- doCookie("BuildingAutoOrginalValue0002","20");
-  //orginal energy gain
- doCookie("orginalgain","1");
- doCookie("orginalepsgain","0");
-
-  //orginal energy 
- doCookie("thetotal","0");
+ Cookieresult = getCookie("Var3");
+ if(Cookieresult!=""){
+	 loadCookies("Var3","3");
+ }else{
+	 console.log("Cookie Var3 not found, creating Var3");
+	 setCookieJson("Var3",InitVar3);
+	 loadCookies("Var3","3");
+ }
  
- //new upgrade
- doCookie("upgrade9000","0");
-  
- //EnergyGoals
- doCookie("EnergyGoalLevel","0");
- doCookie("EnergyGoalStart","50");
+ Cookieresult = getCookie("Var4");
+ if(Cookieresult!=""){
+	 loadCookies("Var4","4");
+ }else{
+	 console.log("Cookie Var4 not found, creating Var4");
+	 setCookieJson("Var4",InitVar4);
+	 loadCookies("Var4","4");
+ }
  
-  
- //research points
- doCookie("ResearchPoints","0");
- 
- //research costs
- doCookie("cost9000E","25");
- doCookie("cost9000R","0");
- 
- doCookie("cost8000E","125");
- doCookie("cost8000R","0.75");
- 
- doCookie("cost8081E","400");
- doCookie("cost8081R","1.25");
- 
- doCookie("cost8091E","500");
- doCookie("cost8091R","1.5");
- 
- doCookie("cost8001E","1500");
- doCookie("cost8001R","2");
- 
- doCookie("cost8002E","10000");
- doCookie("cost8002R","4");
- 
-
- //research levels
- doCookie("unqID9000lvl","0");
- doCookie("unqID8000lvl","0");
- doCookie("unqID8001lvl","0");
- doCookie("unqID8081lvl","0");
- doCookie("unqID8091lvl","0");
+ function loadCookies(cookieName,variableName){
+	 cookieResult = getCookie(cookieName);
+	 if(variableName=="1"){
+	  loadedVar1=JSON.parse(cookieResult);  
+	 }
+	 if(variableName=="2"){
+	  loadedVar2=JSON.parse(cookieResult);  
+	 }
+	 if(variableName=="3"){
+	  loadedVar3=JSON.parse(cookieResult);  
+	 }
+	 if(variableName=="4"){
+	  loadedVar4=JSON.parse(cookieResult);  
+	 }
+ }
+ varTovar();
+ function varTovar(){
+    time=loadedVar1.time;
+	totalenergyed=loadedVar1.totalenergyed;
+	probarcounter=loadedVar1.probarcounter;
+	widthpercentage=loadedVar1.widthpercentage;
+	ProbarpercentageA=loadedVar1.ProbarpercentageA;
+	Probarpercentage=loadedVar1.Probarpercentage;
+	probarstartdate=loadedVar1.probarstartdate;
+	probarstartdateI=loadedVar1.probarstartdateI;
+	probarreduction=loadedVar1.probarreduction;
+	timesprobarcompleted=loadedVar1.timesprobarcompleted;
+	epcgaintotal1=loadedVar1.epcgaintotal1;
+	epcgaintotal2=loadedVar1.epcgaintotal2;
+	epsgaintotal1=loadedVar1.epsgaintotal1;
+	epsgaintotal2=loadedVar1.epsgaintotal2;
+	epsgaintotal3=loadedVar1.epsgaintotal3;
+	BuildingClickNumber0000=loadedVar1.BuildingClickNumber0000;
+	BuildingClickNumber0001=loadedVar1.BuildingClickNumber0001;
+	BuildingClickNumber0002=loadedVar1.BuildingClickNumber0002;
+	BuildingAutoNumber0000=loadedVar1.BuildingAutoNumber0000;
+	BuildingAutoNumber0001=loadedVar1.BuildingAutoNumber0001;
+	BuildingAutoNumber0002=loadedVar1.BuildingAutoNumber0002;
+    
+	BuildingClickOriginalCost0000=loadedVar2.BuildingClickOriginalCost0000;
+	BuildingClickOriginalCost0001=loadedVar2.BuildingClickOriginalCost0001;	
+	BuildingClickOriginalCost0002=loadedVar2.BuildingClickOriginalCost0002;
+	BuildingAutoOriginalCost0000=loadedVar2.BuildingAutoOriginalCost0000;
+	BuildingAutoOriginalCost0001=loadedVar2.BuildingAutoOriginalCost0001;
+	BuildingAutoOriginalCost0002=loadedVar2.BuildingAutoOriginalCost0002;
+	clicked=loadedVar2.clicked;
+	clickenergy=loadedVar2.clickenergy;
+	emultiply=loadedVar2.emultiply;
+	epcmultiply1=loadedVar2.epcmultiply1;
+	epcmultiply2=loadedVar2.epcmultiply2;
+	epcmultiply3=loadedVar2.epcmultiply3;
+	egmultiply1=loadedVar2.egmultiply1;
+	egmultiply2=loadedVar2.egmultiply2;
+	egmultiply3=loadedVar2.egmultiply3;
+	BuildingClickOrginalValue0000=loadedVar2.BuildingClickOrginalValue0000;
+	BuildingClickOrginalValue0001=loadedVar2.BuildingClickOrginalValue0001;
+	BuildingClickOrginalValue0002=loadedVar2.BuildingClickOrginalValue0002;
+	BuildingAutoOrginalValue0000=loadedVar2.BuildingAutoOrginalValue0000;
+	BuildingAutoOrginalValue0001=loadedVar2.BuildingAutoOrginalValue0001;
+	BuildingAutoOrginalValue0002=loadedVar2.BuildingAutoOrginalValue0002;
+	
+	orginalgain=loadedVar3.orginalgain;
+	orginalepsgain=loadedVar3.orginalepsgain;
+	thetotal=loadedVar3.thetotal;
+	achievementstatus1=loadedVar3.achievementstatus1;
+	achievementstatus2=loadedVar3.achievementstatus2;
+	achievementstatus3=loadedVar3.achievementstatus3;
+	achievementstatus4=loadedVar3.achievementstatus4;
+	achievementstatus5=loadedVar3.achievementstatus5;
+	achievementstatus6=loadedVar3.achievementstatus6;
+	EnergyGoalLevel=loadedVar3.EnergyGoalLevel;
+	EnergyGoalStart=loadedVar3.EnergyGoalStart;
+	ResearchPoints=loadedVar3.ResearchPoints;
+	
+	cost9000E=loadedVar4.cost9000E;
+	cost9000R=loadedVar4.cost9000R;
+	cost8000E=loadedVar4.cost8000E;
+	cost8000R=loadedVar4.cost8000R;
+	cost8081E=loadedVar4.cost8081E;
+	cost8081R=loadedVar4.cost8081R;
+	cost8001E=loadedVar4.cost8001E;
+	cost8001R=loadedVar4.cost8001R;
+	cost8002E=loadedVar4.cost8002E;
+	cost8002R=loadedVar4.cost8002R;
+	cost8091E=loadedVar4.cost8091E;
+	cost8091R=loadedVar4.cost8091R;
+	unqID9000lvl=loadedVar4.unqID9000lvl;
+	unqID8000lvl=loadedVar4.unqID8000lvl;
+	unqID8001lvl=loadedVar4.unqID8001lvl;
+	unqID8081lvl=loadedVar4.unqID8081lvl;
+	unqID8091lvl=loadedVar4.unqID8091lvl;
+	
+ }
  //others
  
  //GLOBAL VALUES INITIALIZE
- 
  probarcounterbasevalue = 2000;
 setTimeout(function() {
   setInterval(savegamecookie, 30000);
@@ -226,150 +312,225 @@ if (e.ctrlKey && e.keyCode==83) {savegamecookie();e.preventDefault();}
 });
  
 function savegamecookie(){
+ notify("Saving game...");
+ saveVar1 = {
+		time:time,
+		totalenergyed:totalenergyed,
+		probarcounter:probarcounter,
+		widthpercentage:widthpercentage,
+		ProbarpercentageA:ProbarpercentageA,
+		Probarpercentage:Probarpercentage,
+		probarstartdate:probarstartdate,
+		probarstartdateI:probarstartdateI,
+		probarreduction:probarreduction,
+		timesprobarcompleted:timesprobarcompleted,
+		epcgaintotal1:epcgaintotal1,
+		epcgaintotal2:epcgaintotal2,
+		epsgaintotal1:epsgaintotal1,
+		epsgaintotal2:epsgaintotal2,
+		epsgaintotal3:epsgaintotal3,
+		BuildingClickNumber0000:BuildingClickNumber0000,
+		BuildingClickNumber0001:BuildingClickNumber0001,
+		BuildingClickNumber0002:BuildingClickNumber0002,
+		BuildingAutoNumber0000:BuildingAutoNumber0000,
+		BuildingAutoNumber0001:BuildingAutoNumber0001,
+		BuildingAutoNumber0002:BuildingAutoNumber0002
+	}
+ 
+ saveVar2 = {
+		 BuildingClickOriginalCost0000:BuildingClickOriginalCost0000,
+		 BuildingClickOriginalCost0001:BuildingClickOriginalCost0001,
+		 BuildingClickOriginalCost0002:BuildingClickOriginalCost0002,
+		 BuildingAutoOriginalCost0000:BuildingAutoOriginalCost0000,
+		 BuildingAutoOriginalCost0001:BuildingAutoOriginalCost0001,
+		 BuildingAutoOriginalCost0002:BuildingAutoOriginalCost0002,
+		 clicked:clicked,
+		 clickenergy:clickenergy,
+		 emultiply:emultiply,
+		 epcmultiply1:epcmultiply1,
+		 epcmultiply2:epcmultiply2,
+		 epcmultiply3:epcmultiply3,
+		 egmultiply1:egmultiply1,
+		 egmultiply2:egmultiply2,
+		 egmultiply3:egmultiply3,
+		 BuildingClickOrginalValue0000:BuildingClickOrginalValue0000,
+		 BuildingClickOrginalValue0001:BuildingClickOrginalValue0001,
+		 BuildingClickOrginalValue0002:BuildingClickOrginalValue0002,
+		 BuildingAutoOrginalValue0000:BuildingAutoOrginalValue0000,
+		 BuildingAutoOrginalValue0001:BuildingAutoOrginalValue0001,
+		 BuildingAutoOrginalValue0002:BuildingAutoOrginalValue0002
+	}
+ saveVar3 = {
+    orginalgain:orginalgain,
+	orginalepsgain:orginalepsgain,
+	thetotal:thetotal,
+	achievementstatus1:achievementstatus1,
+	achievementstatus2:achievementstatus2,
+	achievementstatus3:achievementstatus3,
+	achievementstatus4:achievementstatus4,
+	achievementstatus5:achievementstatus5,
+	achievementstatus6:achievementstatus6,
+	EnergyGoalLevel:EnergyGoalLevel,
+	EnergyGoalStart:EnergyGoalStart,
+	ResearchPoints:ResearchPoints,
+	
+ }
+ saveVar4 = {
+ cost9000E:cost9000E,
+ cost9000R:cost9000R,
+ cost8000E:cost8000E,
+ cost8000R:cost8000R,
+ cost8081E:cost8081E,
+ cost8081R:cost8081R,
+ cost8001E:cost8001E,
+ cost8001R:cost8001R,
+ cost8002E:cost8002E,
+ cost8002R:cost8002R,
+ cost8091E:cost8091E,
+ cost8091R:cost8091R,
+ 
+  
+ unqID9000lvl:unqID9000lvl,
+ unqID8000lvl:unqID8000lvl,
+ unqID8001lvl:unqID8001lvl,
+ unqID8081lvl:unqID8081lvl,
+ unqID8091lvl:unqID8091lvl
+ 
+ }
+ setCookieJson("Var1",saveVar1);
+ setCookieJson("Var2",saveVar2);
+ setCookieJson("Var3",saveVar3);
+ setCookieJson("Var4",saveVar4);
  notify("Game saved");
- setCookie("resolution",resolution);
- setCookie("width1",width1);
- setCookie("time",time);
- setCookie("init1",init1);
- setCookie("totalenergyed",totalenergyed);
-
- //related to probar
- setCookie("probarcounter",probarcounter);
- setCookie("widthpercentage",widthpercentage);
- setCookie("ProbarpercentageA",ProbarpercentageA);
- setCookie("Probarpercentage",Probarpercentage);
- setCookie("probarstartdate",probarstartdate);
- setCookie("probarstartdateI",probarstartdateI);
- setCookie("probarreduction",probarreduction);
- setCookie("timesprobarcompleted",timesprobarcompleted);
- 
-  //orginal total gain for each building
- setCookie("epcgaintotal1",epcgaintotal1);
- setCookie("epcgaintotal2",epcgaintotal2);
-
- setCookie("epsgaintotal1",epsgaintotal1);
- setCookie("epsgaintotal2",epsgaintotal2);
- setCookie("epsgaintotal3",epsgaintotal3);
- 
-  //orginal number of buildings
- setCookie("BuildingClickNumber0000",BuildingClickNumber0000);
- setCookie("BuildingClickNumber0001",BuildingClickNumber0001);
- setCookie("BuildingClickNumber0002",BuildingClickNumber0002);
-
- setCookie("BuildingAutoNumber0000",BuildingAutoNumber0000);
- setCookie("BuildingAutoNumber0001",BuildingAutoNumber0001);
- setCookie("BuildingAutoNumber0002",BuildingAutoNumber0002);
-  //orginal costs
- setCookie("BuildingClickOriginalCost0000",BuildingClickOriginalCost0000);
- setCookie("BuildingClickOriginalCost0001",BuildingClickOriginalCost0001);
-
- setCookie("BuildingAutoOriginalCost0000",BuildingAutoOriginalCost0000);
- setCookie("BuildingAutoOriginalCost0001",BuildingAutoOriginalCost0001);
- setCookie("BuildingAutoOriginalCost0002",BuildingAutoOriginalCost0002);
-
-   
-
-  
- // cost1 = orginalcost1;
- // cost2 = orginalcost2;
-   
- // egcost1 = orginalegcost1;
- // egcost2 = orginalegcost2;
- // egcost3 = orginalegcost3;
-  
-  //upgrade costs
- setCookie("upgradeenergy1cost",upgradeenergy1cost);
- setCookie("upgradeenergy2cost",upgradeenergy2cost);
- setCookie("upgradeprobarenergy1cost",upgradeprobarenergy1cost);
- setCookie("upgradeprobarenergy2cost",upgradeprobarenergy2cost);
- 
- 
-  //orginal click 
- setCookie("clicked",clicked);
- setCookie("clickenergy",clickenergy);
- 
-  //multiplyier 
- setCookie("emultiply",emultiply);
-
-  //individual multiplyier 
- setCookie("epcmultiply1",epcmultiply1);
- setCookie("epcmultiply2",epcmultiply2);
- setCookie("epcmultiply3",epcmultiply3);
- 
- setCookie("egmultiply1",egmultiply1);
- setCookie("egmultiply2",egmultiply2);
- setCookie("egmultiply3",egmultiply3);
-  //orginal individual energy gain
- //not needed as these value are re calculated every time
- /*
- setCookie("epcgain1",epcgain1);
- setCookie("epcgain2",epcgain2);
- 
- setCookie("epsgain1",epsgain1);
- setCookie("epsgain2",epsgain2);
- setCookie("epsgain3",epsgain3);
- */
-  //orginal increment energy
- setCookie("BuildingClickOrginalValue0000",BuildingClickOrginalValue0000);
- setCookie("BuildingClickOrginalValue0001",BuildingClickOrginalValue0001);
- setCookie("BuildingClickOrginalValue0002",BuildingClickOrginalValue0002);
- 
- setCookie("BuildingAutoOrginalValue0000",BuildingAutoOrginalValue0000);
- setCookie("BuildingAutoOrginalValue0001",BuildingAutoOrginalValue0001);
- setCookie("BuildingAutoOrginalValue0002",BuildingAutoOrginalValue0002);
-  //orginal energy gain
- setCookie("orginalgain",orginalgain);
- setCookie("orginalepsgain",orginalepsgain);
-
-  //orginal energy 
- setCookie("thetotal",thetotal);
- 
- setCookie("upgradeenergy1init",upgradeenergy1init);
- setCookie("upgradeenergy2init",upgradeenergy2init);
- setCookie("upgradeprobarenergy1init",upgradeprobarenergy1init);
- setCookie("upgradeprobarenergy2init",upgradeprobarenergy2init);
- 
- 
- setCookie("achievementstatus1",achievementstatus1);
- setCookie("achievementstatus2",achievementstatus2);
- setCookie("achievementstatus3",achievementstatus3);
- setCookie("achievementstatus4",achievementstatus4);
- setCookie("achievementstatus5",achievementstatus5);
- setCookie("achievementstatus6",achievementstatus6);
-
- //new upgrade
- setCookie("upgrade9000",upgrade9000);
- 
- //EnergyGoals
- setCookie("EnergyGoalLevel",EnergyGoalLevel);
- setCookie("EnergyGoalStart",EnergyGoalStart);
- 
- //research points
- setCookie("ResearchPoints",ResearchPoints);
- 
- //research costs
- setCookie("cost9000E",cost9000E);
- setCookie("cost9000R",cost9000R);
- setCookie("cost8000E",cost8000E);
- setCookie("cost8000R",cost8000R);
- setCookie("cost8081E",cost8081E);
- setCookie("cost8081R",cost8081R);
- setCookie("cost8001E",cost8001E);
- setCookie("cost8001R",cost8001R);
- setCookie("cost8002E",cost8002E);
- setCookie("cost8002R",cost8002R);
- setCookie("cost8091E",cost8091E);
- setCookie("cost8091R",cost8091R);
-
- 
- //research levels
- setCookie("unqID9000lvl",unqID9000lvl);
- setCookie("unqID8000lvl",unqID8000lvl);
- setCookie("unqID8001lvl",unqID8001lvl);
- setCookie("unqID8081lvl",unqID8081lvl);
- setCookie("unqID8091lvl",unqID8091lvl);
 }
-
+//Export SAVE
+  $( "#exportImportSave" ).click(function() {
+document.getElementById("SaveDialog").style.display = "block";
+  });
+  $( "#canceldialog2" ).click(function() {
+document.getElementById("SaveDialog").style.display = "none";
+  });
+   $( "#selectAll" ).click(function() {
+	   document.getElementById("ImportExportField").select();
+   });
+   $("#import").click(function(){
+	   if(document.getElementById('ImportExportField').value==""){
+		    alert("Textbox is empty");
+	   }else{
+	   var compressed = document.getElementById('ImportExportField').value;
+	   var decompressed = LZString.decompressFromBase64(compressed);
+	   if(isJson(decompressed)){
+	   var revived = JSON.parse(decompressed);
+	
+		//set variables to load from
+		 setCookieJson("Var1",revived[0]);
+         setCookieJson("Var2",revived[1]);
+         setCookieJson("Var3",revived[2]);
+         setCookieJson("Var4",revived[3]);
+		 location.reload();
+	   }
+	   else{
+		   alert("Invalid save file");
+	   }
+	   }
+   });
+  function isJson(str) {
+       try {
+        JSON.parse(str);
+       } catch (e) {
+        return false;
+       }
+    return true;
+     }
+   $( "#export" ).click(function() {
+	  saveVar1 = {
+		time:time,
+		totalenergyed:totalenergyed,
+		probarcounter:probarcounter,
+		widthpercentage:widthpercentage,
+		ProbarpercentageA:ProbarpercentageA,
+		Probarpercentage:Probarpercentage,
+		probarstartdate:probarstartdate,
+		probarstartdateI:probarstartdateI,
+		probarreduction:probarreduction,
+		timesprobarcompleted:timesprobarcompleted,
+		epcgaintotal1:epcgaintotal1,
+		epcgaintotal2:epcgaintotal2,
+		epsgaintotal1:epsgaintotal1,
+		epsgaintotal2:epsgaintotal2,
+		epsgaintotal3:epsgaintotal3,
+		BuildingClickNumber0000:BuildingClickNumber0000,
+		BuildingClickNumber0001:BuildingClickNumber0001,
+		BuildingClickNumber0002:BuildingClickNumber0002,
+		BuildingAutoNumber0000:BuildingAutoNumber0000,
+		BuildingAutoNumber0001:BuildingAutoNumber0001,
+		BuildingAutoNumber0002:BuildingAutoNumber0002
+	}
+ 
+ saveVar2 = {
+		 BuildingClickOriginalCost0000:BuildingClickOriginalCost0000,
+		 BuildingClickOriginalCost0001:BuildingClickOriginalCost0001,
+		 BuildingClickOriginalCost0002:BuildingClickOriginalCost0002,
+		 BuildingAutoOriginalCost0000:BuildingAutoOriginalCost0000,
+		 BuildingAutoOriginalCost0001:BuildingAutoOriginalCost0001,
+		 BuildingAutoOriginalCost0002:BuildingAutoOriginalCost0002,
+		 clicked:clicked,
+		 clickenergy:clickenergy,
+		 emultiply:emultiply,
+		 epcmultiply1:epcmultiply1,
+		 epcmultiply2:epcmultiply2,
+		 epcmultiply3:epcmultiply3,
+		 egmultiply1:egmultiply1,
+		 egmultiply2:egmultiply2,
+		 egmultiply3:egmultiply3,
+		 BuildingClickOrginalValue0000:BuildingClickOrginalValue0000,
+		 BuildingClickOrginalValue0001:BuildingClickOrginalValue0001,
+		 BuildingClickOrginalValue0002:BuildingClickOrginalValue0002,
+		 BuildingAutoOrginalValue0000:BuildingAutoOrginalValue0000,
+		 BuildingAutoOrginalValue0001:BuildingAutoOrginalValue0001,
+		 BuildingAutoOrginalValue0002:BuildingAutoOrginalValue0002
+	}
+ saveVar3 = {
+    orginalgain:orginalgain,
+	orginalepsgain:orginalepsgain,
+	thetotal:thetotal,
+	achievementstatus1:achievementstatus1,
+	achievementstatus2:achievementstatus2,
+	achievementstatus3:achievementstatus3,
+	achievementstatus4:achievementstatus4,
+	achievementstatus5:achievementstatus5,
+	achievementstatus6:achievementstatus6,
+	EnergyGoalLevel:EnergyGoalLevel,
+	EnergyGoalStart:EnergyGoalStart,
+	ResearchPoints:ResearchPoints,
+	
+ }
+ saveVar4 = {
+ cost9000E:cost9000E,
+ cost9000R:cost9000R,
+ cost8000E:cost8000E,
+ cost8000R:cost8000R,
+ cost8081E:cost8081E,
+ cost8081R:cost8081R,
+ cost8001E:cost8001E,
+ cost8001R:cost8001R,
+ cost8002E:cost8002E,
+ cost8002R:cost8002R,
+ cost8091E:cost8091E,
+ cost8091R:cost8091R,
+ 
+  
+ unqID9000lvl:unqID9000lvl,
+ unqID8000lvl:unqID8000lvl,
+ unqID8001lvl:unqID8001lvl,
+ unqID8081lvl:unqID8081lvl,
+ unqID8091lvl:unqID8091lvl
+ 
+ }
+ 	  var string = '[' + JSON.stringify(saveVar1) + ',' + JSON.stringify(saveVar2) + ',' + JSON.stringify(saveVar3) + ',' + JSON.stringify(saveVar4) + ']';
+	  var compressed = LZString.compressToBase64(string);
+      document.getElementById('ImportExportField').value = compressed;  
+  });
 function calcgain(){
 	//calculate click energy gain
 	calcepsgain();
@@ -580,6 +741,7 @@ document.getElementById("deleteallcookiesdialog").style.display = "none";
 deleteallcookies();
 location.reload();
   });
+
 //
 //
 //
@@ -675,7 +837,7 @@ $.fn.extend({
    }
 });
 //old upgrade code not use anymore
-upgradecost();
+/*upgradecost();
 function upgradecost(){
 	$("#upgradeenergy1cost").html(upgradeenergy1cost);
 	$("#upgradeenergy2cost").html(upgradeenergy2cost);
@@ -733,6 +895,7 @@ $("#upgradeprobarenergy2").qaddclass("redborder").delay(1750).qremoveclass("redb
 
 }
 	   });
+	   */
  //end
  //
  //
@@ -1060,7 +1223,7 @@ openTab('menuB',"tabB");
 	 }
 	 	 });
 	 function load8001(){
-	if(unqID8000lvl>=1){
+	if(unqID8000lvl>=5){
      $("#upgrade8001").click(function() {
 		  
      if(unqID8001lvl>=5) {
@@ -1144,8 +1307,6 @@ openTab('menuB',"tabB");
 	   drawLink(122,250,5,30,"unqID0892");
 	      drawIcon(135,220,50,50,30,40,'/website/tools/nil.png',"unqID8091","upgrade8091","cost8091","Energy per click gains additional +2% Eps","Energy per click gains additional +1% Eps for each level, max level 5.");
        //load them
-	   	upgrade8001Pack("onload");
-		load8001();
  
 	    drawCosts();
 	 }
@@ -1181,6 +1342,9 @@ openTab('menuB',"tabB");
 		//if reach max unlock next make it active
 	     linkClass("unqID0801");
 		 linkIcon("unqID8001");
+		 //load them
+		  upgrade8001Pack("onload");
+		 load8001();
 	    //reveal this
 		 drawLink(220,302,20,5,"unqID0802");
 	      drawIcon(240,280,50,50,30,40,'/website/tools/probarenergy3.png',"unqID8002","upgrade8002","cost8002","Progress bar - Instant","Progress bar will take next to no time to complete, max level 1.");
