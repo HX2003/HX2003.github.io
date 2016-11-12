@@ -409,6 +409,7 @@ document.getElementById("SaveDialog").style.display = "block";
   });
   $( "#canceldialog2" ).click(function() {
 document.getElementById("SaveDialog").style.display = "none";
+document.getElementById('ImportExportField').value = "";  
   });
    $( "#selectAll" ).click(function() {
 	   document.getElementById("ImportExportField").select();
