@@ -64,7 +64,7 @@ function move() {
 
 
   elem = document.getElementById("bar1");  
-  currentVersion="1.0.1";
+  currentVersion="1.0.2";
   //Init VARAIABLES starting game 
     InitVar1 = {
 		version:currentVersion,
