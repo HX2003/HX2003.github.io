@@ -118,6 +118,9 @@ function move() {
     orginalgain:1,
 	orginalepsgain:0,
 	thetotal:0,
+	achievementEnergyGoalStatus:0,
+	achievementClickTimesStatus:0,
+	achievementClickEnergyStatus:0,
 	achievementstatus1:true,
 	achievementstatus2:true,
 	achievementstatus3:true,
@@ -268,6 +271,9 @@ function move() {
 	orginalgain=loadedVar3.orginalgain;
 	orginalepsgain=loadedVar3.orginalepsgain;
 	thetotal=loadedVar3.thetotal;
+    achievementEnergyGoalStatus=loadedVar3.achievementEnergyGoalStatus;
+	achievementClickTimesStatus=loadedVar3.achievementClickTimesStatus;
+	achievementClickEnergyStatus=loadedVar3.achievementClickEnergyStatus;
 	achievementstatus1=loadedVar3.achievementstatus1;
 	achievementstatus2=loadedVar3.achievementstatus2;
 	achievementstatus3=loadedVar3.achievementstatus3;
@@ -392,6 +398,9 @@ if (e.ctrlKey && e.keyCode==83) {savegamecookie();e.preventDefault();}
     orginalgain:orginalgain,
 	orginalepsgain:orginalepsgain,
 	thetotal:thetotal,
+	achievementEnergyGoalStatus:achievementEnergyGoalStatus,
+	achievementClickTimesStatus:achievementClickTimesStatus,
+	achievementClickEnergyStatus:achievementClickEnergyStatus,
 	achievementstatus1:achievementstatus1,
 	achievementstatus2:achievementstatus2,
 	achievementstatus3:achievementstatus3,
@@ -846,73 +855,36 @@ $.fn.extend({
          next();
       });
    }
-});
-//old upgrade code not use anymore
-/*upgradecost();
-function upgradecost(){
-	$("#upgradeenergy1cost").html(upgradeenergy1cost);
-	$("#upgradeenergy2cost").html(upgradeenergy2cost);
+}); 
+ totalAchievement=10;
+ achievementEnergyGoalArray=[1,3,5,10,15,20,30,40,50,60];
+ achievementClickTimesArray=[10,50,200,1000,2000,5000,10000,20000,50000,100000];
+ achievementClickEnergyArray=[100,10000,1000000,100000000,10000000000,1000000000000,100000000000000,10000000000000000,1000000000000000000,100000000000000000000];
+ displayAchievementInit();
+ function displayAchievementInit(){
 	
-	$("#upgradeprobarenergy1cost").html(upgradeprobarenergy1cost);
-	$("#upgradeprobarenergy2cost").html(upgradeprobarenergy2cost);
-}
-//upgradeenergy1
- $("#upgradeenergy1").click(function() {
-
-if(upgradeenergy1init == true) {
-	 
-if(upgradeenergy1cost <= thetotal) {
-upgradeenergy1init = "notinit";
-} else {
-$("#upgradeenergy1").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-}
-
-}
-	   });
-//upgradeenergy2
- $("#upgradeenergy2").click(function() {
-if(upgradeenergy2init == true) {
+	 for(var i=totalAchievement;i>0;i--){
+	 $( "#achievementEnergyGoalGRP" ).after("<div id=\"achievementEnergyGoal"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Energy Goal Level "+achievementEnergyGoalArray[i-1]+"<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
+     }
+	 for(var i=totalAchievement;i>0;i--){
+	 $( "#achievementClickTimesGRP" ).after("<div id=\"achievementClickTimes"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Click "+achievementClickTimesArray[i-1]+" times<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
+     }
 	
-if(upgradeenergy2cost <= thetotal) {
-upgradeenergy2init = "notinit";
-} else {
-$("#upgradeenergy2").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-}
-
-}
-	   });
-//upgradeprobarenergy1
- $("#upgradeprobarenergy1").click(function() {
-if(upgradeprobarenergy1init == true) {
-	
-if(upgradeprobarenergy1cost <= thetotal) {
-upgradeprobarenergy1init = "notinit";
-} else {
-$("#upgradeprobarenergy1").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-}
-
-}
-	   });
-	   
-//upgradeprobarenergy2
- $("#upgradeprobarenergy2").click(function() {
-if(upgradeprobarenergy2init == true) {
-	
-if(upgradeprobarenergy2cost <= thetotal) {
-upgradeprobarenergy2init = "notinit";
-} else {
-$("#upgradeprobarenergy2").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-}
-
-}
-	   });
-	   */
- //end
- //
- //
- //achievement
+	 for(var i=totalAchievement;i>0;i--){
+	 $( "#achievementClickEnergyGRP" ).after("<div id=\"achievementClickEnergy"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Gain "+formatNumber(achievementClickEnergyArray[i-1])+" energy from clicking<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
+     }
+ }
  updateAchievement();
  function updateAchievement(){
+ for(var i=0; i<achievementEnergyGoalStatus+1;i++){
+	 eval("$(\"#achievementEnergyGoal"+i+"\").addClass(\"achievementachieved\");");
+ }
+ for(var i=0; i<achievementClickTimesStatus+1;i++){
+	 eval("$(\"#achievementClickTimes"+i+"\").addClass(\"achievementachieved\");");
+ }
+ for(var i=0; i<achievementClickEnergyStatus+1;i++){
+	 eval("$(\"#achievementClickEnergy"+i+"\").addClass(\"achievementachieved\");");
+ }
  if(achievementstatus1 == false){$("#achievement1").addClass("achievementachieved");}
  if(achievementstatus2 == false){$("#achievement2").addClass("achievementachieved");}
  if(achievementstatus3 == false){$("#achievement3").addClass("achievementachieved");}
@@ -923,7 +895,27 @@ $("#upgradeprobarenergy2").qaddclass("redborder").delay(1750).qremoveclass("redb
  
  setInterval(achievement, 1000);
   function achievement() {
-	  
+ if(EnergyGoalLevel>=achievementEnergyGoalArray[achievementEnergyGoalStatus]){
+	 achievementEnergyGoalStatus=achievementEnergyGoalStatus+1;
+	 emultiply = emultiply + 0.05;
+	 emultiply = Math.round(emultiply * 1000) / 1000;
+	 notify("Achievement \"Energy Goal Level "+achievementEnergyGoalArray[achievementEnergyGoalStatus]+"\" acquried. Energy multiplyier increased to "+ emultiply +"");
+	 eval("$(\"#achievementEnergyGoal"+achievementEnergyGoalStatus+"\").addClass(\"achievementachieved\");");
+ }
+ if(clicked>=achievementClickTimesArray[achievementClickTimesStatus]){
+	 achievementClickTimesStatus=achievementClickTimesStatus+1;
+	 emultiply = emultiply + 0.05;
+	 emultiply = Math.round(emultiply * 1000) / 1000;
+	 notify("Achievement \"Click "+achievementClickTimesArray[achievementClickTimesStatus]+" times \" acquried. Energy multiplyier increased to "+ emultiply +"");
+	 eval("$(\"#achievementClickTimes"+achievementClickTimesStatus+"\").addClass(\"achievementachieved\");");
+ } 
+ if(clickenergy>=achievementClickEnergyArray[achievementClickEnergyStatus]){
+	 achievementClickEnergyStatus=achievementClickEnergyStatus+1;
+	 emultiply = emultiply + 0.05;
+	 emultiply = Math.round(emultiply * 1000) / 1000;
+	 notify("Achievement \"Gain "+achievementClickEnergyArray[achievementClickEnergyStatus]+" energy from clicking \" acquried. Energy multiplyier increased to "+ emultiply +"");
+	 eval("$(\"#achievementClickEnergy"+achievementClickEnergyStatus+"\").addClass(\"achievementachieved\");");
+ } 
  //achievement1 
  if(BuildingClickNumber0000 >= 5 && achievementstatus1 == true){
 	notify("Achievement \"Acquired 5 Energy Pylon\" acquried. Energy progress bar operation reduced by 100ms.")
