@@ -27,7 +27,7 @@ function setCookieJson(name, value) {
 	var exdate=new Date();
 	exdate.setDate(exdate.getDate() + 30);
 	 
-	var cookie = [name, '=', JSON.stringify(value),';'].join('');
+	var cookie = [name, '=',  LZString.compressToBase64(JSON.stringify(value)),';'].join('');
 	document.cookie = cookie;
 }
  
@@ -221,16 +221,16 @@ function move() {
 	cookieResult = getCookie(cookieName);
 	if(cookieResult!=""){
 	 if(variableName=="1"){
-	  loadedVar1=JSON.parse(cookieResult);  
+	  loadedVar1=JSON.parse(LZString.decompressFromBase64(cookieResult));  
 	 }
 	 if(variableName=="2"){
-	  loadedVar2=JSON.parse(cookieResult);  
+	  loadedVar2=JSON.parse(LZString.decompressFromBase64(cookieResult)); 
 	 }
 	 if(variableName=="3"){
-	  loadedVar3=JSON.parse(cookieResult);  
+	  loadedVar3=JSON.parse(LZString.decompressFromBase64(cookieResult)); 
 	 }
 	 if(variableName=="4"){
-	  loadedVar4=JSON.parse(cookieResult);  
+	  loadedVar4=JSON.parse(LZString.decompressFromBase64(cookieResult)); 
 	 }
 	}else{ 
 	  alert("cookie not valid");
@@ -398,15 +398,20 @@ if (e.ctrlKey && e.keyCode==83) {savegamecookie();e.preventDefault();}
 		timesprobarcompleted:timesprobarcompleted,
 		epcgaintotal1:epcgaintotal1,
 		epcgaintotal2:epcgaintotal2,
+		epcgaintotal3:epcgaintotal3,
+		epcgaintotal4:epcgaintotal4,
 		epsgaintotal1:epsgaintotal1,
 		epsgaintotal2:epsgaintotal2,
 		epsgaintotal3:epsgaintotal3,
+		epsgaintotal4:epsgaintotal4,
 		BuildingClickNumber0000:BuildingClickNumber0000,
 		BuildingClickNumber0001:BuildingClickNumber0001,
 		BuildingClickNumber0002:BuildingClickNumber0002,
+		BuildingClickNumber0003:BuildingClickNumber0003,
 		BuildingAutoNumber0000:BuildingAutoNumber0000,
 		BuildingAutoNumber0001:BuildingAutoNumber0001,
-		BuildingAutoNumber0002:BuildingAutoNumber0002
+		BuildingAutoNumber0002:BuildingAutoNumber0002,
+		BuildingAutoNumber0003:BuildingAutoNumber0003
 	}
  
  saveVar2 = {
@@ -424,15 +429,19 @@ if (e.ctrlKey && e.keyCode==83) {savegamecookie();e.preventDefault();}
 		 epcmultiply1:epcmultiply1,
 		 epcmultiply2:epcmultiply2,
 		 epcmultiply3:epcmultiply3,
+		 epcmultiply4:epcmultiply4,
 		 egmultiply1:egmultiply1,
 		 egmultiply2:egmultiply2,
 		 egmultiply3:egmultiply3,
+		 egmultiply4:egmultiply4,
 		 BuildingClickOrginalValue0000:BuildingClickOrginalValue0000,
 		 BuildingClickOrginalValue0001:BuildingClickOrginalValue0001,
 		 BuildingClickOrginalValue0002:BuildingClickOrginalValue0002,
+		 BuildingClickOrginalValue0003:BuildingClickOrginalValue0003,
 		 BuildingAutoOrginalValue0000:BuildingAutoOrginalValue0000,
 		 BuildingAutoOrginalValue0001:BuildingAutoOrginalValue0001,
-		 BuildingAutoOrginalValue0002:BuildingAutoOrginalValue0002
+		 BuildingAutoOrginalValue0002:BuildingAutoOrginalValue0002,
+		 BuildingAutoOrginalValue0003:BuildingAutoOrginalValue0003
 	}
  saveVar3 = {
     orginalgain:orginalgain,
