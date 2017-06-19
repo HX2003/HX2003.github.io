@@ -64,7 +64,7 @@ function move() {
 
 
   elem = document.getElementById("bar1");  
-  currentVersion="1.0.3";
+  currentVersion="1.1.0";
   //Init VARAIABLES starting game 
     InitVar1 = {
 		version:currentVersion,
@@ -80,39 +80,50 @@ function move() {
 		timesprobarcompleted:0,
 		epcgaintotal1:0,
 		epcgaintotal2:0,
+		epcgaintotal3:0,
+		epcgaintotal4:0,
 		epsgaintotal1:0,
 		epsgaintotal2:0,
 		epsgaintotal3:0,
+		epsgaintotal4:0,
 		BuildingClickNumber0000:0,
 		BuildingClickNumber0001:0,
 		BuildingClickNumber0002:0,
+		BuildingClickNumber0003:0,
 		BuildingAutoNumber0000:0,
 		BuildingAutoNumber0001:0,
-		BuildingAutoNumber0002:0
+		BuildingAutoNumber0002:0,
+		BuildingAutoNumber0003:0
 	}
  
  InitVar2 = {
 		 BuildingClickOriginalCost0000:5,
 		 BuildingClickOriginalCost0001:50,
-		 BuildingClickOriginalCost0002:400,
+		 BuildingClickOriginalCost0002:800,
+		 BuildingClickOriginalCost0003:16000,
 		 BuildingAutoOriginalCost0000:100,
 		 BuildingAutoOriginalCost0001:1000,
 		 BuildingAutoOriginalCost0002:7500,
+		 BuildingAutoOriginalCost0003:125000,
 		 clicked:0,
 		 clickenergy:0,
 		 emultiply:1,
 		 epcmultiply1:1,
 		 epcmultiply2:1,
 		 epcmultiply3:1,
+		 epcmultiply4:1,
 		 egmultiply1:1,
 		 egmultiply2:1,
 		 egmultiply3:1,
+		 egmultiply4:1,
 		 BuildingClickOrginalValue0000:0.75,
 		 BuildingClickOrginalValue0001:4,
-		 BuildingClickOrginalValue0002:25,
+		 BuildingClickOrginalValue0002:50,
+		 BuildingClickOrginalValue0003:500,
 		 BuildingAutoOrginalValue0000:0.75,
 		 BuildingAutoOrginalValue0001:5,
-		 BuildingAutoOrginalValue0002:20
+		 BuildingAutoOrginalValue0002:20,
+		 BuildingAutoOrginalValue0003:250
 	}
   InitVar3 = {
     orginalgain:1,
@@ -245,37 +256,48 @@ function move() {
 	timesprobarcompleted=loadedVar1.timesprobarcompleted;
 	epcgaintotal1=loadedVar1.epcgaintotal1;
 	epcgaintotal2=loadedVar1.epcgaintotal2;
+	epcgaintotal3=loadedVar1.epcgaintotal3;
+	epcgaintotal4=loadedVar1.epcgaintotal4;
 	epsgaintotal1=loadedVar1.epsgaintotal1;
 	epsgaintotal2=loadedVar1.epsgaintotal2;
 	epsgaintotal3=loadedVar1.epsgaintotal3;
+	epsgaintotal4=loadedVar1.epsgaintotal4;
 	BuildingClickNumber0000=loadedVar1.BuildingClickNumber0000;
 	BuildingClickNumber0001=loadedVar1.BuildingClickNumber0001;
 	BuildingClickNumber0002=loadedVar1.BuildingClickNumber0002;
+	BuildingClickNumber0003=loadedVar1.BuildingClickNumber0003;
 	BuildingAutoNumber0000=loadedVar1.BuildingAutoNumber0000;
 	BuildingAutoNumber0001=loadedVar1.BuildingAutoNumber0001;
 	BuildingAutoNumber0002=loadedVar1.BuildingAutoNumber0002;
+	BuildingAutoNumber0003=loadedVar1.BuildingAutoNumber0003;
     
 	BuildingClickOriginalCost0000=loadedVar2.BuildingClickOriginalCost0000;
 	BuildingClickOriginalCost0001=loadedVar2.BuildingClickOriginalCost0001;	
 	BuildingClickOriginalCost0002=loadedVar2.BuildingClickOriginalCost0002;
+	BuildingClickOriginalCost0003=loadedVar2.BuildingClickOriginalCost0003;
 	BuildingAutoOriginalCost0000=loadedVar2.BuildingAutoOriginalCost0000;
 	BuildingAutoOriginalCost0001=loadedVar2.BuildingAutoOriginalCost0001;
 	BuildingAutoOriginalCost0002=loadedVar2.BuildingAutoOriginalCost0002;
+	BuildingAutoOriginalCost0003=loadedVar2.BuildingAutoOriginalCost0003;
 	clicked=loadedVar2.clicked;
 	clickenergy=loadedVar2.clickenergy;
 	emultiply=loadedVar2.emultiply;
 	epcmultiply1=loadedVar2.epcmultiply1;
 	epcmultiply2=loadedVar2.epcmultiply2;
 	epcmultiply3=loadedVar2.epcmultiply3;
+	epcmultiply4=loadedVar2.epcmultiply4;
 	egmultiply1=loadedVar2.egmultiply1;
 	egmultiply2=loadedVar2.egmultiply2;
 	egmultiply3=loadedVar2.egmultiply3;
+	egmultiply4=loadedVar2.egmultiply4;
 	BuildingClickOrginalValue0000=loadedVar2.BuildingClickOrginalValue0000;
 	BuildingClickOrginalValue0001=loadedVar2.BuildingClickOrginalValue0001;
 	BuildingClickOrginalValue0002=loadedVar2.BuildingClickOrginalValue0002;
+	BuildingClickOrginalValue0003=loadedVar2.BuildingClickOrginalValue0003;
 	BuildingAutoOrginalValue0000=loadedVar2.BuildingAutoOrginalValue0000;
 	BuildingAutoOrginalValue0001=loadedVar2.BuildingAutoOrginalValue0001;
 	BuildingAutoOrginalValue0002=loadedVar2.BuildingAutoOrginalValue0002;
+	BuildingAutoOrginalValue0003=loadedVar2.BuildingAutoOrginalValue0003;
 	
 	orginalgain=loadedVar3.orginalgain;
 	orginalepsgain=loadedVar3.orginalepsgain;
@@ -391,9 +413,11 @@ if (e.ctrlKey && e.keyCode==83) {savegamecookie();e.preventDefault();}
 		 BuildingClickOriginalCost0000:BuildingClickOriginalCost0000,
 		 BuildingClickOriginalCost0001:BuildingClickOriginalCost0001,
 		 BuildingClickOriginalCost0002:BuildingClickOriginalCost0002,
+		 BuildingClickOriginalCost0003:BuildingClickOriginalCost0003,
 		 BuildingAutoOriginalCost0000:BuildingAutoOriginalCost0000,
 		 BuildingAutoOriginalCost0001:BuildingAutoOriginalCost0001,
 		 BuildingAutoOriginalCost0002:BuildingAutoOriginalCost0002,
+		 BuildingAutoOriginalCost0003:BuildingAutoOriginalCost0003,
 		 clicked:clicked,
 		 clickenergy:clickenergy,
 		 emultiply:emultiply,
@@ -539,7 +563,7 @@ function calcgain(){
 	}else if(unqID6002lvl==1){
 		anotherMultipler=0.9;
 	}
-	gain = (orginalgain + (BuildingClickOrginalValue0000*BuildingClickNumber0000*epcmultiply1) + (BuildingClickOrginalValue0001*BuildingClickNumber0001*epcmultiply2) + (BuildingClickOrginalValue0002*BuildingClickNumber0002*epcmultiply3)+additionalGain)*emultiply*anotherMultipler;
+	gain = (orginalgain + (BuildingClickOrginalValue0000*BuildingClickNumber0000*epcmultiply1) + (BuildingClickOrginalValue0001*BuildingClickNumber0001*epcmultiply2) + (BuildingClickOrginalValue0002*BuildingClickNumber0002*epcmultiply3) + (BuildingClickOrginalValue0003*BuildingClickNumber0003*epcmultiply4)+additionalGain)*emultiply*anotherMultipler;
 	gain = Math.round(gain * 1000) / 1000;
  }
 function calcepsgain(){
@@ -550,7 +574,7 @@ function calcepsgain(){
 	}else if(unqID6002lvl==1){
 		anotherMultipler=1.1;
 	}
-	epsgain = (orginalepsgain + (BuildingAutoOrginalValue0000*BuildingAutoNumber0000*egmultiply1) + (BuildingAutoOrginalValue0001*BuildingAutoNumber0001*egmultiply2) + (BuildingAutoOrginalValue0002*BuildingAutoNumber0002*egmultiply3))*emultiply*anotherMultipler;
+	epsgain = (orginalepsgain + (BuildingAutoOrginalValue0000*BuildingAutoNumber0000*egmultiply1) + (BuildingAutoOrginalValue0001*BuildingAutoNumber0001*egmultiply2) + (BuildingAutoOrginalValue0002*BuildingAutoNumber0002*egmultiply3) + (BuildingAutoOrginalValue0003*BuildingAutoNumber0003*egmultiply4))*emultiply*anotherMultipler;
 	epsgain = Math.round(epsgain * 1000) / 1000;
 }
  
@@ -565,14 +589,17 @@ function calcplus() {
 	calcA1 = (BuildingClickOrginalValue0000*epcmultiply1)*emultiply*anotherMultipler;
 	calcA2 = (BuildingClickOrginalValue0001*epcmultiply2)*emultiply*anotherMultipler;
 	calcA3 = (BuildingClickOrginalValue0002*epcmultiply3)*emultiply*anotherMultipler;
+	calcA4 = (BuildingClickOrginalValue0003*epcmultiply4)*emultiply*anotherMultipler;
 	
     calcA1 = Math.round(calcA1 * 1000) / 1000;
 	calcA2 = Math.round(calcA2 * 1000) / 1000;
 	calcA3 = Math.round(calcA3 * 1000) / 1000;
+	calcA4 = Math.round(calcA4 * 1000) / 1000;
 	
 	$("#epcplus1").html(formatNumber(calcA1));
 	$("#epcplus2").html(formatNumber(calcA2));	
 	$("#epcplus3").html(formatNumber(calcA3));	
+	$("#epcplus4").html(formatNumber(calcA3));	
 }
 function calcepsplus(){
     var anotherMultipler=1;
@@ -584,14 +611,17 @@ function calcepsplus(){
 	calcB1 = (BuildingAutoOrginalValue0000*egmultiply1)*emultiply*anotherMultipler;
 	calcB2 = (BuildingAutoOrginalValue0001*egmultiply2)*emultiply*anotherMultipler;
 	calcB3 = (BuildingAutoOrginalValue0002*egmultiply3)*emultiply*anotherMultipler;
+	calcB4 = (BuildingAutoOrginalValue0003*egmultiply4)*emultiply*anotherMultipler;
 	
     calcB1 = Math.round(calcB1 * 1000) / 1000;
 	calcB2 = Math.round(calcB2 * 1000) / 1000;	
 	calcB3 = Math.round(calcB3 * 1000) / 1000;	
+	calcB4 = Math.round(calcB4 * 1000) / 1000;	
 	
 	$("#epsplus1").html(formatNumber(calcB1));
 	$("#epsplus2").html(formatNumber(calcB2));
 	$("#epsplus3").html(formatNumber(calcB3));	
+	$("#epsplus4").html(formatNumber(calcB4));	
 }
  calcgain();
  calcepsgain();
@@ -612,14 +642,17 @@ function calcepsplus(){
 	epctotal1 = (BuildingClickOrginalValue0000*BuildingClickNumber0000*epcmultiply1)*emultiply*anotherMultipler;
 	epctotal2 = (BuildingClickOrginalValue0001*BuildingClickNumber0001*epcmultiply2)*emultiply*anotherMultipler;
 	epctotal3 = (BuildingClickOrginalValue0002*BuildingClickNumber0002*epcmultiply3)*emultiply*anotherMultipler;
+	epctotal4 = (BuildingClickOrginalValue0003*BuildingClickNumber0003*epcmultiply4)*emultiply*anotherMultipler;
 	
     epctotal1 = Math.round(epctotal1 * 1000) / 1000;
 	epctotal2 = Math.round(epctotal2 * 1000) / 1000;
 	epctotal3 = Math.round(epctotal3 * 1000) / 1000;
-	 
+	epctotal4 = Math.round(epctotal4 * 1000) / 1000;
+	
 $("#epctotal1").html(formatNumber(epctotal1));
 $("#epctotal2").html(formatNumber(epctotal2)); 
 $("#epctotal3").html(formatNumber(epctotal3)); 
+$("#epctotal4").html(formatNumber(epctotal4));
  }
  calcgaintotal();
  
@@ -633,14 +666,17 @@ $("#epctotal3").html(formatNumber(epctotal3));
 	epstotal1 = (BuildingAutoOrginalValue0000*BuildingAutoNumber0000*egmultiply1)*emultiply*anotherMultipler;
 	epstotal2 = (BuildingAutoOrginalValue0001*BuildingAutoNumber0001*egmultiply2)*emultiply*anotherMultipler;
 	epstotal3 = (BuildingAutoOrginalValue0002*BuildingAutoNumber0002*egmultiply3)*emultiply*anotherMultipler;
+	epstotal4 = (BuildingAutoOrginalValue0003*BuildingAutoNumber0003*egmultiply4)*emultiply*anotherMultipler;
 	
     epstotal1 = Math.round(epstotal1 * 1000) / 1000;
 	epstotal2 = Math.round(epstotal2 * 1000) / 1000;
 	epstotal3 = Math.round(epstotal3 * 1000) / 1000;
+    epstotal4 = Math.round(epstotal4 * 1000) / 1000;
 	  
 $("#epstotal1").html(formatNumber(epstotal1));
 $("#epstotal2").html(formatNumber(epstotal2)); 
 $("#epstotal3").html(formatNumber(epstotal3)); 
+$("#epstotal4").html(formatNumber(epstotal4)); 
  }
  calcepsgaintotal();
    
@@ -656,13 +692,15 @@ $("#epstotal3").html(formatNumber(epstotal3));
 	epctotal1 = (BuildingClickOrginalValue0000*BuildingClickNumber0000*epcmultiply1)*emultiply*anotherMultipler;
 	epctotal2 = (BuildingClickOrginalValue0001*BuildingClickNumber0001*epcmultiply2)*emultiply*anotherMultipler;
 	epctotal3 = (BuildingClickOrginalValue0002*BuildingClickNumber0002*epcmultiply3)*emultiply*anotherMultipler;
+	epctotal4 = (BuildingClickOrginalValue0003*BuildingClickNumber0003*epcmultiply4)*emultiply*anotherMultipler;
 	
     epctotal1 = Math.round(epctotal1 * 1000) / 1000;
 	epctotal2 = Math.round(epctotal2 * 1000) / 1000;
 	epctotal3 = Math.round(epctotal3 * 1000) / 1000;
+	epctotal4 = Math.round(epctotal4 * 1000) / 1000;
 	
 	//calculate click energy gain
-	clicktotalgainfrombuildings = (orginalgain + (BuildingClickOrginalValue0000*BuildingClickNumber0000*epcmultiply1) + (BuildingClickOrginalValue0001*BuildingClickNumber0001*epcmultiply2) + (BuildingClickOrginalValue0002*BuildingClickNumber0002*epcmultiply3))*emultiply*anotherMultipler;
+	clicktotalgainfrombuildings = (orginalgain + (BuildingClickOrginalValue0000*BuildingClickNumber0000*epcmultiply1) + (BuildingClickOrginalValue0001*BuildingClickNumber0001*epcmultiply2) + (BuildingClickOrginalValue0002*BuildingClickNumber0002*epcmultiply3) + (BuildingClickOrginalValue0003*BuildingClickNumber0003*epcmultiply4))*emultiply*anotherMultipler;
 	clicktotalgainfrombuildings = Math.round(clicktotalgainfrombuildings * 1000) / 1000;
 
 	clickpercentage1 = (BuildingClickNumber0000 > 0)?(epctotal1/clicktotalgainfrombuildings)*100:0;
@@ -674,10 +712,13 @@ $("#epstotal3").html(formatNumber(epstotal3));
 	clickpercentage3 = (BuildingClickNumber0002 > 0)?(epctotal3/clicktotalgainfrombuildings)*100:0;
 	clickpercentage3 = Math.round(clickpercentage3 * 1000) / 1000;
 	
+	clickpercentage4 = (BuildingClickNumber0003 > 0)?(epctotal4/clicktotalgainfrombuildings)*100:0;
+	clickpercentage4 = Math.round(clickpercentage4 * 1000) / 1000;
+	
 	$("#clickpercentage1").html(clickpercentage1);
 	$("#clickpercentage2").html(clickpercentage2); 
 	$("#clickpercentage3").html(clickpercentage3);
- 
+    $("#clickpercentage4").html(clickpercentage4);
  }
  
  autopercentagetotal();
@@ -692,12 +733,14 @@ $("#epstotal3").html(formatNumber(epstotal3));
 	epstotal1 = (BuildingAutoOrginalValue0000*BuildingAutoNumber0000*egmultiply1)*emultiply*anotherMultipler;
 	epstotal2 = (BuildingAutoOrginalValue0001*BuildingAutoNumber0001*egmultiply2)*emultiply*anotherMultipler;
 	epstotal3 = (BuildingAutoOrginalValue0002*BuildingAutoNumber0002*egmultiply3)*emultiply*anotherMultipler;
+	epstotal4 = (BuildingAutoOrginalValue0003*BuildingAutoNumber0003*egmultiply4)*emultiply*anotherMultipler;
 	
     epstotal1 = Math.round(epstotal1 * 1000) / 1000;
 	epstotal2 = Math.round(epstotal2 * 1000) / 1000;
 	epstotal3 = Math.round(epstotal3 * 1000) / 1000; 
+	epstotal4 = Math.round(epstotal4 * 1000) / 1000; 
 	
-	autototalgainfrombuildings = ((BuildingAutoOrginalValue0000*BuildingAutoNumber0000*egmultiply1) + (BuildingAutoOrginalValue0001*BuildingAutoNumber0001*egmultiply2) + (BuildingAutoOrginalValue0002*BuildingAutoNumber0002*egmultiply3))*emultiply*anotherMultipler;
+	autototalgainfrombuildings = ((BuildingAutoOrginalValue0000*BuildingAutoNumber0000*egmultiply1) + (BuildingAutoOrginalValue0001*BuildingAutoNumber0001*egmultiply2) + (BuildingAutoOrginalValue0002*BuildingAutoNumber0002*egmultiply3) + (BuildingAutoOrginalValue0003*BuildingAutoNumber0003*egmultiply4))*emultiply*anotherMultipler;
 	autototalgainfrombuildings = Math.round(autototalgainfrombuildings * 1000) / 1000;
 	
 	autopercentage1 = (BuildingAutoNumber0000 > 0)?(epstotal1/autototalgainfrombuildings)*100:0;
@@ -706,12 +749,16 @@ $("#epstotal3").html(formatNumber(epstotal3));
 	autopercentage2 = (BuildingAutoNumber0001 > 0)?(epstotal2/autototalgainfrombuildings)*100:0;
 	autopercentage2 = Math.round(autopercentage2 * 1000) / 1000;
 	
-	autopercentage3 = (BuildingAutoNumber0001> 0)?(epstotal3/autototalgainfrombuildings)*100:0;
+	autopercentage3 = (BuildingAutoNumber0002> 0)?(epstotal3/autototalgainfrombuildings)*100:0;
 	autopercentage3 = Math.round(autopercentage3 * 1000) / 1000;	
+	
+	autopercentage4 = (BuildingAutoNumber0003> 0)?(epstotal4/autototalgainfrombuildings)*100:0;
+	autopercentage4 = Math.round(autopercentage4 * 1000) / 1000;	
 	
 	$("#autopercentage1").html(autopercentage1);
 	$("#autopercentage2").html(autopercentage2); 
-	$("#autopercentage3").html(autopercentage3); 
+	$("#autopercentage3").html(autopercentage3);
+	$("#autopercentage4").html(autopercentage4); 
  }
  achievementBonusArray=[0,5,10,20,35,50];
  acheivementTotalEmultiplyBonus=[0,15,20,40,80,160];
@@ -734,6 +781,7 @@ for(var i=0; i<6; i++){
 costClickfunctions("0000");
 costClickfunctions("0001");
 costClickfunctions("0002");
+costClickfunctions("0003");
  function costClickfunctions(ID){
 	eval("BuildingClickCostMultiplier"+ID+" = Math.pow(1.15, BuildingClickNumber"+ID+");\
 	BuildingClickCost"+ID+"= BuildingClickOriginalCost"+ID+" * BuildingClickCostMultiplier"+ID+"; \
@@ -744,6 +792,7 @@ costClickfunctions("0002");
 costAutofunctions("0000");
 costAutofunctions("0001");
 costAutofunctions("0002");
+costAutofunctions("0003");
  function costAutofunctions(ID){
 	eval("BuildingAutoCostMultiplier"+ID+" = Math.pow(1.15, BuildingAutoNumber"+ID+");\
 	BuildingAutoCost"+ID+" = BuildingAutoOriginalCost"+ID+" * BuildingAutoCostMultiplier"+ID+"; \
@@ -757,10 +806,12 @@ costAutofunctions("0002");
   $("#epnum0000").html(BuildingClickNumber0000);
   $("#epnum0001").html(BuildingClickNumber0001);
   $("#epnum0002").html(BuildingClickNumber0002);
+  $("#epnum0003").html(BuildingClickNumber0003);
   
   $("#egnum0000").html(BuildingAutoNumber0000);
   $("#egnum0001").html(BuildingAutoNumber0001);
   $("#egnum0002").html(BuildingAutoNumber0002); 
+  $("#egnum0003").html(BuildingAutoNumber0003); 
  }
 /*
   $(".menubutton1").addClass("highlighted");
@@ -809,6 +860,7 @@ location.reload();
  buyClickClickfunctions("0000");
  buyClickClickfunctions("0001");
  buyClickClickfunctions("0002");
+ buyClickClickfunctions("0003");
  function buyClickClickfunctions(ID){
 	eval("$( \"#clickbuy"+ID+"\" ).click(function() {\
 	BuildingClickCostMultiplier"+ID+" = Math.pow(1.15, BuildingClickNumber"+ID+");\
@@ -835,6 +887,7 @@ if(BuildingClickCost"+ID+" <= thetotal) {\
  buyClickAutofunctions("0000");
  buyClickAutofunctions("0001");
  buyClickAutofunctions("0002");
+ buyClickAutofunctions("0003");
   //auto
   //autoBUY1
   function buyClickAutofunctions(ID){
@@ -1008,7 +1061,7 @@ $.fn.extend({
  setInterval(stats, 2000);
  
  function stats(){
-totalbuildings = BuildingClickNumber0000 + BuildingClickNumber0001 + BuildingClickNumber0002 + BuildingAutoNumber0000 + BuildingAutoNumber0001 + BuildingAutoNumber0002;
+totalbuildings = BuildingClickNumber0000 + BuildingClickNumber0001 + BuildingClickNumber0002 + BuildingClickNumber0003 + BuildingAutoNumber0000 + BuildingAutoNumber0001 + BuildingAutoNumber0002 + BuildingAutoNumber0003;
 $("#createdenergy").html(formatNumber(totalenergyed));
 $("#createdenergyclicking").html(formatNumber(clickenergy));
 $("#timesclicked").html(clicked); 
@@ -1103,7 +1156,7 @@ ClickTimes=0;
 	  $(".thetotalresearchpoint").html(formatNumber(ResearchPoints));
 	  doEnergyGoals();
 	  drawCosts();
-	if(thetotal >= 100000000){$( "#won" ).show();}
+	if(thetotal >= 100000000000000){$( "#won" ).show();}
   }
 
   //TABS CODE
@@ -1131,7 +1184,7 @@ tabs = document.getElementsByClassName("tabs");
         tabs[i].className = tabs[i].className += " notOn";
     }
 
-openTab('menuB',"tabB");
+openTab('menuA',"tabA");
  document.getElementById('menuA').addEventListener("click", function() {openTab('menuA','tabA')});
  document.getElementById('menuB').addEventListener("click", function() {openTab('menuB','tabB')});
  document.getElementById('menuC').addEventListener("click", function() {openTab('menuC','tabC')});

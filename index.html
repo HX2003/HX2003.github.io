@@ -165,87 +165,54 @@ border-width:1px;
 border-style:solid;
 border-color:#FFFFFF;
 }
-.clickbuy .buytooltiptext {
+.clickbuildingbuy .buytooltiptext {
     visibility: hidden;
-    width: 100%;
+    width: 250px;
     background-color: black;
     color: #fff;
 	margin-bottom:5px;
-    padding: 5px 0;
+    padding: 5px 5px;
     border-radius: 6px;
 	font-size:18px;
- 
+    bottom: 100%;
+    left: -50%; 
+    margin-left: calc(100%/-2);
     position: absolute;
     z-index: 1;
 }
-.clickbuy:hover .buytooltiptext {
+.clickbuildingbuy:hover .buytooltiptext {
     visibility: visible;
 	transition-delay:0.25s;
 
 }
-.clickbuy .buytooltiptext {
-    width: 100%;
-    bottom: 100%;
-    left: 50%; 
-    margin-left: calc(100%/-2);
-	
+ 
 
-}
-.clickbuy {
-	position: relative;
-    display: inline-block;
-	width:277px;
-	cursor: pointer;
-	float:left;
-	background-color:#c6c6c6;
-	height: 30px;
-	margin-top:5px;
-	}
-
-.autobuy .buytooltiptext {
+.autobuildingbuy .buytooltiptext {
     visibility: hidden;
-    width: 100%;
+    width: 250px;
     background-color: black;
     color: #fff;
 	margin-bottom:5px;
-    padding: 5px 0;
+    padding: 5px 5px;
     border-radius: 6px;
 	font-size:18px;
- 
+    bottom: 100%;
+    left: -50%; 
+    margin-left: calc(100%/-2);
     position: absolute;
-    z-index: 1;
+    z-index: 1
 }
-.autobuy:hover .buytooltiptext {
+.autobuildingbuy:hover .buytooltiptext {
     visibility: visible;
 	transition-delay:0.25s;
 
 }
-.autobuy .buytooltiptext {
-    width: 100%;
-    bottom: 100%;
-    left: 50%; 
-    margin-left: calc(100%/-2);
-	
-
-}
-
-.autobuy {
-	position: relative;
-    display: inline-block;
-	cursor: pointer;
-	width:auto;
-	float:left;
-	text-align:left;
-	background-color:#c6c6c6;
-	height: 30px;
-	margin-top:5px;
-	width:277px;
-	}
+ 
 .details {
-	padding-top:8px;
+	padding-top:0px;
 	display: inline-block;
 	margin-left:5px;
-	font-size:20px;
+	font-size:17px;
 }	
 
 
@@ -377,6 +344,70 @@ border-color:#FFFFFF;
 }
 .errorcost {
 	 margin-left:5px;color:#FF0000; display:none;	height:21.8px;
+}
+.clickbuildings{
+	border-width:1px;
+	border-style:solid;
+	border-color:#FFFFFF;
+}
+.clickbuildingicons{
+    width: 50px;
+	height: 50px;
+ 	border-width:1px;
+	border-style:solid;
+	border-color:#FFFFFF;
+	float:left;
+}
+.clickbuildingtitles{
+	margin-left:5px;
+	font-size:24px;
+}
+.clickbuildingbuy{
+    height:100%;
+	width:75px;
+	float:right;
+	background-color:#c6c6c6;
+	position: relative;
+    display: inline-block;
+    cursor: pointer;
+	 
+}
+.clickbuildingbuytext{
+	font-size:24px;
+	text-align: center;
+	line-height: 50px; 
+}
+.autobuildings{
+	border-width:1px;
+	border-style:solid;
+	border-color:#FFFFFF;
+}
+.autobuildingicons{
+    width: 50px;
+	height: 50px;
+ 	border-width:1px;
+	border-style:solid;
+	border-color:#FFFFFF;
+	float:left;
+}
+.autobuildingtitles{
+	margin-left:5px;
+	font-size:24px;
+}
+.autobuildingbuy{
+    height:100%;
+	width:75px;
+	float:right;
+	background-color:#c6c6c6;
+	position: relative;
+    display: inline-block;
+    cursor: pointer;
+	 
+}
+.autobuildingbuytext{
+	font-size:24px;
+	text-align: center;
+	line-height: 50px; 
 }
 #achievementmenu {
 	float:left;
@@ -904,7 +935,20 @@ Do you really want to delete this save?
 <table style="font-size:22px;"><tr><td><div style="">Total Energy: </div></td><td><div class="thetotal" style=""></div></td></tr></table>
 <table style="font-size:22px;"><tr><td><div style="">Total Research Points: </div></td><td><div class="thetotalresearchpoint" style=""></div></td></tr></table>
 <div class="clear"></div>
-<div id="clickbuy0000" class="clickbuy">Buy More Energy Pylons T1<span class="buytooltiptext">
+ 
+ 
+<div class="clear"></div>
+<hr style="margin-right:3px;">
+<br>
+
+ 
+<div class="clear"></div>
+<div id="clickbuilding1" class="clickbuildings">
+<div class="clear"></div>
+<div id="clickbuilding1icon" class="clickbuildingicons"></div>
+<span class="clickbuildingtitles">Energy Crank T1</span>
+<div id="clickbuy0000" class="clickbuildingbuy"><p class="clickbuildingbuytext">Buy</p>
+<span class="buytooltiptext">
 <span>Increases epc by </span><b><span id="epcplus1"></span></b><span> each.</span>
 <br>
 <span>Increases epc by </span><b><span id="epctotal1"></span></b><span> in total.</span>
@@ -914,11 +958,17 @@ Do you really want to delete this save?
 </span>
 </div>
 
-<span class="details"><span>Cost: </span><span id="epcost0000" ></span><span id="errorcost0000" class="errorcost">Not enough energy</span><span> Amount acquired:</span><span id="epnum0000"></span></span>
-
+<p></p>
+<span class="details"><span>Cost: </span><span id="epcost0000" ></span><span id="errorcost0000" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="epnum0000"></span></span>
+ 
 <div class="clear"></div>
-
-<div id="clickbuy0001" class="clickbuy">Buy More Energy Pylons T2<span class="buytooltiptext">
+</div>
+<div id="clickbuilding2" class="clickbuildings">
+<div class="clear"></div>
+<div id="clickbuilding2icon" class="clickbuildingicons"></div>
+<span class="clickbuildingtitles">Energy Crank T2</span>
+<div id="clickbuy0001" class="clickbuildingbuy"><p class="clickbuildingbuytext">Buy</p>
+<span class="buytooltiptext">
 <span>Increases epc by </span><b><span id="epcplus2"></span></b><span> each.</span>
 <br>
 <span>Increases epc by </span><b><span id="epctotal2"></span></b><span> in total.</span>
@@ -927,9 +977,18 @@ Do you really want to delete this save?
 
 </span>
 </div>
-<span class="details"><span>Cost: </span><span id="epcost0001" ></span><span id="errorcost0001" class="errorcost">Not enough energy</span><span> Amount acquired:</span><span id="epnum0001"></span></span>
+
+<p></p>
+<span class="details"><span>Cost: </span><span id="epcost0001" ></span><span id="errorcost0001" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="epnum0001"></span></span>
+ 
 <div class="clear"></div>
-<div id="clickbuy0002" class="clickbuy">Buy More Energy Pylons T3<span class="buytooltiptext">
+</div>
+<div id="clickbuilding3" class="clickbuildings">
+<div class="clear"></div>
+<div id="clickbuilding3icon" class="clickbuildingicons"></div>
+<span class="clickbuildingtitles">Energy Bot T1</span>
+<div id="clickbuy0002" class="clickbuildingbuy"><p class="clickbuildingbuytext">Buy</p>
+<span class="buytooltiptext">
 <span>Increases epc by </span><b><span id="epcplus3"></span></b><span> each.</span>
 <br>
 <span>Increases epc by </span><b><span id="epctotal3"></span></b><span> in total.</span>
@@ -938,14 +997,38 @@ Do you really want to delete this save?
 
 </span>
 </div>
-<span class="details"><span>Cost: </span><span id="epcost0002" ></span><span id="errorcost0002" class="errorcost">Not enough energy</span><span> Amount acquired:</span><span id="epnum0002"></span></span>
 
+<p></p>
+<span class="details"><span>Cost: </span><span id="epcost0002" ></span><span id="errorcost0002" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="epnum0002"></span></span>
+ 
 <div class="clear"></div>
-<br>
-<hr style="margin-right:3px;">
-<br>
+</div>
 
-<div id="autobuy0000" class="autobuy">Buy More Solar Panels <span class="buytooltiptext">
+<div id="clickbuilding4" class="clickbuildings">
+<div class="clear"></div>
+<div id="clickbuilding4icon" class="clickbuildingicons"></div><span class="clickbuildingtitles">Energy Bot T2</span>
+<div id="clickbuy0003" class="clickbuildingbuy"><p class="clickbuildingbuytext">Buy</p>
+<span class="buytooltiptext">
+<span>Increases epc by </span><b><span id="epcplus4"></span></b><span> each.</span>
+<br>
+<span>Increases epc by </span><b><span id="epctotal4"></span></b><span> in total.</span>
+<br>
+<span>(</span><b><span id="clickpercentage4"></span></b><span>% of total)</span>
+
+</span>
+</div>
+
+<p></p>
+<span class="details"><span>Cost: </span><span id="epcost0003" ></span><span id="errorcost0003" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="epnum0003"></span></span>
+ 
+<div class="clear"></div>
+</div>
+<br>
+<div id="autobuilding1" class="autobuildings">
+<div class="clear"></div>
+<div id="autobuilding1icon" class="autobuildingicons"></div><span class="autobuildingtitles">Spatial Energy Generator T1 </span>
+<div id="autobuy0000" class="autobuildingbuy"><p class="autobuildingbuytext">Buy</p>
+ <span class="buytooltiptext">
 <span>Increases eps by </span><b><span id="epsplus1"></span></b><span> each.</span>
 <br>
 <span>Increases eps by </span><b><span id="epstotal1"></span></b><span> in total.</span>
@@ -953,11 +1036,16 @@ Do you really want to delete this save?
 <span>(</span><b><span id="autopercentage1"></span></b><span>% of total)</span>
 </span>
 </div>
-<span class="details"><span>Cost: </span><span id="egcost0000" ></span><span id="autoerrorcost0000" class="errorcost">Not enough energy</span><span> Amount acquired:</span><span id="egnum0000"></span></span>
+<p></p>
+<span class="details"><span>Cost: </span><span id="egcost0000" ></span><span id="autoerrorcost0000" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="egnum0000"></span></span>
 
 <div class="clear"></div>
-
-<div id="autobuy0001" class="autobuy">Buy More Wind Turbine<span class="buytooltiptext">
+</div>
+<div id="autobuilding2" class="autobuildings">
+<div class="clear"></div>
+<div id="autobuilding2icon" class="autobuildingicons"></div><span class="autobuildingtitles">Spatial Energy Generator T2 </span>
+<div id="autobuy0001" class="autobuildingbuy"><p class="autobuildingbuytext">Buy</p>
+ <span class="buytooltiptext">
 <span>Increases eps by </span><b><span id="epsplus2"></span></b><span> each.</span>
 <br>
 <span>Increases eps by </span><b><span id="epstotal2"></span></b><span> in total.</span>
@@ -965,12 +1053,16 @@ Do you really want to delete this save?
 <span>(</span><b><span id="autopercentage2"></span></b><span>% of total)</span>
 </span>
 </div>
-<span class="details"><span>Cost: </span><span id="egcost0001" ></span><span id="autoerrorcost0001" class="errorcost">Not enough energy</span><span> Amount acquired:</span><span id="egnum0001"></span></span>
-
+<p></p>
+<span class="details"><span>Cost: </span><span id="egcost0001" ></span><span id="autoerrorcost0001" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="egnum0001"></span></span>
 
 <div class="clear"></div>
-
-<div id="autobuy0002" class="autobuy">Buy More Energy Generator<span class="buytooltiptext">
+</div>
+<div id="autobuilding3" class="autobuildings">
+<div class="clear"></div>
+<div id="autobuilding3icon" class="autobuildingicons"></div><span class="autobuildingtitles">Plasma Energy Generator T1 </span>
+<div id="autobuy0002" class="autobuildingbuy"><p class="autobuildingbuytext">Buy</p>
+ <span class="buytooltiptext">
 <span>Increases eps by </span><b><span id="epsplus3"></span></b><span> each.</span>
 <br>
 <span>Increases eps by </span><b><span id="epstotal3"></span></b><span> in total.</span>
@@ -978,18 +1070,33 @@ Do you really want to delete this save?
 <span>(</span><b><span id="autopercentage3"></span></b><span>% of total)</span>
 </span>
 </div>
-<span class="details"><span>Cost: </span><span id="egcost0002" ></span><span id="autoerrorcost0002" class="errorcost">Not enough energy</span><span> Amount acquired:</span><span id="egnum0002"></span></span>
+<p></p>
+<span class="details"><span>Cost: </span><span id="egcost0002" ></span><span id="autoerrorcost0002" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="egnum0002"></span></span>
 
+<div class="clear"></div>
+</div>
+<div id="autobuilding4" class="autobuildings">
+<div class="clear"></div>
+<div id="autobuilding4icon" class="autobuildingicons"></div><span class="autobuildingtitles">Plasma Energy Generator T2 </span>
+<div id="autobuy0003" class="autobuildingbuy"><p class="autobuildingbuytext">Buy</p>
+ <span class="buytooltiptext">
+<span>Increases eps by </span><b><span id="epsplus4"></span></b><span> each.</span>
+<br>
+<span>Increases eps by </span><b><span id="epstotal4"></span></b><span> in total.</span>
+<br>
+<span>(</span><b><span id="autopercentage4"></span></b><span>% of total)</span>
+</span>
+</div>
+<p></p>
+<span class="details"><span>Cost: </span><span id="egcost0003" ></span><span id="autoerrorcost0003" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="egnum0003"></span></span>
 
-
-
-
-
+<div class="clear"></div>
+</div>
 <br>
 <div id="a" style="display:none;"></div>
 <div id="auto" style="display:none;">Auto click</div>
 <br>
-<div id="won" style="font-size:40px; display:none;"><b>Congrats, you won the game!</b></div>
+<div id="won" style="font-size:40px; display:none;"><b>Congrats, you won the game! There's not much to do now</b></div>
 </div>
 </div>
 
@@ -1113,6 +1220,9 @@ Do you really want to delete this save?
 <br><hr><br>
 <h3>Version:1.0.3</h3>
 <p>New research available. Achievements gives additional bonus!</p>
+<br><hr><br>
+<h3>Version:1.1.0</h3>
+<p>Revamped Buildings + More buildings</p>
 <br><hr><br>
 </div>
 <div class="clear"></div>
