@@ -69,7 +69,9 @@ body {
 }
  
 /* Achievements */
- 
+.achievementBonusAchieved {
+    color:#FFFFFF;
+}
 .achievementbox {
 	background-color:#666666;
 	color:#808080;
@@ -121,6 +123,47 @@ background-color:#FFFFFF;
 color:#000000;
 font-size:18px;
 float:left;
+}
+#achievementBonusContainer{
+width:75%;
+color:#808080;
+}
+#achievementBonus {
+width:100%;
+height:20px;
+border-width:1px;
+border-style:solid;
+border-color:#FFFFFF;
+}
+#achievementBonusBar {
+  width: 0%;
+  height: 100%;
+  background-color: #FFFFFF;
+}
+#achievementBonusTarget1{
+left:calc(0.74*10%);
+position:absolute;
+}
+#achievementBonusTarget2{
+left:calc(0.74*20%);
+position:absolute;
+}
+#achievementBonusTarget3{
+left:calc(0.74*40%);
+position:absolute;
+}
+#achievementBonusTarget4{
+left:calc(0.74*70%);
+position:absolute;
+}
+#achievementBonusTarget5{
+left:calc(0.74*100%);
+position:absolute;
+}
+#BonusList{
+border-width:1px;
+border-style:solid;
+border-color:#FFFFFF;
 }
 .clickbuy .buytooltiptext {
     visibility: hidden;
@@ -1005,6 +1048,25 @@ Do you really want to delete this save?
 <tr><td><div id="achievement1" class="achievementbox"> <span class="achievementtooltiptext">Acquire 5 Energy Pylons T1 <br><b style="color:#FF00FF;">Reward: </b>Energy progress bar operation will be reduced by 100ms</span></div></a></td><td><div id="achievement2" class="achievementbox"><span class="achievementtooltiptext">Acquire 10 Energy Pylons T1<br><b style="color:#FF00FF;">Reward: </b>Energy multiplyier for Energy Pylon will be increased to 1.5</span></div><td></tr>
 
 </table>
+<br>
+<div class="clear"></div>
+ <h2>Additional Bonus</h2>
+ <br>
+ <div id="achievementBonusContainer">
+ <div id="achievementBonus"><div id="achievementBonusBar"></div></div>
+ <span id="achievementBonusTarget0">0</span><span id="achievementBonusTarget1">5</span> <span id="achievementBonusTarget2">10</span> <span id="achievementBonusTarget3">20</span> <span id="achievementBonusTarget5">50</span><span id="achievementBonusTarget4">35</span>
+ </div>
+ <div id="BonusList">
+ <h2 style="margin-left:5px;margin-top:5px;">Bonuses</h2>
+ <div id="BonusListText" style="margin-left:5px;margin-top:5px;">
+ <p>5 Achievements - +15% energy multiplyier</p>
+ <p>10 Achievements - +20% energy multiplyier</p>
+ <p>20 Achievements - +40% energy multiplyier</p>
+ <p>35 Achievements - +80% energy multiplyier</p>
+ <p>50 Achievements - +160% energy multiplyier</p>
+ Total energy multiplyier bonus - <b>+<span id="TotalEmultiply">0</span><span>%</span></b>
+ </div>
+ </div>
 </div>
 
 <div id="tabE" class="tabClass">
@@ -1049,7 +1111,9 @@ Do you really want to delete this save?
 <h3>Version:1.0.2</h3>
 <p>New research available.</p>
 <br><hr><br>
-
+<h3>Version:1.0.3</h3>
+<p>New research available. Achievements gives additional bonus!</p>
+<br><hr><br>
 </div>
 <div class="clear"></div>
 <div id="bottomcontainer">

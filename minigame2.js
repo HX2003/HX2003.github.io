@@ -64,7 +64,7 @@ function move() {
 
 
   elem = document.getElementById("bar1");  
-  currentVersion="1.0.2";
+  currentVersion="1.0.3";
   //Init VARAIABLES starting game 
     InitVar1 = {
 		version:currentVersion,
@@ -153,6 +153,10 @@ function move() {
  cost6002E:750000,
  cost6002R:5,
  cost6002Cancel:750000000,
+ cost9001E:200,
+ cost9001R:0.75,
+ cost9002E:10000,
+ cost9002R:3,
  unqID9000lvl:0,
  unqID8000lvl:0,
  unqID8001lvl:0,
@@ -160,8 +164,9 @@ function move() {
  unqID8091lvl:0,
  unqID6000lvl:0,
  unqID6001lvl:0,
- unqID6002lvl:0
- 
+ unqID6002lvl:0,
+ unqID9001lvl:0,
+ unqID9002lvl:0
  }
  
  Cookieresult = getCookie("Var1");
@@ -202,7 +207,8 @@ function move() {
  }
  
  function loadCookies(cookieName,variableName){
-	 cookieResult = getCookie(cookieName);
+	cookieResult = getCookie(cookieName);
+	if(cookieResult!=""){
 	 if(variableName=="1"){
 	  loadedVar1=JSON.parse(cookieResult);  
 	 }
@@ -215,11 +221,14 @@ function move() {
 	 if(variableName=="4"){
 	  loadedVar4=JSON.parse(cookieResult);  
 	 }
+	}else{ 
+	  alert("cookie not valid");
+	  throw new Error("Something went badly wrong!");
+	}
  }
   if(loadedVar1.version!=currentVersion){
-	 alert("Your version "+loadedVar1.version+" is not supported, current supported is verison "+currentVersion+". Errors may occur if you proceed.");
-	 //deleteallcookies();
-     //location.reload();
+	 var r = confirm("Your version "+loadedVar1.version+" is not supported, current supported is verison "+currentVersion+". Reset game? Errors may occur if you proceed.");
+	 if(r==1){deleteallcookies();location.reload();}
  }
  varTovar();
  function varTovar(){
@@ -304,7 +313,10 @@ function move() {
 	cost6002E=loadedVar4.cost6002E;
 	cost6002R=loadedVar4.cost6002R;
     cost6002Cancel=loadedVar4.cost6002Cancel;
-		
+    cost9001E=loadedVar4.cost9001E;
+	cost9001R=loadedVar4.cost9001R;
+	cost9002E=loadedVar4.cost9002E;
+	cost9002R=loadedVar4.cost9002R;
 	unqID9000lvl=loadedVar4.unqID9000lvl;
 	unqID8000lvl=loadedVar4.unqID8000lvl;
 	unqID8001lvl=loadedVar4.unqID8001lvl;
@@ -313,6 +325,10 @@ function move() {
 	unqID6000lvl=loadedVar4.unqID6000lvl;
 	unqID6001lvl=loadedVar4.unqID6001lvl;
 	unqID6002lvl=loadedVar4.unqID6002lvl;
+	unqID9001lvl=loadedVar4.unqID9001lvl;
+	unqID9002lvl=loadedVar4.unqID9002lvl;
+	
+	
  }
  //others
  
@@ -433,6 +449,10 @@ if (e.ctrlKey && e.keyCode==83) {savegamecookie();e.preventDefault();}
  cost6002E:cost6002E,
  cost6002R:cost6002R,
  cost6002Cancel:cost6002Cancel, 
+ cost9001E:cost9001E,
+ cost9001R:cost9001R,
+ cost9002E:cost9002E,
+ cost9002R:cost9002R,
  unqID9000lvl:unqID9000lvl,
  unqID8000lvl:unqID8000lvl,
  unqID8001lvl:unqID8001lvl,
@@ -440,8 +460,9 @@ if (e.ctrlKey && e.keyCode==83) {savegamecookie();e.preventDefault();}
  unqID8091lvl:unqID8091lvl,
  unqID6000lvl:unqID6000lvl,
  unqID6001lvl:unqID6001lvl,
- unqID6002lvl:unqID6002lvl
- 
+ unqID6002lvl:unqID6002lvl,
+ unqID9001lvl:unqID9001lvl,
+ unqID9002lvl:unqID9002lvl
  }
 	 
  }
@@ -692,6 +713,22 @@ $("#epstotal3").html(formatNumber(epstotal3));
 	$("#autopercentage2").html(autopercentage2); 
 	$("#autopercentage3").html(autopercentage3); 
  }
+ achievementBonusArray=[0,5,10,20,35,50];
+ acheivementTotalEmultiplyBonus=[0,15,20,40,80,160];
+  calcemultiply();
+ function calcemultiply(){
+	 TotalEmultiply=0;
+for(var i=0; i<6; i++){
+	 if(achievementEnergyGoalStatus+achievementClickTimesStatus+achievementClickEnergyStatus>=achievementBonusArray[i]){
+	  TotalEmultiply=TotalEmultiply+acheivementTotalEmultiplyBonus[i];
+	 }else{
+		 i=999;
+	 }
+ }   
+     $("#TotalEmultiply").html(TotalEmultiply);
+	 emultiply=(1+achievementEnergyGoalStatus*0.05+achievementClickTimesStatus*0.05+achievementClickEnergyStatus*0.05+unqID9001lvl*0.10+unqID9002lvl*0.20)*((100+TotalEmultiply)/100);
+	 emultiply = Math.round(emultiply * 1000) / 1000;
+ }
  cost();
  function cost(){
 costClickfunctions("0000");
@@ -857,6 +894,7 @@ $.fn.extend({
    }
 }); 
  totalAchievement=10;
+ 
  achievementEnergyGoalArray=[1,3,5,10,15,20,30,40,50,60];
  achievementClickTimesArray=[10,50,200,1000,2000,5000,10000,20000,50000,100000];
  achievementClickEnergyArray=[100,10000,1000000,100000000,10000000000,1000000000000,100000000000000,10000000000000000,1000000000000000000,100000000000000000000];
@@ -876,6 +914,7 @@ $.fn.extend({
  }
  updateAchievement();
  function updateAchievement(){
+	 //for initial update
  for(var i=0; i<achievementEnergyGoalStatus+1;i++){
 	 eval("$(\"#achievementEnergyGoal"+i+"\").addClass(\"achievementachieved\");");
  }
@@ -887,39 +926,61 @@ $.fn.extend({
  }
  if(achievementstatus1 == false){$("#achievement1").addClass("achievementachieved");}
  if(achievementstatus2 == false){$("#achievement2").addClass("achievementachieved");}
- if(achievementstatus3 == false){$("#achievement3").addClass("achievementachieved");}
- if(achievementstatus4 == false){$("#achievement4").addClass("achievementachieved");}
- if(achievementstatus5 == false){$("#achievement5").addClass("achievementachieved");}
- if(achievementstatus6 == false){$("#achievement6").addClass("achievementachieved");}
+ var width=(achievementEnergyGoalStatus+achievementClickTimesStatus+achievementClickEnergyStatus)/50*100;
+ for(var i=0; i<6; i++){
+	 if(achievementEnergyGoalStatus+achievementClickTimesStatus+achievementClickEnergyStatus>=achievementBonusArray[i]){
+	 eval("$(\"#achievementBonusTarget"+i+"\").addClass(\"achievementBonusAchieved\");");
+	 }else{
+		 i=999;
+	 }
+ }
+ document.getElementById("achievementBonusBar").style.width = width+ '%'; 
  }
  
  setInterval(achievement, 1000);
   function achievement() {
  if(EnergyGoalLevel>=achievementEnergyGoalArray[achievementEnergyGoalStatus]){
 	 achievementEnergyGoalStatus=achievementEnergyGoalStatus+1;
-	 emultiply = emultiply + 0.05;
-	 emultiply = Math.round(emultiply * 1000) / 1000;
-	 notify("Achievement \"Energy Goal Level "+achievementEnergyGoalArray[achievementEnergyGoalStatus]+"\" acquried. Energy multiplyier increased to "+ emultiply +"");
+    calcemultiply(); 
+	calcgain();
+	calcplus();
+	calcgain();
+    calcepsgain();
+ updateAchievement();
+	 notify("Achievement \"Energy Goal Level "+achievementEnergyGoalArray[achievementEnergyGoalStatus-1]+"\" acquried. Energy multiplyier increased to "+ emultiply +"");
 	 eval("$(\"#achievementEnergyGoal"+achievementEnergyGoalStatus+"\").addClass(\"achievementachieved\");");
  }
  if(clicked>=achievementClickTimesArray[achievementClickTimesStatus]){
 	 achievementClickTimesStatus=achievementClickTimesStatus+1;
-	 emultiply = emultiply + 0.05;
-	 emultiply = Math.round(emultiply * 1000) / 1000;
-	 notify("Achievement \"Click "+achievementClickTimesArray[achievementClickTimesStatus]+" times \" acquried. Energy multiplyier increased to "+ emultiply +"");
+    calcemultiply(); 
+	calcgain();
+	calcplus();
+	calcgain();
+    calcepsgain();
+	 updateAchievement();
+	 notify("Achievement \"Click "+achievementClickTimesArray[achievementClickTimesStatus-1]+" times \" acquried. Energy multiplyier increased to "+ emultiply +"");
 	 eval("$(\"#achievementClickTimes"+achievementClickTimesStatus+"\").addClass(\"achievementachieved\");");
  } 
  if(clickenergy>=achievementClickEnergyArray[achievementClickEnergyStatus]){
 	 achievementClickEnergyStatus=achievementClickEnergyStatus+1;
-	 emultiply = emultiply + 0.05;
-	 emultiply = Math.round(emultiply * 1000) / 1000;
-	 notify("Achievement \"Gain "+achievementClickEnergyArray[achievementClickEnergyStatus]+" energy from clicking \" acquried. Energy multiplyier increased to "+ emultiply +"");
+    calcemultiply(); 
+	calcgain();
+	calcplus();
+	calcgain();
+    calcepsgain();
+	 notify("Achievement \"Gain "+formatNumber(achievementClickEnergyArray[achievementClickEnergyStatus-1])+" energy from clicking \" acquried. Energy multiplyier increased to "+ emultiply +"");
 	 eval("$(\"#achievementClickEnergy"+achievementClickEnergyStatus+"\").addClass(\"achievementachieved\");");
  } 
  //achievement1 
  if(BuildingClickNumber0000 >= 5 && achievementstatus1 == true){
 	notify("Achievement \"Acquired 5 Energy Pylon\" acquried. Energy progress bar operation reduced by 100ms.")
     probarreduction=probarreduction+100;
+	    
+	calcgain();
+	calcplus();
+	calcgain();
+    calcepsgain();
+	 updateAchievement();
 	achievementstatus1 = false;
 	setTimeout(function(){
 	updateAchievement();
@@ -931,54 +992,13 @@ $.fn.extend({
   epcmultiply1 = 1.5;
 	achievementstatus2 = false;
 	updateAchievement();
+  
 	calcgain();
 	calcplus();
- }
-
- //achievement3
- if(clicked >= 10 && achievementstatus3 == true){
-	notify("Achievement \"Click 10 times\" acquried. Energy multiplyier increased to "+ emultiply +"");
-	emultiply = emultiply + 0.05;
-	emultiply = Math.round(emultiply * 1000) / 1000;
-	achievementstatus3 = false;
-	updateAchievement();
 	calcgain();
-	calcplus();
+    calcepsgain();
  }
  
-  //achievement4
- if(clicked >= 100 && achievementstatus4 == true){
-	notify("Achievement \"Click 100 times\" acquried. Energy multiplyier increased to "+ emultiply +"");
-	emultiply = emultiply + 0.05;
-	emultiply = Math.round(emultiply * 1000) / 1000;
-	achievementstatus4= false;
-	updateAchievement();
-	calcgain();
-	calcplus();
- }
-  
- 
-  //achievement5
- if(clickenergy >= 50 && achievementstatus5 == true){
-	notify("Achievement \"Gain 50 energy from clicking\" acquried. Energy multiplyier increased to "+ emultiply +"");
-	emultiply = emultiply + 0.05;
-	emultiply = Math.round(emultiply * 1000) / 1000;
-	achievementstatus5= false;
-	updateAchievement();
-	calcgain();
-	calcplus();
- }
-  
-  //achievement6
- if(clickenergy >= 500 && achievementstatus6 == true){
-	notify("Achievement \"Gain 500 energy from clicking\" acquried. Energy multiplyier increased to "+ emultiply +"");
-	emultiply = emultiply + 0.05;
-	emultiply = Math.round(emultiply * 1000) / 1000;
-	achievementstatus6= false;
-	updateAchievement();
-	calcgain();
-	calcplus();
- }
  
  }
   //end
@@ -1140,9 +1160,9 @@ openTab('menuB',"tabB");
 	drawIcon(10,280,50,50,30,40,'/website/tools/research.png',"unqID9000","upgrade9000","cost9000","Unlock research","Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.");
     drawLink(60,302,20,5,"unqID0000");
 	drawLink(80,185,5,255,"unqID0001");
-	drawLink(80,185,20,5,"unqID0002");
+	drawLink(85,185,20,5,"unqID0002");
 	//E branch
-		drawIcon(100,160,50,50,30,40,'/website/tools/EPOWunlock.png',"unqID9001","upgrade9001","cost9001","Energy multipler + pow","Increase energy multiplyier and pow each by 0.05, Stacks with other tiers");
+		drawIcon(105,160,50,50,30,40,'/website/tools/EPOWunlock.png',"unqID9001","upgrade9001","cost9001","Energy multipler","Increase energy multiplyier by 0.10");
 	linkIcon("unqID9000");
 	//PRO bar branch
 	drawLink(85,302,20,5,"unqID0800");
@@ -1150,17 +1170,18 @@ openTab('menuB',"tabB");
     //9
 	drawIcon(58,440,50,50,30,40,'/website/tools/researchD.png',"unqID6000","upgrade6000","cost6000","Unlock new research tree","Unlock the ability to research new, perharps more sinister technologies.");
 	//onload functions
-	 
+ 
 		upgrade9000Pack("onload");
+		upgrade9001Pack("onload");
 	    upgrade8000Pack("onload");
 		upgrade6000Pack("onload");
-   
+        
  
 	drawCosts();
 	//functions
 	//click functions
 	 $("#upgrade9000").click(function() {
-     if(unqID9000lvl >1) {
+     if(unqID9000lvl >=1) {
 		 //if bought already
 	 }else{
 	   
@@ -1211,6 +1232,45 @@ openTab('menuB',"tabB");
 	 }
 	 }
 	 	 });
+	$("#upgrade9001").click(function() {
+	if(unqID9000lvl>=1){
+     if(unqID9001lvl>=5) {
+		 //if bought already
+	 }else{
+	   
+	   if(thetotal>=cost9001E&&ResearchPoints>=cost9001R){
+	   useCost(cost9001E,cost9001R);
+	   //successfully purchased upgrade
+	   unqID9001lvl=unqID9001lvl+1;
+	   upgrade9001Pack("click");
+	   }else{
+	   //do not meet requirement
+	   $("#upgrade9001").qaddclass("redborder").delay(1750).qremoveclass("redborder");
+	   }
+	 }
+	}
+	 	 });
+	function load9002(){
+	if(unqID9001lvl>=5){
+     $("#upgrade9002").click(function() {
+		  
+     if(unqID9002lvl>=5) {
+		 //if bought already
+	 }else{
+	   
+	   if(thetotal>=cost9002E&&ResearchPoints>=cost9002R){
+	   useCost(cost9002E,cost9002R);
+	   //successfully purchased upgrade
+	   unqID9002lvl=unqID9002lvl+1;
+	   upgrade9002Pack("click");
+	   }else{
+	   //do not meet requirement
+	   $("#upgrade9002").qaddclass("redborder").delay(1750).qremoveclass("redborder");
+	   }
+	 }
+	 	 });
+	}
+	 }	 
 	 function load8001(){
 	if(unqID8000lvl>=5){
      $("#upgrade8001").click(function() {
@@ -1350,6 +1410,8 @@ openTab('menuB',"tabB");
 	   linkIcon("unqID8000"); 
 	   linkIcon("unqID6000");
 	       //reveal new links and icons
+	  drawLink(155,185,20,5,"unqID0901");
+	      drawIcon(175,160,50,50,30,40,'/website/tools/nil.png',"unqID9002","upgrade9002","cost9002","Energy multipler T2","Increase energy multiplyier by 0.20");
 	   drawLink(155,302,20,5,"unqID0801");
 	      drawIcon(175,280,50,50,30,40,'/website/tools/probarenergy2.png',"unqID8001","upgrade8001","cost8001","Speed up pro bar T2","Reduce time taken for progress bar to complete 150ms each, max level 5.");
 	   drawLink(127,330,5,30,"unqID0881");
@@ -1519,11 +1581,46 @@ openTab('menuB',"tabB");
 	   }
 	   $("#unqID8001lvl").text(unqID8001lvl+maxed);
 	 }
+	 function upgrade9001Pack(theLocation){
+	   var maxed = "";
+	    if(unqID9001lvl>=5){
+		//if reach max unlock next make it active
+	     linkClass("unqID0901");
+		 linkIcon("unqID9002");
+	 	 upgrade9002Pack("onload");
+		 load9002();
+		}
+	   if(unqID9001lvl>=5){
+	   boughtIt("upgrade9001");
+	   maxed=" MAX";
+	   }
+	   $("#unqID9001lvl").text(unqID9001lvl+maxed);
+	 }
 	}
+	 function upgrade9002Pack(theLocation){
+	   var maxed = "";
+	    if(unqID9002lvl>=5){
+		//if reach max unlock next make it active
+	     //linkClass("unqID9002");
+		 //linkIcon("unqID0901");
+	 	 //upgrade9003Pack("onload");
+		 //load9003();
+		}
+	   if(unqID9002lvl>=5){
+	   boughtIt("upgrade9002");
+	   maxed=" MAX";
+	   }
+	   $("#unqID9002lvl").text(unqID9002lvl+maxed);
+	 }
+	
 	research();
 	//functions
 	  padding = 5;
 	function drawCosts(){
+		$("#cost9002E").text(formatNumber(cost9002E));
+		$("#cost9002R").text(formatNumber(cost9002R));
+		$("#cost9001E").text(formatNumber(cost9001E));
+		$("#cost9001R").text(formatNumber(cost9001R));
 		$("#cost9000E").text(formatNumber(cost9000E));
 		$("#cost9000R").text(formatNumber(cost9000R));
 		$("#cost8000E").text(formatNumber(cost8000E));
