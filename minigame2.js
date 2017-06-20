@@ -222,7 +222,7 @@ function move() {
 	if(cookieResult!=""){
         Var output = "";
         try { output = JSON.parse(LZString.decompressFromBase64(cookieResult));
-		} catch(e) { deleteallcookies();location.reload() }
+		} catch(e) { deleteallcookies();location.reload(); }
 	
 	 if(variableName=="1"){
 	  loadedVar1=output; 
