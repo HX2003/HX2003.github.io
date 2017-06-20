@@ -220,7 +220,7 @@ function move() {
  function loadCookies(cookieName,variableName){
 	cookieResult = getCookie(cookieName);
 	if(cookieResult!=""){
-        Var output = "";
+        output = "";
         try { output = JSON.parse(LZString.decompressFromBase64(cookieResult));
 		} catch(e) { alert("Save file invalid. Resetting"); deleteallcookies();location.reload(); }
 	
