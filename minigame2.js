@@ -220,17 +220,21 @@ function move() {
  function loadCookies(cookieName,variableName){
 	cookieResult = getCookie(cookieName);
 	if(cookieResult!=""){
+        Var output = "";
+        try { output = JSON.parse(LZString.decompressFromBase64(cookieResult));
+		} catch(e) { deleteallcookies();location.reload() }
+	
 	 if(variableName=="1"){
-	  loadedVar1=JSON.parse(LZString.decompressFromBase64(cookieResult));  
+	  loadedVar1=output; 
 	 }
 	 if(variableName=="2"){
-	  loadedVar2=JSON.parse(LZString.decompressFromBase64(cookieResult)); 
+	  loadedVar2=output;
 	 }
 	 if(variableName=="3"){
-	  loadedVar3=JSON.parse(LZString.decompressFromBase64(cookieResult)); 
+	  loadedVar3=output;
 	 }
 	 if(variableName=="4"){
-	  loadedVar4=JSON.parse(LZString.decompressFromBase64(cookieResult)); 
+	  loadedVar4=output;
 	 }
 	}else{ 
 	  alert("cookie not valid");
