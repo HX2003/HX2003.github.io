@@ -61,10 +61,8 @@ function setVar(variable,value){
 
 
 function move() {
-
-
   elem = document.getElementById("bar1");  
-  currentVersion="1.1.0";
+  currentVersion="1.1.1";
   //Init VARAIABLES starting game 
     InitVar1 = {
 		version:currentVersion,
@@ -220,21 +218,17 @@ function move() {
  function loadCookies(cookieName,variableName){
 	cookieResult = getCookie(cookieName);
 	if(cookieResult!=""){
-        output = "";
-        try { output = JSON.parse(LZString.decompressFromBase64(cookieResult));
-		} catch(e) { alert("Save file invalid. Resetting"); deleteallcookies();location.reload(); }
-	
 	 if(variableName=="1"){
-	  loadedVar1=output; 
+	  loadedVar1=JSON.parse(LZString.decompressFromBase64(cookieResult));  
 	 }
 	 if(variableName=="2"){
-	  loadedVar2=output;
+	  loadedVar2=JSON.parse(LZString.decompressFromBase64(cookieResult)); 
 	 }
 	 if(variableName=="3"){
-	  loadedVar3=output;
+	  loadedVar3=JSON.parse(LZString.decompressFromBase64(cookieResult)); 
 	 }
 	 if(variableName=="4"){
-	  loadedVar4=output;
+	  loadedVar4=JSON.parse(LZString.decompressFromBase64(cookieResult)); 
 	 }
 	}else{ 
 	  alert("cookie not valid");
@@ -1221,7 +1215,9 @@ openTab('menuA',"tabA");
 
  setInterval(addResource,20);
  //RESEARCH SECTION
-
+	zoom1=100;
+	padding = 5;
+	yoffset =-55;
     function research(){
 	drawIcon(10,280,50,50,30,40,'/website/tools/research.png',"unqID9000","upgrade9000","cost9000","Unlock research","Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.");
     drawLink(60,302,20,5,"unqID0000");
@@ -1681,7 +1677,7 @@ openTab('menuA',"tabA");
 	
 	research();
 	//functions
-	  padding = 5;
+	 
 	function drawCosts(){
 		$("#cost9002E").text(formatNumber(cost9002E));
 		$("#cost9002R").text(formatNumber(cost9002R));
@@ -1741,6 +1737,7 @@ openTab('menuA',"tabA");
 		 $("#"+upgradeID+"").text("Buy"); 
 		 }
 	}
+ 
 	function drawIcon(x,y,boxw,boxh,imgw,imgh,url,unqID,upgradeID,costID,title,desc){
 		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\"></span></b>&nbsp<span>Energy</span><p><b><span id=\""+costID+"R\"></span></b> Research Points</p><p style=\"text-align:left; padding-left:5px;padding-right:5px;\">"+desc+"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
 		drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content);
@@ -1749,24 +1746,49 @@ openTab('menuA',"tabA");
 		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\"></span></b>&nbsp<span>Energy</span><p><b><span id=\""+costID+"R\"></span></b> Research Points</p><p>Canceling Cost:&nbsp<b><span id=\""+costID+"Cancel\"></span></b>&nbsp<span>Energy</span></p><p style=\"text-align:left; padding-left:5px;padding-right:5px;\">"+desc+"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
 		drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content);
 	}
+ 
 	function drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content){
-		var border = 6;
-		var calc1 = ((boxw-imgw-border)/2);
-		var calc2 = ((boxh-imgh-border)/2);
- padding = 5;
-	$( "#overlay" ).append( "<div class=\"upgradeIcon IconnotLinked\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding)+"px;left:"+(x+padding)+"px;width:"+boxw+"px;height:"+boxh+"px;\"></div>" );	
-     $( "#"+unqID+"" ).append("<b><span class=\"upgradeLevel\" id=\""+unqID+"lvl\"></span></b>");
-	 $( "#"+unqID+"" ).append("<img src=\""+url+"\" class=\"divsImg\" id=\""+unqID+"Img\" style=\"position:absolute;top:"+calc2 +"px;left:"+calc1+"px;width:"+imgw+"px;height:"+imgh+"px;\">");
-     $( "#"+unqID+"" ).append("<span class=\"upgradetooltiptext notLinkedTooltip \" id=\""+unqID+"tt\">"+content+"</span>");
-	 $( "#"+unqID+"" ).append("<span class=\"upgradebridge notLinkedTooltip\" id=\""+unqID+"ttb\"></span>");
+		border = 6;
+		calc1 = ((boxw-imgw-border)/2);
+		calc2 = ((boxh-imgh-border)/2);	
+		
+	$( "#overlay2contents" ).append( "<div class=\"upgradeIcon IconnotLinked\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+boxw+"px;height:"+boxh+"px;\"></div>" );	
+    $( "#"+unqID+"" ).append("<b><span class=\"upgradeLevel\" id=\""+unqID+"lvl\"></span></b>");
+	$( "#"+unqID+"" ).append("<img src=\""+url+"\" class=\"divsImg\" id=\""+unqID+"Img\" style=\"position:absolute;top:"+calc2 +"px;left:"+calc1+"px;width:"+imgw+"px;height:"+imgh+"px;\">");
+    $( "#"+unqID+"" ).append("<span class=\"upgradetooltiptext notLinkedTooltip \" id=\""+unqID+"tt\">"+content+"</span>");
+	$( "#"+unqID+"" ).append("<span class=\"upgradebridge notLinkedTooltip\" id=\""+unqID+"ttb\"></span>");
    }
    //next function
    function drawLink(x,y,linkw,linkh,unqID){
-	   	$( "#overlay" ).append( "<div class=\"researchLink notLinked\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding)+"px;left:"+(x+padding)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
+	   	$( "#overlay2contents" ).append( "<div class=\"researchLink notLinked\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
    }
    function drawRect(x,y,linkw,linkh,unqIDRect){
-	   	$( "#overlay" ).append( "<div class=\"rect\" id=\""+unqIDRect+"\" style=\"background-color:transparent; border-width:2px; border-color:#FFFFFF; border-style:solid; position:absolute;top:"+(y+padding)+"px;left:"+(x+padding)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
+	   	$( "#overlay2contents" ).append( "<div class=\"rect\" id=\""+unqIDRect+"\" style=\"background-color:transparent; border-width:2px; border-color:#FFFFFF; border-style:solid; position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
    }
+   function researchZoom(){
+      sliderrange1 = $('#range-slider__range1');
+	  overlay2contents = $('#overlay2contents');
+      slidervalue1 = $('#range-slider__value1');
+     
+      zoom1 = sliderrange1.val();
+      slidervalue1.html(zoom1+"%");
+	  
+      sliderrange1.on('input', function(){
+		 zoom1 = sliderrange1.val();
+		slidervalue1.html(zoom1+"%");  
+		var scaling = "scale("+zoom1/100+","+zoom1/100+")";
+		var marginLeft=0;
+		if(zoom1>100){
+			marginLeft=(zoom1-100)*overlay2contents.width()/100/2;
+		}
+		var marginLeftpx = ""+marginLeft+"px";
+		$('#overlay2contents').css("transform", scaling);
+		$('#overlay2contents').css("marginLeft", marginLeftpx);
+      });
+	   
+	}
+	researchZoom();
+ 
   function multiply(a,b){
 	  var factor = 8;
 	  return a*Math.pow(factor,b);  
@@ -1861,7 +1883,7 @@ openTab('menuA',"tabA");
 
 	move();
 
- 
+ /*
  function canvass(){
 	 
 	  ctx.beginPath();
@@ -1901,4 +1923,6 @@ openTab('menuA',"tabA");
 	    drawImageBox(310,70,50,50,30,40,'/website/tools/EPOW3.png',"unqID9102","<p style=\"font-size:26px;position: relative;\"> Energy pow T1</p><p>Cost:<span></span><span>Increase energy multiplyier T1 by 0.05, Stacks with other tiers</p></p><br>");
 	//
 }
+*/
 });
+ 
