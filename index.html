@@ -27,7 +27,6 @@ html {
 }
 body {
 	background:#454545;
-	padding:5px;
 	margin:0px;
 	font-family: 'Josefin Sans', sans-serif;
 	font-size: 20px;
@@ -42,10 +41,41 @@ body {
 	height:100%;
 	position:relative;
 }
+.blackScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 1;
+    filter: alpha(opacity=60);
+    z-index: 5;
+    display: block;
+}
+#startgameText1{
+    margin-top:75px;
+	width:100%;
+	font-size:60px;
+	text-align:center;
+	color:#FFFFFF;
+	position:absolute;
+	z-index:10;
+}
+#startgameText2{
+	width:100%;
+	font-size:20px;
+	text-align:center;
+	color:#000000;
+	position:absolute;
+	z-index:10;
+}
 #progress1 {
-  width: 90%;
+  position:absolute;
+  width: calc(100% - 10px);
   height: 30px;
   background-color: #ddd;
+  z-index:10;
 }
 
 #bar1 {
@@ -53,21 +83,50 @@ body {
   height: 100%;
   background-color: #4CAF50;
 }
-#click1,#click2 {
-	cursor: pointer;
-	width:9%;
-	float:left;
-	background-color:#c6c6c6;
-	height: 30px;
-	text-align:center;
-}
 
 #amount,#amount2{
 	height: 30px;
 	text-align:left;
 	margin-top:8px;
 }
- 
+/*Buildings*/
+#buildingscontainer{
+width:calc(100% - 125px);
+}
+#researchbuildingscontainer{
+width:calc(100% - 125px);
+}
+#energyproduction{
+width:50%;
+float:left;
+}
+#energystorage{
+width:50%;
+float:right;
+}
+#researchproduction{
+width:50%;
+float:left;
+}
+#researchstorage{
+width:50%;
+float:right;
+}
+.workerbotsAssign{
+padding: 0px 10px;
+background-color:#4CAF50;
+font-size:19px;
+cursor: pointer;
+}
+.workerbotsRemove{
+padding: 0px 10px;
+background-color:#FF0000;
+font-size:19px;
+cursor: pointer;
+}
+.workerbotsAction{
+float:right;
+}
 /* Achievements */
 .achievementBonusAchieved {
     color:#FFFFFF;
@@ -165,28 +224,7 @@ border-width:1px;
 border-style:solid;
 border-color:#FFFFFF;
 }
-.clickbuildingbuy .buytooltiptext {
-    visibility: hidden;
-    width: 250px;
-    background-color: black;
-    color: #fff;
-	margin-bottom:5px;
-    padding: 5px 5px;
-    border-radius: 6px;
-	font-size:18px;
-    bottom: 100%;
-    left: -50%; 
-    margin-left: calc(100%/-2);
-    position: absolute;
-    z-index: 1;
-}
-.clickbuildingbuy:hover .buytooltiptext {
-    visibility: visible;
-	transition-delay:0.25s;
-
-}
  
-
 .autobuildingbuy .buytooltiptext {
     visibility: hidden;
     width: 250px;
@@ -207,7 +245,70 @@ border-color:#FFFFFF;
 	transition-delay:0.25s;
 
 }
+
  
+.estorebuildingbuy .buytooltiptext {
+    visibility: hidden;
+    width: 250px;
+    background-color: black;
+    color: #fff;
+	margin-bottom:5px;
+    padding: 5px 5px;
+    border-radius: 6px;
+	font-size:18px;
+    bottom: 100%;
+    left: -50%; 
+    margin-left: calc(100%/-2);
+    position: absolute;
+    z-index: 1
+}
+.estorebuildingbuy:hover .buytooltiptext {
+    visibility: visible;
+	transition-delay:0.25s;
+
+}
+
+.rProdbuildingbuy .buytooltiptext {
+    visibility: hidden;
+    width: 250px;
+    background-color: black;
+    color: #fff;
+	margin-bottom:5px;
+    padding: 5px 5px;
+    border-radius: 6px;
+	font-size:18px;
+    bottom: 100%;
+    left: -50%; 
+    margin-left: calc(100%/-2);
+    position: absolute;
+    z-index: 1
+}
+.rProdbuildingbuy:hover .buytooltiptext {
+    visibility: visible;
+	transition-delay:0.25s;
+
+}
+
+.rStorebuildingbuy .buytooltiptext {
+    visibility: hidden;
+    width: 250px;
+    background-color: black;
+    color: #fff;
+	margin-bottom:5px;
+    padding: 5px 5px;
+    border-radius: 6px;
+	font-size:18px;
+    bottom: 100%;
+    left: -50%; 
+    margin-left: calc(100%/-2);
+    position: absolute;
+    z-index: 1
+}
+.rStorebuildingbuy:hover .buytooltiptext {
+    visibility: visible;
+	transition-delay:0.25s;
+
+}
 .details {
 	padding-top:0px;
 	display: inline-block;
@@ -250,12 +351,13 @@ border-color:#FFFFFF;
     position:relative;
 	height:400px;
 	overflow: auto;
-	}
+}
 #overlay2contents{
+    min-height: 600px;
 }
 .upgradeIcon:hover{
     transition: border-color 0.3s ease;
-	}
+}
 
 .upgradeIcon .upgradetooltiptext {
     visibility: hidden;
@@ -342,18 +444,22 @@ border-color:#FFFFFF;
 	margin-left:-3px;
     <!--margin-left: calc(300px/-2); use this for center aligned!-->
 }
+.red{
+	color:#FF0000 !important;
+}
 .redborder {
 	border-color:#FF0000 !important;
 }
 .errorcost {
 	 margin-left:5px;color:#FF0000; display:none;	height:21.8px;
 }
-.clickbuildings{
+.estorebuildings{
+    height: 51px;
 	border-width:1px;
 	border-style:solid;
 	border-color:#FFFFFF;
 }
-.clickbuildingicons{
+.estorebuildingicons{
     width: 50px;
 	height: 50px;
  	border-width:1px;
@@ -361,11 +467,11 @@ border-color:#FFFFFF;
 	border-color:#FFFFFF;
 	float:left;
 }
-.clickbuildingtitles{
+.estorebuildingtitles{
 	margin-left:5px;
 	font-size:24px;
 }
-.clickbuildingbuy{
+.estorebuildingbuy{
     height:100%;
 	width:75px;
 	float:right;
@@ -375,12 +481,47 @@ border-color:#FFFFFF;
     cursor: pointer;
 	 
 }
-.clickbuildingbuytext{
+.estorebuildingbuytext{
+	font-size:24px;
+	text-align: center;
+	line-height: 50px; 
+}
+
+.rProdbuildings{
+    height: 51px;
+	border-width:1px;
+	border-style:solid;
+	border-color:#FFFFFF;
+}
+.rProdbuildingicons{
+    width: 50px;
+	height: 50px;
+ 	border-width:1px;
+	border-style:solid;
+	border-color:#FFFFFF;
+	float:left;
+}
+.rProdbuildingtitles{
+	margin-left:5px;
+	font-size:24px;
+}
+.rProdbuildingbuy{
+    height:100%;
+	width:75px;
+	float:right;
+	background-color:#c6c6c6;
+	position: relative;
+    display: inline-block;
+    cursor: pointer;
+	 
+}
+.rProdbuildingbuytext{
 	font-size:24px;
 	text-align: center;
 	line-height: 50px; 
 }
 .autobuildings{
+	height: 51px;
 	border-width:1px;
 	border-style:solid;
 	border-color:#FFFFFF;
@@ -408,6 +549,40 @@ border-color:#FFFFFF;
 	 
 }
 .autobuildingbuytext{
+	font-size:24px;
+	text-align: center;
+	line-height: 50px; 
+}
+
+.rStorebuildings{
+    height: 51px;
+	border-width:1px;
+	border-style:solid;
+	border-color:#FFFFFF;
+}
+.rStorebuildingicons{
+    width: 50px;
+	height: 50px;
+ 	border-width:1px;
+	border-style:solid;
+	border-color:#FFFFFF;
+	float:left;
+}
+.rStorebuildingtitles{
+	margin-left:5px;
+	font-size:24px;
+}
+.rStorebuildingbuy{
+    height:100%;
+	width:75px;
+	float:right;
+	background-color:#c6c6c6;
+	position: relative;
+    display: inline-block;
+    cursor: pointer;
+	 
+}
+.rStorebuildingbuytext{
 	font-size:24px;
 	text-align: center;
 	line-height: 50px; 
@@ -573,9 +748,6 @@ margin-right:15px;
 .goToBottom{
 	position:absolute;
 	bottom:5px;
-}
-@media only screen  and (min-width: 581px) {
-	
 }
 
 #deleteallcookies {
@@ -753,7 +925,7 @@ margin-right:15px;
  text-decoration: none; 
  transition: background-color 0.1s ease-in-out;
  float:left;
- font-size:22px;
+ font-size:21px;
  text-align:center;
  }
 .notOn:hover { background-color: #ccc; }
@@ -776,8 +948,12 @@ margin-right:15px;
 	
 }
 #span2{
-position:absolute;
-left:200px;
+position:relative;
+ 
+}
+#span3{
+position:relative;
+
 }
 .energyGoals{
 	width:100%;
@@ -790,14 +966,14 @@ left:200px;
 	color:#FFFFFF;
 	text-align:center;
 }
-@media only screen  and (max-width: 1100px) {
- .tabbar  p { 
- font-size:19px;
- }
-}
-@media only screen  and (max-width: 950px) {
+@media only screen  and (max-width: 1150px) {
  .tabbar  p { 
  font-size:18px;
+ }
+}
+@media only screen  and (max-width: 1000px) {
+ .tabbar  p { 
+ font-size:16px;
  }
 }
 @media only screen  and (max-width: 900px) {
@@ -835,7 +1011,7 @@ left:200px;
 }
   @media only screen  and (max-width: 475px) {
   .tabbar  p { 
- font-size:16px;
+ font-size:14px;
  }
  #resourcebar {
 	font-size:18px;
@@ -844,18 +1020,12 @@ left:200px;
   }
    @media only screen  and (max-width: 450px) {
   .tabbar  p { 
- font-size:14px;
- }
- #span2{
-	left:175px;
+ font-size:13px;
  }
   }
-     @media only screen  and (max-width: 390px) {
+     @media only screen  and (max-width: 400px) {
   .tabbar  p { 
   font-size:12px;
- }
- #span2{
-	left:125px;
  }
   #resourcebar {
 	font-size:16px;
@@ -923,9 +1093,11 @@ input[type=range]:active::-moz-range-thumb {
   margin-left: 8px;
 }
 </style>
- <script src="./website/tools/lz-string.js" type="text/javascript"></script>
+<script type="text/javascript"src="./js/cookies.js"></script>
+<script type="text/javascript"src="./js/formatting.js"></script>
+<script type="text/javascript"src="./js/lz-string.js"></script>
 <script type="text/javascript" src="./minigame2.js"></script>
-<script type="text/javascript" src="./website/tools/dragscroll.js"></script>
+<script type="text/javascript" src="./js/dragscroll.js"></script>
 <link rel="icon" 
       type="image/png" 
       href="./favicon.png">
@@ -933,6 +1105,8 @@ input[type=range]:active::-moz-range-thumb {
 
 <body>
 <div id="gamearea">
+<div class="blackScreen"></div>
+<div id="startgameText1">The energy game</div>
 <div id="deleteallcookiesdialog">
 <div id="canceldialog">&times;</div>
 <div id="infobox">
@@ -959,9 +1133,9 @@ Do you really want to delete this save?
 <!-- Resource Bar!-->
 <div id="resourcebar">
 <b>
-<span id="span1" style="position:absolute;left:5px;">Energy: <span class="thetotal" style=""></span></span>
- 
-<span id="span2" style="">Research points:<span class="thetotalresearchpoint" style=""></span></span>
+<span id="span1" style="">Energy: <span class="thetotal" style=""></span></span>
+<span id="span2" style="">Research points:<span class="ResearchPoints"></span>-><span class="RealResearchPoints"></span>/<span class="RealResearchPointscap"></span></span>
+<span id="span3" style="">Worker bots:<span class="workerbotsINACTIVE" style=""></span>/<span class="totalworkerbots" style=""></span>
 </b>
 </div>
 <!-- TABS -->
@@ -977,111 +1151,26 @@ Do you really want to delete this save?
 <div id="tabA" class="tabClass">
 <br>
   <h2>Buildings</h2>
-  <p>Build more buildings to gain more energy</p>
-
-<div id="click1">Click</div><div id="progress1" style="float:right;">
-  <div id="bar1"></div>
-</div>
+  <p>Buildings are crucial to your development</p>
 <div class="clear"></div>
-<div id="left">
-
-<span>Energy per click (epc): </span><span id="gain"></span>
+<div id="progress1"><span id="startgameText2">Start game</span>
+  <div id="bar1"></div> 
+</div>
+<br>
+<div class="clear"></div> 
+<div id=" ">
 <br>
 <span>Energy per second (eps): </span><span id="epsgain"></span>
-
-<div class="clear"></div><br>
+<div class="clear"></div> 
+<span>Research production per second (rps): </span><span id="rProdgain"></span>
 <table style="font-size:22px;"><tr><td><div style="">Total Energy: </div></td><td><div class="thetotal" style=""></div></td></tr></table>
-<table style="font-size:22px;"><tr><td><div style="">Total Research Points: </div></td><td><div class="thetotalresearchpoint" style=""></div></td></tr></table>
-<div class="clear"></div>
- 
- 
+<table style="font-size:22px;"><tr><td><div style="">Total research points: </div></td><td><span class="ResearchPoints"></span>-><span class="RealResearchPoints"></span>/<span class="RealResearchPointscap"></span></td></tr></table>
+<table style="font-size:22px;"><tr><td><div style="">Available Worker Bots: </div></td><td><span class="workerbotsINACTIVE" style=""></span>/<span class="totalworkerbots" style=""></span></div></td></tr></table>
 <div class="clear"></div>
 <hr style="margin-right:3px;">
-<br>
-
- 
-<div class="clear"></div>
-<div id="clickbuilding1" class="clickbuildings">
-<div class="clear"></div>
-<div id="clickbuilding1icon" class="clickbuildingicons"></div>
-<span class="clickbuildingtitles">Energy Crank T1</span>
-<div id="clickbuy0000" class="clickbuildingbuy"><p class="clickbuildingbuytext">Buy</p>
-<span class="buytooltiptext">
-<span>Increases epc by </span><b><span id="epcplus1"></span></b><span> each.</span>
-<br>
-<span>Increases epc by </span><b><span id="epctotal1"></span></b><span> in total.</span>
-<br>
-<span>(</span><b><span id="clickpercentage1"></span></b><span>% of total)</span>
-
-</span>
-</div>
-
-<p></p>
-<span class="details"><span>Cost: </span><span id="epcost0000" ></span><span id="errorcost0000" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="epnum0000"></span></span>
- 
-<div class="clear"></div>
-</div>
-<div id="clickbuilding2" class="clickbuildings">
-<div class="clear"></div>
-<div id="clickbuilding2icon" class="clickbuildingicons"></div>
-<span class="clickbuildingtitles">Energy Crank T2</span>
-<div id="clickbuy0001" class="clickbuildingbuy"><p class="clickbuildingbuytext">Buy</p>
-<span class="buytooltiptext">
-<span>Increases epc by </span><b><span id="epcplus2"></span></b><span> each.</span>
-<br>
-<span>Increases epc by </span><b><span id="epctotal2"></span></b><span> in total.</span>
-<br>
-<span>(</span><b><span id="clickpercentage2"></span></b><span>% of total)</span>
-
-</span>
-</div>
-
-<p></p>
-<span class="details"><span>Cost: </span><span id="epcost0001" ></span><span id="errorcost0001" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="epnum0001"></span></span>
- 
-<div class="clear"></div>
-</div>
-<div id="clickbuilding3" class="clickbuildings">
-<div class="clear"></div>
-<div id="clickbuilding3icon" class="clickbuildingicons"></div>
-<span class="clickbuildingtitles">Energy Bot T1</span>
-<div id="clickbuy0002" class="clickbuildingbuy"><p class="clickbuildingbuytext">Buy</p>
-<span class="buytooltiptext">
-<span>Increases epc by </span><b><span id="epcplus3"></span></b><span> each.</span>
-<br>
-<span>Increases epc by </span><b><span id="epctotal3"></span></b><span> in total.</span>
-<br>
-<span>(</span><b><span id="clickpercentage3"></span></b><span>% of total)</span>
-
-</span>
-</div>
-
-<p></p>
-<span class="details"><span>Cost: </span><span id="epcost0002" ></span><span id="errorcost0002" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="epnum0002"></span></span>
- 
-<div class="clear"></div>
-</div>
-
-<div id="clickbuilding4" class="clickbuildings">
-<div class="clear"></div>
-<div id="clickbuilding4icon" class="clickbuildingicons"></div><span class="clickbuildingtitles">Energy Bot T2</span>
-<div id="clickbuy0003" class="clickbuildingbuy"><p class="clickbuildingbuytext">Buy</p>
-<span class="buytooltiptext">
-<span>Increases epc by </span><b><span id="epcplus4"></span></b><span> each.</span>
-<br>
-<span>Increases epc by </span><b><span id="epctotal4"></span></b><span> in total.</span>
-<br>
-<span>(</span><b><span id="clickpercentage4"></span></b><span>% of total)</span>
-
-</span>
-</div>
-
-<p></p>
-<span class="details"><span>Cost: </span><span id="epcost0003" ></span><span id="errorcost0003" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="epnum0003"></span></span>
- 
-<div class="clear"></div>
-</div>
-<br>
+<div id="buildingscontainer">
+<div id="energyproduction">
+<b>Energy Production </b> <span>Assigned:<span id="workerbotsT1"></span></span><span class="workerbotsAction"><span id="workerbotsA1" class="workerbotsAssign">+</span><span id="workerbotsR1" class="workerbotsRemove">-</span></span>
 <div id="autobuilding1" class="autobuildings">
 <div class="clear"></div>
 <div id="autobuilding1icon" class="autobuildingicons"></div><span class="autobuildingtitles">Spatial Energy Generator T1 </span>
@@ -1095,7 +1184,7 @@ Do you really want to delete this save?
 </span>
 </div>
 <p></p>
-<span class="details"><span>Cost: </span><span id="egcost0000" ></span><span id="autoerrorcost0000" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="egnum0000"></span></span>
+<span class="details"><span>Cost: </span><span id="egcost0000" ></span><span id="autoerrorcost0000" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="egnum0000"></span></span>
 
 <div class="clear"></div>
 </div>
@@ -1112,7 +1201,7 @@ Do you really want to delete this save?
 </span>
 </div>
 <p></p>
-<span class="details"><span>Cost: </span><span id="egcost0001" ></span><span id="autoerrorcost0001" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="egnum0001"></span></span>
+<span class="details"><span>Cost: </span><span id="egcost0001" ></span><span id="autoerrorcost0001" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="egnum0001"></span></span>
 
 <div class="clear"></div>
 </div>
@@ -1129,7 +1218,7 @@ Do you really want to delete this save?
 </span>
 </div>
 <p></p>
-<span class="details"><span>Cost: </span><span id="egcost0002" ></span><span id="autoerrorcost0002" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="egnum0002"></span></span>
+<span class="details"><span>Cost: </span><span id="egcost0002" ></span><span id="autoerrorcost0002" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="egnum0002"></span></span>
 
 <div class="clear"></div>
 </div>
@@ -1146,17 +1235,135 @@ Do you really want to delete this save?
 </span>
 </div>
 <p></p>
-<span class="details"><span>Cost: </span><span id="egcost0003" ></span><span id="autoerrorcost0003" class="errorcost">Not enough energy</span><span> Acquired:</span><span id="egnum0003"></span></span>
+<span class="details"><span>Cost: </span><span id="egcost0003" ></span><span id="autoerrorcost0003" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="egnum0003"></span></span>
+</div>
+</div>
+<div id="energystorage">
+<b>Energy Storage </b><span>Assigned:<span id="workerbotsT2"></span></span><span class="workerbotsAction"><span id="workerbotsA2" class="workerbotsAssign">+</span><span id="workerbotsR2" class="workerbotsRemove">-</span></span>
+<div id="estorebuilding1" class="estorebuildings">
+<div class="clear"></div>
+<div id="estorebuilding1icon" class="estorebuildingicons"></div><span class="estorebuildingtitles">Batteries Gen1</span>
+<div id="estorebuy0000" class="estorebuildingbuy"><p class="estorebuildingbuytext">Buy</p>
+ <span class="buytooltiptext">
+<span>Increases energy storage by </span><b><span id="estoreplus1"></span></b><span> each.</span>
+<br>
+<span>Increases energy storage by </span><b><span id="estoretotal1"></span></b><span> in total.</span>
+<br>
+<span>(</span><b><span id="estorepercentage1"></span></b><span>% of total)</span>
+</span>
+</div>
+<p></p>
+<span class="details"><span>Cost: </span><span id="Estorecost0000" ></span><span id="Estoreerrorcost0000" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="Estorenum0000"></span></span>
 
 <div class="clear"></div>
 </div>
+<div id="estorebuilding2" class="estorebuildings">
+<div class="clear"></div>
+<div id="estorebuilding2icon" class="estorebuildingicons"></div><span class="estorebuildingtitles">Batteries Gen2</span>
+<div id="estorebuy0001" class="estorebuildingbuy"><p class="estorebuildingbuytext">Buy</p>
+ <span class="buytooltiptext">
+<span>Increases energy storage by </span><b><span id="estoreplus2"></span></b><span> each.</span>
 <br>
-<div id="a" style="display:none;"></div>
-<div id="auto" style="display:none;">Auto click</div>
+<span>Increases energy storage by </span><b><span id="estoretotal2"></span></b><span> in total.</span>
+<br>
+<span>(</span><b><span id="estorepercentage2"></span></b><span>% of total)</span>
+</span>
+</div>
+<p></p>
+<span class="details"><span>Cost: </span><span id="Estorecost0001" ></span><span id="Estoreerrorcost0001" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="Estorenum0001"></span></span>
+
+<div class="clear"></div>
+</div>
+<div id="estorebuilding3" class="estorebuildings">
+<div class="clear"></div>
+<div id="estorebuilding3icon" class="estorebuildingicons"></div><span class="estorebuildingtitles">Dense field storage Gen1</span>
+<div id="estorebuy0002" class="estorebuildingbuy"><p class="estorebuildingbuytext">Buy</p>
+ <span class="buytooltiptext">
+<span>Increases energy storage by </span><b><span id="estoreplus3"></span></b><span> each.</span>
+<br>
+<span>Increases energy storage by </span><b><span id="estoretotal3"></span></b><span> in total.</span>
+<br>
+<span>(</span><b><span id="estorepercentage3"></span></b><span>% of total)</span>
+</span>
+</div>
+<p></p>
+<span class="details"><span>Cost: </span><span id="Estorecost0002" ></span><span id="Estoreerrorcost0002" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="Estorenum0002"></span></span>
+
+<div class="clear"></div>
+</div>
+<div id="estorebuilding4" class="estorebuildings">
+<div class="clear"></div>
+<div id="estorebuilding4icon" class="estorebuildingicons"></div><span class="estorebuildingtitles">Dense field storage Gen2</span>
+<div id="estorebuy0003" class="estorebuildingbuy"><p class="estorebuildingbuytext">Buy</p>
+ <span class="buytooltiptext">
+<span>Increases energy storage by </span><b><span id="estoreplus4"></span></b><span> each.</span>
+<br>
+<span>Increases energy storage by </span><b><span id="estoretotal4"></span></b><span> in total.</span>
+<br>
+<span>(</span><b><span id="estorepercentage4"></span></b><span>% of total)</span>
+</span>
+</div>
+<p></p>
+<span class="details"><span>Cost: </span><span id="Estorecost0003" ></span><span id="Estoreerrorcost0003" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="Estorenum0003"></span></span>
+</div>
+</div>
+</div>
+<hr>
+<div class="clear"></div>
+<div id="researchbuildingscontainer">
+<div id="researchproduction">
+<b style="color:#FF00FF">Research Production </b> <span>Assigned:<span id="workerbotsT3"></span></span><span class="workerbotsAction"><span id="workerbotsA3" class="workerbotsAssign">+</span><span id="workerbotsR3" class="workerbotsRemove">-</span></span>
+<div id="rProdbuilding1" class="rProdbuildings">
+<div class="clear"></div>
+<div id="rProdbuilding1icon" class="rProdbuildingicons"></div><span class="rProdbuildingtitles">Research production facility</span>
+<div id="rProdbuy0000" class="rProdbuildingbuy"><p class="rProdbuildingbuytext">Buy</p>
+ <span class="buytooltiptext">
+<span>Increases research production from pool by </span><b><span id="rProdplus1"></span></b><span> each.</span>
+<br>
+<span>Increases research production from pool by </span><b><span id="rProdtotal1"></span></b><span> in total.</span>
+<br>
+<span>(</span><b><span id="rProdpercentage1"></span></b><span>% of total)</span>
+</span>
+</div>
+<p></p>
+<span class="details"><span>Cost: </span><span id="rProdcost0000" ></span><span id="rProderrorcost0000" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="rProdnum0000"></span></span>
+
+<div class="clear"></div>
+</div>
+</div>
+<div id="researchstorage">
+<b style="color:#FF00FF">Research Storage</b> <span>Assigned:<span id="workerbotsT4"></span></span><span class="workerbotsAction"><span id="workerbotsA4" class="workerbotsAssign">+</span><span id="workerbotsR4" class="workerbotsRemove">-</span></span>
+<div id="rStorebuilding1" class="rStorebuildings">
+<div class="clear"></div>
+<div id="rStorebuilding1icon" class="rStorebuildingicons"></div><span class="rStorebuildingtitles">Research storage facility</span>
+<div id="rStorebuy0000" class="rStorebuildingbuy"><p class="rStorebuildingbuytext">Buy</p>
+ <span class="buytooltiptext">
+<span>Increases research storage by </span><b><span id="rStoreplus1"></span></b><span> each.</span>
+<br>
+<span>Increases research storage by </span><b><span id="rStoretotal1"></span></b><span> in total.</span>
+<br>
+<span>(</span><b><span id="rStorepercentage1"></span></b><span>% of total)</span>
+</span>
+</div>
+<p></p>
+<span class="details"><span>Cost: </span><span id="rStorecost0000" ></span><span id="rStoreerrorcost0000" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="rStorenum0000"></span></span>
+
+<div class="clear"></div>
+</div>
+</div>
+</div>
+<hr>
+<div class="clear"></div>
+<div id="">
+<b>Build more worker bots<b>
+<div id="">BUILD
+</div>
+</div>
+</div>
 <br>
 <div id="won" style="font-size:40px; display:none;"><b>Congrats, you won the game! There's not much to do now</b></div>
 </div>
-</div>
+ 
 
 <div id="tabB" class="tabClass">
 
@@ -1168,6 +1375,10 @@ Do you really want to delete this save?
 <br>
   <h2>Research</h2>
   <p>Research new technology to unlock and improve your buildings and others</p>
+  <div class="clear"></div>
+  <span id="researchpoint" style="">Research pool:<span class="researchpoint" style=""></span></span><-><span id="realresearchpoint" style="">Research points:<span class="realresearchpoint" style=""></span></span>
+  <div class="clear"></div>
+  <br>
   	 <div class="range-slider">
      <input class="range-slider__range" id="range-slider__range1" type="range" value="100" min="25" max="200">
      <span class="range-slider__value" id="range-slider__value1">err</span>
@@ -1215,6 +1426,8 @@ Do you really want to delete this save?
 <div class="clear"></div>
 <div id="achievementClickEnergyGRP" class="achievementGRP">Energy from clicking</div> 
 <div class="clear"></div>
+<br>
+<h2>Specialty</h2>
 <table>
 <tr><td><div id="achievement1" class="achievementbox"> <span class="achievementtooltiptext">Acquire 5 Energy Pylons T1 <br><b style="color:#FF00FF;">Reward: </b>Energy progress bar operation will be reduced by 100ms</span></div></a></td><td><div id="achievement2" class="achievementbox"><span class="achievementtooltiptext">Acquire 10 Energy Pylons T1<br><b style="color:#FF00FF;">Reward: </b>Energy multiplyier for Energy Pylon will be increased to 1.5</span></div><td></tr>
 
@@ -1273,6 +1486,9 @@ Do you really want to delete this save?
 <div id="deleteallcookies" >Delete Save</div><label style="margin-left:5px;	vertical-align: middle;">Delete <b style="color:#FF0000;">ALL</b> of you progress.</label>
 <br><hr><br>
 <b style="font-size:30px;">Update Logs</b><span id="currentVersionSettings" style="font-size:26px;"></span>
+<h3>Version:2.0.0</h3>
+<p>Major overhaul</p>
+<br><hr><br>
 <h3>Version:1.1.1</h3>
 <p>Zoomable research area</p>
 <br><hr><br>
