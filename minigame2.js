@@ -66,15 +66,7 @@ function move() {
     orginalestore:0,
 	orginalepsgain:0,
 	thetotal:0,
-	achievementEnergyGoalStatus:0,
-	achievementClickTimesStatus:0,
-	achievementClickEnergyStatus:0,
-	achievementstatus1:true,
-	achievementstatus2:true,
-	achievementstatus3:true,
-	achievementstatus4:true,
-	achievementstatus5:true,
-	achievementstatus6:true,
+	achievementstatus:[0,0,0,0,0,0,0,0,0,0,],
 	EnergyGoalLevel:0,
 	EnergyGoalStart:50,
 	ResearchPoints:0,
@@ -239,15 +231,7 @@ function move() {
 	orginalgain=loadedVar3.orginalgain;
 	orginalepsgain=loadedVar3.orginalepsgain;
 	thetotal=loadedVar3.thetotal;
-    achievementEnergyGoalStatus=loadedVar3.achievementEnergyGoalStatus;
-	achievementClickTimesStatus=loadedVar3.achievementClickTimesStatus;
-	achievementClickEnergyStatus=loadedVar3.achievementClickEnergyStatus;
-	achievementstatus1=loadedVar3.achievementstatus1;
-	achievementstatus2=loadedVar3.achievementstatus2;
-	achievementstatus3=loadedVar3.achievementstatus3;
-	achievementstatus4=loadedVar3.achievementstatus4;
-	achievementstatus5=loadedVar3.achievementstatus5;
-	achievementstatus6=loadedVar3.achievementstatus6;
+    achievementstatus=loadedVar3.achievementstatus;
 	EnergyGoalLevel=loadedVar3.EnergyGoalLevel;
 	EnergyGoalStart=loadedVar3.EnergyGoalStart;
 	ResearchPoints=loadedVar3.ResearchPoints;
@@ -357,15 +341,7 @@ function move() {
     orginalgain:orginalgain,
 	orginalepsgain:orginalepsgain,
 	thetotal:thetotal,
-	achievementEnergyGoalStatus:achievementEnergyGoalStatus,
-	achievementClickTimesStatus:achievementClickTimesStatus,
-	achievementClickEnergyStatus:achievementClickEnergyStatus,
-	achievementstatus1:achievementstatus1,
-	achievementstatus2:achievementstatus2,
-	achievementstatus3:achievementstatus3,
-	achievementstatus4:achievementstatus4,
-	achievementstatus5:achievementstatus5,
-	achievementstatus6:achievementstatus6,
+	achievementstatus:achievementstatus,
 	EnergyGoalLevel:EnergyGoalLevel,
 	EnergyGoalStart:EnergyGoalStart,
 	ResearchPoints:ResearchPoints,
@@ -822,18 +798,18 @@ function calcresearchplustotal(){
 	$("#autopercentage4").html(autopercentage4); 
  }
  achievementBonusArray=[0,5,10,20,35,50];
- acheivementTotalEmultiplyBonus=[0,15,20,40,80,160];
+ achievementTotalEmultiplyBonus=[0,15,20,40,80,160];
  function calcemultiply(){
 	 TotalEmultiply=0;
 for(var i=0; i<6; i++){
-	 if(achievementEnergyGoalStatus+achievementClickTimesStatus+achievementClickEnergyStatus>=achievementBonusArray[i]){
-	  TotalEmultiply=TotalEmultiply+acheivementTotalEmultiplyBonus[i];
+	 if(achievementstatus[0]+achievementstatus[1]+achievementstatus[2]+achievementstatus[3]+achievementstatus[4]+achievementstatus[5]+achievementstatus[6]+achievementstatus[7]+achievementstatus[8]+achievementstatus[9]>=achievementBonusArray[i]){
+	  TotalEmultiply=TotalEmultiply+achievementTotalEmultiplyBonus[i];
 	 }else{
 		 i=999;
 	 }
  }   
      $("#TotalEmultiply").html(TotalEmultiply);
-	 emultiplytotal=(1+achievementEnergyGoalStatus*0.05+achievementClickTimesStatus*0.05+achievementClickEnergyStatus*0.05+unqID9001lvl*0.10+unqID9002lvl*0.20)*((100+TotalEmultiply)/100);
+	 emultiplytotal=(1+achievementstatus[0]*0.05+achievementstatus[1]*0.05+achievementstatus[2]*0.05+achievementstatus[3]*0.05+achievementstatus[4]*0.05+achievementstatus[5]*0.05+achievementstatus[6]*0.05+achievementstatus[7]*0.05+achievementstatus[8]*0.05+achievementstatus[9]*0.05+unqID9001lvl*0.10+unqID9002lvl*0.20)*((100+TotalEmultiply)/100);
 	 emultiplytotal = Math.round(emultiplytotal * 1000) / 1000;
 }
 function costAutofunctions(ID){
@@ -1180,8 +1156,8 @@ location.reload();
  totalAchievement=10;
  
  achievementEnergyGoalArray=[1,3,5,10,15,20,30,40,50,60];
- achievementClickTimesArray=[10,50,200,1000,2000,5000,10000,20000,50000,100000];
- achievementClickEnergyArray=[100,10000,1000000,100000000,10000000000,1000000000000,100000000000000,10000000000000000,1000000000000000000,100000000000000000000];
+ achievementTotalBuildingsArray=[5,10,25,50,100,250,500,1000,1500,2500];
+ achievementTotalworkerbotsArray=[3,4,5,6,7,8,9,10,11,12];
  displayAchievementInit();
  function displayAchievementInit(){
 	
@@ -1189,30 +1165,29 @@ location.reload();
 	 $( "#achievementEnergyGoalGRP" ).after("<div id=\"achievementEnergyGoal"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Energy Goal Level "+achievementEnergyGoalArray[i-1]+"<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
      }
 	 for(var i=totalAchievement;i>0;i--){
-	 $( "#achievementClickTimesGRP" ).after("<div id=\"achievementClickTimes"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Click "+achievementClickTimesArray[i-1]+" times<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
+	 $( "#achievementTotalBuildingsGRP" ).after("<div id=\"achievementTotalBuildings"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Acquire "+achievementTotalBuildingsArray[i-1]+" buildings<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
      }
 	
 	 for(var i=totalAchievement;i>0;i--){
-	 $( "#achievementClickEnergyGRP" ).after("<div id=\"achievementClickEnergy"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Gain "+formatNumber(achievementClickEnergyArray[i-1])+" energy from clicking<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
+	 $( "#achievementTotalworkerbotsGRP" ).after("<div id=\"achievementTotalworkerbots"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Acquire "+achievementTotalworkerbotsArray[i-1]+" worker bots<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
      }
  }
  updateAchievement();
  function updateAchievement(){
 	 //for initial update
- for(var i=0; i<achievementEnergyGoalStatus+1;i++){
+ for(var i=0; i<achievementstatus[0]+1;i++){
 	 eval("$(\"#achievementEnergyGoal"+i+"\").addClass(\"achievementachieved\");");
  }
- for(var i=0; i<achievementClickTimesStatus+1;i++){
-	 eval("$(\"#achievementClickTimes"+i+"\").addClass(\"achievementachieved\");");
+ for(var i=0; i<achievementstatus[1]+1;i++){
+	 eval("$(\"#achievementTotalBuildings"+i+"\").addClass(\"achievementachieved\");");
  }
- for(var i=0; i<achievementClickEnergyStatus+1;i++){
-	 eval("$(\"#achievementClickEnergy"+i+"\").addClass(\"achievementachieved\");");
+ for(var i=0; i<achievementstatus[2]+1;i++){
+	 eval("$(\"#achievementTotalworkerbots"+i+"\").addClass(\"achievementachieved\");");
  }
- if(achievementstatus1 == false){$("#achievement1").addClass("achievementachieved");}
- if(achievementstatus2 == false){$("#achievement2").addClass("achievementachieved");}
- var width=(achievementEnergyGoalStatus+achievementClickTimesStatus+achievementClickEnergyStatus)/50*100;
+ 
+ var width=(achievementstatus[0]+achievementstatus[1]+achievementstatus[2]+achievementstatus[3]+achievementstatus[4]+achievementstatus[5]+achievementstatus[6]+achievementstatus[7]+achievementstatus[8]+achievementstatus[9])/50*100;
  for(var i=0; i<6; i++){
-	 if(achievementEnergyGoalStatus+achievementClickTimesStatus+achievementClickEnergyStatus>=achievementBonusArray[i]){
+	 if(achievementstatus[0]+achievementstatus[1]+achievementstatus[2]+achievementstatus[3]+achievementstatus[4]+achievementstatus[5]+achievementstatus[6]+achievementstatus[7]+achievementstatus[8]+achievementstatus[9]>=achievementBonusArray[i]){
 	 eval("$(\"#achievementBonusTarget"+i+"\").addClass(\"achievementBonusAchieved\");");
 	 }else{
 		 i=999;
@@ -1223,39 +1198,39 @@ location.reload();
  
  setInterval(achievement, 1000);
   function achievement() {
- if(EnergyGoalLevel>=achievementEnergyGoalArray[achievementEnergyGoalStatus]){
-	achievementEnergyGoalStatus=achievementEnergyGoalStatus+1;
+ if(EnergyGoalLevel>=achievementEnergyGoalArray[achievementstatus[0]]){
+	achievementstatus[0]=achievementstatus[0]+1;
 	calculateEverything();
 	updateAchievement();
-	notify("Achievement \"Energy Goal Level "+achievementEnergyGoalArray[achievementEnergyGoalStatus-1]+"\" acquried. Energy multiplyier increased to "+ emultiplytotal +"");
-	eval("$(\"#achievementEnergyGoal"+achievementEnergyGoalStatus+"\").addClass(\"achievementachieved\");");
+	notify("Achievement \"Energy Goal Level "+achievementEnergyGoalArray[achievementstatus[0]-1]+"\" acquried. Energy multiplyier increased to "+ emultiplytotal +"");
+	eval("$(\"#achievementEnergyGoal"+achievementstatus[0]+"\").addClass(\"achievementachieved\");");
  }
- if(clicked>=achievementClickTimesArray[achievementClickTimesStatus]){
-	achievementClickTimesStatus=achievementClickTimesStatus+1;
+ if(totalbuildings>=achievementTotalBuildingsArray[achievementstatus[1]]){
+	achievementstatus[1]=achievementstatus[1]+1;
     calculateEverything();
 	updateAchievement();
-	notify("Achievement \"Click "+achievementClickTimesArray[achievementClickTimesStatus-1]+" times \" acquried. Energy multiplyier increased to "+ emultiplytotal +"");
-	eval("$(\"#achievementClickTimes"+achievementClickTimesStatus+"\").addClass(\"achievementachieved\");");
+	notify("Achievement \"Acquire "+achievementTotalBuildingsArray[achievementstatus[1]-1]+" buildings \" acquried. Energy multiplyier increased to "+ emultiplytotal +"");
+	eval("$(\"#achievementTotalBuildings"+achievementstatus[1]+"\").addClass(\"achievementachieved\");");
  } 
- if(clickenergy>=achievementClickEnergyArray[achievementClickEnergyStatus]){
-	achievementClickEnergyStatus=achievementClickEnergyStatus+1;
+ if(totalworkerbots>=achievementTotalworkerbotsArray[achievementstatus[2]]){
+	achievementstatus[2]=achievementstatus[2]+1;
 	calculateEverything();
-	notify("Achievement \"Gain "+formatNumber(achievementClickEnergyArray[achievementClickEnergyStatus-1])+" energy from clicking \" acquried. Energy multiplyier increased to "+ emultiplytotal +"");
-	eval("$(\"#achievementClickEnergy"+achievementClickEnergyStatus+"\").addClass(\"achievementachieved\");");
+	notify("Achievement \"Acquire "+formatNumber(achievementTotalworkerbotsArray[achievementstatus[2]-1])+" worker bots \" acquried. Energy multiplyier increased to "+ emultiplytotal +"");
+	eval("$(\"#achievementTotalworkerbots"+achievementstatus[2]+"\").addClass(\"achievementachieved\");");
  } 
   }
   //end
  //STATS CODE
- stats();
  
  setInterval(stats, 2000);
  
  function stats(){
+totalachievements = achievementstatus[0]+achievementstatus[1]+achievementstatus[2]+achievementstatus[3]+achievementstatus[4]+achievementstatus[5]+achievementstatus[6]+achievementstatus[7]+achievementstatus[8]+achievementstatus[9]
 totalbuildings = BuildingAutoNumber0000 + BuildingAutoNumber0001 + BuildingAutoNumber0002 + BuildingAutoNumber0003 + BuildingEstoreNumber0000 + BuildingEstoreNumber0001 + BuildingEstoreNumber0002 + BuildingEstoreNumber0003 + BuildingrProd[0][0] + BuildingrStore[0][0];
 $("#createdenergy").html(formatNumber(totalenergyed)); 
-$("#timesprobarcompleted").html(timesprobarcompleted); 
-$("#totalbuildings").html(totalbuildings); 	 
-$("#probartime").html((probarcounterbasevalue-probarreduction-(unqID8000lvl*200)-(unqID8001lvl*150))+" ms");
+$("#totalachievements").html(totalachievements); 
+$("#totalbuildings").html(totalbuildings); 	  
+$("#htmltotalworkerbots").html(totalworkerbots);
 $("#emultiply").html("x" + emultiplytotal); 	
 $("#version").html(version); 
 $("#currentVersionSettings").html(" Current version: "+version);
@@ -1334,6 +1309,7 @@ function limit(val,max){
  }
 calculateEverything();
 addResource();
+stats();
  function updateValues(){
 	calculateEverything();
  }
