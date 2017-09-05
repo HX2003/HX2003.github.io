@@ -7,6 +7,7 @@ function move() {
 		version:currentVersion,
 		gameState:0,
 		workerbots:[0,0,0,0,0],
+		workerbotscost:[[1,0],[2,100000]],
 		time:10,
 		totalenergyed:0,
 		energycap:50,
@@ -183,6 +184,7 @@ function move() {
 	version=loadedVar1.version;
 	gameState=loadedVar1.gameState;
 	workerbots=loadedVar1.workerbots;
+	workerbotscost=loadedVar1.workerbotscost;
     time=loadedVar1.time;
 	totalenergyed=loadedVar1.totalenergyed;
 	energycap=loadedVar1.energycap;
@@ -297,6 +299,7 @@ function move() {
 		version:version,
 		time:time,
 		workerbots:workerbots,
+		workerbotscost:workerbotscost,
 		gameState:gameState,
 		totalenergyed:totalenergyed,
 		energycap:energycap,
@@ -765,7 +768,7 @@ $("#epstotal3").html(formatNumber(epstotal3));
 $("#epstotal4").html(formatNumber(epstotal4)); 
  }
 function calcresearchplustotal(){
-	rProdplus1=((BuildingrProd[0][2]*BuildingrProd[0][0]))*rProdmultiplytotal*workerbotsrProd;
+	rProdplus1=((BuildingrProd[0][2]))*rProdmultiplytotal*workerbotsrProd;
     rProdplus1 = Math.round(rProdplus1 * 1000) / 1000;
 
 	rProdtotal1=((BuildingrProd[0][2]*BuildingrProd[0][0]))*rProdmultiplytotal*workerbotsrProd;
@@ -773,7 +776,7 @@ function calcresearchplustotal(){
 	$("#rProdplus1").html(formatNumber(rProdplus1));
 	$("#rProdtotal1").html(formatNumber(rProdtotal1));
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-	rStoreplus1=((BuildingrStore[0][2]*BuildingrStore[0][0]))*rStoremultiplytotal*workerbotsrStore;
+	rStoreplus1=((BuildingrStore[0][2]))*rStoremultiplytotal*workerbotsrStore;
     rStoreplus1 = Math.round(rStoreplus1 * 1000) / 1000;
 
 	rStoretotal1=((BuildingrStore[0][2]*BuildingrStore[0][0]))*rStoremultiplytotal*workerbotsrStore;
@@ -859,6 +862,28 @@ function costrStorefunctions(ID){
 	BuildingrStore[ID][3] = Math.round(BuildingrStore[ID][3]  * 1000) / 1000;	
 	$("#rStorecost000"+ID+"").html(formatNumber(BuildingrStore[ID][3]));
 }
+function costworkerbotsfunctions(){
+    var workerbotsRcost0000;
+	var workerbotsEcost0000;
+	var BuildingworkerbotsCostMultiplier = Math.pow(2, totalworkerbots-2);
+	if(totalworkerbots>=4){
+		workerbotsRcost0000=workerbotscost[1][0]*BuildingworkerbotsCostMultiplier;
+		workerbotsEcost0000=workerbotscost[1][1]*BuildingworkerbotsCostMultiplier;		
+	}else{
+		if(totalworkerbots<2){
+			workerbotsRcost0000=0;
+			workerbotsEcost0000=0;
+		}else{
+		workerbotsRcost0000=workerbotscost[totalworkerbots-2][0];
+		workerbotsEcost0000=workerbotscost[totalworkerbots-2][1];
+		}
+	}
+ 
+	workerbotsRcost0000 = Math.round(workerbotsRcost0000  * 10000) / 10000;
+	workerbotsEcost0000 = Math.round(workerbotsEcost0000  * 10000) / 10000;	
+	$("#workerbotsRcost0000").html(formatNumber(workerbotsRcost0000));
+	$("#workerbotsEcost0000").html(formatNumber(workerbotsEcost0000));	
+}
 function cost(){
 costAutofunctions("0000");
 costAutofunctions("0001");
@@ -872,6 +897,8 @@ costEstorefunctions("0003");
 
 costrProdfunctions(0);
 costrStorefunctions(0);
+
+costworkerbotsfunctions();
  } 
  function acquried(){
   $("#egnum0000").html(BuildingAutoNumber0000);
@@ -982,6 +1009,40 @@ if(BuildingrStore["+ID+"][3]<= thetotal) {\
   });\
  ");
    }
+ $("#workerbotsbuy0000" ).click(function() {
+    var workerbotsRcost0000;
+	var workerbotsEcost0000;
+	var BuildingworkerbotsCostMultiplier = Math.pow(2, totalworkerbots-2);
+	if(totalworkerbots>2+2){
+		workerbotsRcost0000=workerbotscost[1][0]*BuildingworkerbotsCostMultiplier;
+		workerbotsEcost0000=workerbotscost[1][1]*BuildingworkerbotsCostMultiplier;		
+	}else{
+		if(totalworkerbots<2){
+			workerbotsRcost0000=0;
+			workerbotsEcost0000=0;
+		}else{
+		workerbotsRcost0000=workerbotscost[totalworkerbots-2][0];
+		workerbotsEcost0000=workerbotscost[totalworkerbots-2][1];
+		}
+	}
+ 
+	workerbotsRcost0000 = Math.round(workerbotsRcost0000  * 1000) / 1000;
+	workerbotsEcost0000 = Math.round(workerbotsEcost0000  * 1000) / 1000;
+if(workerbotsEcost0000<= thetotal && workerbotsRcost0000<= RealResearchPoints) {
+ 
+	thetotal = thetotal - workerbotsEcost0000;
+	thetotal = Math.round(thetotal * 1000) / 1000;
+	RealResearchPoints = RealResearchPoints - workerbotsRcost0000;
+	RealResearchPoints = Math.round(RealResearchPoints * 10000) / 10000;	
+	workerbots[0]=workerbots[0]+1;
+	calculateEverything();
+	
+} else {
+	$("#workerbotserrorcost0000").show("medium").delay(2500).queue(function(n) {
+  $(this).hide("medium"); n();
+  });
+}
+  }); 
       //ENERGY GOALS
   function multiply(a,b){
 	  var factor = 8;
@@ -1256,15 +1317,15 @@ function limit(val,max){
 	assumedNewResearchPoint=ResearchPoints-assumedResearchPointsconverted;
 	if(assumedNewResearchPoint<0){
 		//if result is negative reduce ResearchPoints by ResearchPoints to zero
-		diffResearchPoint=ResearchPoints;
+		diffResearchPoint=ResearchPoints; 
 	}else{
 		//if result not negative reduce by assumedResearchPointsconverted
 		diffResearchPoint=assumedResearchPointsconverted;
 		}
-		
+ 
 	RealResearchPoints = RealResearchPoints + limit(diffResearchPoint,RealResearchPointscap);
 	RealResearchPoints = Math.round(RealResearchPoints * 10000) / 10000;
-	
+ 
 	ResearchPoints = ResearchPoints - limit(diffResearchPoint,RealResearchPointscap);
 	ResearchPoints = Math.round(ResearchPoints * 10000) / 10000;
 	
