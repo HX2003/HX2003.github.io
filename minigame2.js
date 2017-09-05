@@ -8,6 +8,7 @@ function move() {
 		gameState:0,
 		workerbots:[0,0,0,0,0],
 		workerbotscost:[[1,0],[2,100000]],
+		tabsunlocked:[1,0,0,0,0,1],
 		time:10,
 		totalenergyed:0,
 		energycap:50,
@@ -16,7 +17,6 @@ function move() {
 		probarstartdate:0,
 		probarstartdateI:0,
 		probarreduction:0,
-		timesprobarcompleted:0,
 		epsgaintotal1:0,
 		epsgaintotal2:0,
 		epsgaintotal3:0,
@@ -68,7 +68,7 @@ function move() {
 	thetotal:0,
 	achievementstatus:[0,0,0,0,0,0,0,0,0,0,],
 	EnergyGoalLevel:0,
-	EnergyGoalStart:50,
+	EnergyGoalStart:1000,
 	ResearchPoints:0,
 	RealResearchPoints:0,
 	RealResearchPointscap:0
@@ -177,6 +177,7 @@ function move() {
 	gameState=loadedVar1.gameState;
 	workerbots=loadedVar1.workerbots;
 	workerbotscost=loadedVar1.workerbotscost;
+	tabsunlocked=loadedVar1.tabsunlocked;
     time=loadedVar1.time;
 	totalenergyed=loadedVar1.totalenergyed;
 	energycap=loadedVar1.energycap;
@@ -185,7 +186,6 @@ function move() {
 	probarstartdate=loadedVar1.probarstartdate;
 	probarstartdateI=loadedVar1.probarstartdateI;
 	probarreduction=loadedVar1.probarreduction;
-	timesprobarcompleted=loadedVar1.timesprobarcompleted;
 	epsgaintotal1=loadedVar1.epsgaintotal1;
 	epsgaintotal2=loadedVar1.epsgaintotal2;
 	epsgaintotal3=loadedVar1.epsgaintotal3;
@@ -284,6 +284,7 @@ function move() {
 		time:time,
 		workerbots:workerbots,
 		workerbotscost:workerbotscost,
+		tabsunlocked:tabsunlocked,
 		gameState:gameState,
 		totalenergyed:totalenergyed,
 		energycap:energycap,
@@ -292,7 +293,6 @@ function move() {
 		probarstartdate:probarstartdate,
 		probarstartdateI:probarstartdateI,
 		probarreduction:probarreduction,
-		timesprobarcompleted:timesprobarcompleted,
 		epsgaintotal1:epsgaintotal1,
 		epsgaintotal2:epsgaintotal2,
 		epsgaintotal3:epsgaintotal3,
@@ -1021,7 +1021,7 @@ if(workerbotsEcost0000<= thetotal && workerbotsRcost0000<= RealResearchPoints) {
   }); 
       //ENERGY GOALS
   function multiply(a,b){
-	  var factor = 8;
+	  var factor = 2.75;
 	  return a*Math.pow(factor,b);  
   }
   energyGoal1=$("#energyGoal1");
@@ -1106,31 +1106,6 @@ function calculateEverything(){
 	  doEnergyGoals();
 	if(thetotal >= 100000000000000){$( "#won" ).show();}
 }
-/* START GAME 🔒*/
-function gamestate0(){
-	$('.blackScreen').fadeOut(0);
-	$('#startgameText1').fadeOut(0);
-	$('#startgameText2').fadeOut(0);	
-}
-function gamestate1(){
-	workerbots[1]=1; //first workerbots
-	workerbots[2]=1; //first workerbots
-	$('.blackScreen').fadeOut(1000);
-	$('#startgameText1').fadeOut(1000);
-	$('#startgameText2').fadeOut(1000);
-	BuildingAutoNumber0000 = BuildingAutoNumber0000 + 1;
-	BuildingEstoreNumber0000 = BuildingEstoreNumber0000 + 1;
-	calculateEverything();	
-}
-if(gameState==1){
-   gamestate0();
-}
-$( "#progress1" ).click(function() {
-	if(gameState==0){
-	gamestate1();
-	gameState=1;
-	}
-});
 //DELETE SAVE
   $( "#deleteallcookies" ).click(function() {
 document.getElementById("deleteallcookiesdialog").style.display = "block";
@@ -1255,19 +1230,62 @@ function openTab(tabID,ID) {
 	 
 }
 //addTabClass CODE
+tabsName=["Buildings","Research","Energy Goals","Achievements","Stats","Settings N' Stuff"];
+function fillTabsName(){
+	if(tabsunlocked[0]==1){$("#menuA").html(tabsName[0]);}else{$("#menuA").html("&#128274");}
+	if(tabsunlocked[1]==1){$("#menuB").html(tabsName[1]);}else{$("#menuB").html("&#128274");}
+	if(tabsunlocked[2]==1){$("#menuC").html(tabsName[2]);}else{$("#menuC").html("&#128274");}
+	if(tabsunlocked[3]==1){$("#menuD").html(tabsName[3]);}else{$("#menuD").html("&#128274");}
+	if(tabsunlocked[4]==1){$("#menuE").html(tabsName[4]);}else{$("#menuE").html("&#128274");}
+	if(tabsunlocked[5]==1){$("#menuF").html(tabsName[5]);}else{$("#menuF").html("&#128274");}
+}
+fillTabsName();
 tabs = document.getElementsByClassName("tabs");
  var x = document.getElementsByClassName("tabClass");
  for (i = 0; i < x.length; i++) {
         tabs[i].className = tabs[i].className += " notOn";
     }
-
+ 
  openTab('menuA',"tabA");
- document.getElementById('menuA').addEventListener("click", function() {openTab('menuA','tabA')});
- document.getElementById('menuB').addEventListener("click", function() {openTab('menuB','tabB')});
- document.getElementById('menuC').addEventListener("click", function() {openTab('menuC','tabC')});
- document.getElementById('menuD').addEventListener("click", function() {openTab('menuD','tabD')});
- document.getElementById('menuE').addEventListener("click", function() {openTab('menuE','tabE')});
- document.getElementById('menuF').addEventListener("click", function() {openTab('menuF','tabF')});
+ document.getElementById('menuA').addEventListener("click", function() {if(tabsunlocked[0]==1){openTab('menuA','tabA')}else{$("#menuA").qaddclass("red").delay(750).qremoveclass("red");}});
+ document.getElementById('menuB').addEventListener("click", function() {if(tabsunlocked[1]==1){openTab('menuB','tabB')}else{$("#menuB").qaddclass("red").delay(750).qremoveclass("red");}});
+ document.getElementById('menuC').addEventListener("click", function() {if(tabsunlocked[2]==1){openTab('menuC','tabC')}else{$("#menuC").qaddclass("red").delay(750).qremoveclass("red");}});
+ document.getElementById('menuD').addEventListener("click", function() {if(tabsunlocked[3]==1){openTab('menuD','tabD')}else{$("#menuD").qaddclass("red").delay(750).qremoveclass("red");}});
+ document.getElementById('menuE').addEventListener("click", function() {if(tabsunlocked[4]==1){openTab('menuE','tabE')}else{$("#menuE").qaddclass("red").delay(750).qremoveclass("red");}});
+ document.getElementById('menuF').addEventListener("click", function() {if(tabsunlocked[5]==1){openTab('menuF','tabF')}else{$("#menuF").qaddclass("red").delay(750).qremoveclass("red");}});
+ //
+ /* PROGRESSION COMPONENT */
+function gamestate0(){
+	$('.blackScreen').fadeOut(0);
+	$('#startgameText1').fadeOut(0);
+	$('#startgameText2').fadeOut(0);	
+}
+function gamestate1(){
+	workerbots[1]=1; //first workerbots
+	workerbots[2]=1; //first workerbots
+	$('.blackScreen').fadeOut(1000);
+	$('#startgameText1').fadeOut(1000);
+	$('#startgameText2').fadeOut(1000);
+	BuildingAutoNumber0000 = BuildingAutoNumber0000 + 1;
+	BuildingEstoreNumber0000 = BuildingEstoreNumber0000 + 1;
+	calculateEverything();	
+}
+if(gameState>=1){
+   gamestate0();
+}
+$( "#progress1" ).click(function() {
+	if(gameState==0){
+	gamestate1();
+	gameState=1;
+	}
+});
+function checkGamestate(){
+	if(totalenergyed>=50&&gameState==1){tabsunlocked[3]=1;gameState=2;fillTabsName(); notify("Tab \""+tabsName[3]+"\" unlocked");}
+	if(totalenergyed>=250&&gameState==2){tabsunlocked[4]=1;gameState=3;fillTabsName(); notify("Tab \""+tabsName[4]+"\" unlocked");}
+	if(totalenergyed>=750&&gameState==3){tabsunlocked[2]=1;gameState=4;fillTabsName(); notify("Tab \""+tabsName[2]+"\" unlocked");}
+	if(RealResearchPoints>=1&&gameState==4){tabsunlocked[1]=1;gameState=5;fillTabsName(); notify("Tab \""+tabsName[1]+"\" unlocked");}
+}
+ setInterval(checkGamestate, 500);
  //ADD RESOURCE
   var lastUpdate=Date.now();
 function limit(val,max){
