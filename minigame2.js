@@ -989,7 +989,7 @@ if(BuildingrStore["+ID+"][3]<= thetotal) {\
     var workerbotsRcost0000;
 	var workerbotsEcost0000;
 	var BuildingworkerbotsCostMultiplier = Math.pow(2, totalworkerbots-2);
-	if(totalworkerbots>2+2){
+	if(totalworkerbots>=4){
 		workerbotsRcost0000=workerbotscost[1][0]*BuildingworkerbotsCostMultiplier;
 		workerbotsEcost0000=workerbotscost[1][1]*BuildingworkerbotsCostMultiplier;		
 	}else{
@@ -1002,8 +1002,8 @@ if(BuildingrStore["+ID+"][3]<= thetotal) {\
 		}
 	}
  
-	workerbotsRcost0000 = Math.round(workerbotsRcost0000  * 1000) / 1000;
-	workerbotsEcost0000 = Math.round(workerbotsEcost0000  * 1000) / 1000;
+	workerbotsRcost0000 = Math.round(workerbotsRcost0000  * 10000) / 10000;
+	workerbotsEcost0000 = Math.round(workerbotsEcost0000  * 10000) / 10000;	
 if(workerbotsEcost0000<= thetotal && workerbotsRcost0000<= RealResearchPoints) {
  
 	thetotal = thetotal - workerbotsEcost0000;
@@ -1124,7 +1124,7 @@ location.reload();
 //
 //
 //
-//ACHEIVEMENT
+//ACHIEVEMENT
 //
 //
 //
@@ -1147,7 +1147,7 @@ location.reload();
 	 $( "#achievementTotalworkerbotsGRP" ).after("<div id=\"achievementTotalworkerbots"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Acquire "+achievementTotalworkerbotsArray[i-1]+" worker bots<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
      }
  }
- updateAchievement();
+ 
  function updateAchievement(){
 	 //for initial update
  for(var i=0; i<achievementstatus[0]+1;i++){
@@ -1175,21 +1175,21 @@ location.reload();
   function achievement() {
  if(EnergyGoalLevel>=achievementEnergyGoalArray[achievementstatus[0]]){
 	achievementstatus[0]=achievementstatus[0]+1;
-	calculateEverything();
+	//calculateEverything();
 	updateAchievement();
 	notify("Achievement \"Energy Goal Level "+achievementEnergyGoalArray[achievementstatus[0]-1]+"\" acquried. Energy multiplyier increased to "+ emultiplytotal +"");
 	eval("$(\"#achievementEnergyGoal"+achievementstatus[0]+"\").addClass(\"achievementachieved\");");
  }
  if(totalbuildings>=achievementTotalBuildingsArray[achievementstatus[1]]){
 	achievementstatus[1]=achievementstatus[1]+1;
-    calculateEverything();
+    //calculateEverything();
 	updateAchievement();
 	notify("Achievement \"Acquire "+achievementTotalBuildingsArray[achievementstatus[1]-1]+" buildings \" acquried. Energy multiplyier increased to "+ emultiplytotal +"");
 	eval("$(\"#achievementTotalBuildings"+achievementstatus[1]+"\").addClass(\"achievementachieved\");");
  } 
  if(totalworkerbots>=achievementTotalworkerbotsArray[achievementstatus[2]]){
 	achievementstatus[2]=achievementstatus[2]+1;
-	calculateEverything();
+	//calculateEverything();
 	notify("Achievement \"Acquire "+formatNumber(achievementTotalworkerbotsArray[achievementstatus[2]-1])+" worker bots \" acquried. Energy multiplyier increased to "+ emultiplytotal +"");
 	eval("$(\"#achievementTotalworkerbots"+achievementstatus[2]+"\").addClass(\"achievementachieved\");");
  } 
@@ -1230,7 +1230,7 @@ function openTab(tabID,ID) {
 	 
 }
 //addTabClass CODE
-tabsName=["Buildings","Research","Energy Goals","Achievements","Stats","Settings N' Stuff"];
+tabsName=["Buildings","Research","Energy Goals","Achievements","Unknown","Settings N' Stuff"];
 function fillTabsName(){
 	if(tabsunlocked[0]==1){$("#menuA").html(tabsName[0]);}else{$("#menuA").html("&#128274");}
 	if(tabsunlocked[1]==1){$("#menuB").html(tabsName[1]);}else{$("#menuB").html("&#128274");}
@@ -1281,9 +1281,8 @@ $( "#progress1" ).click(function() {
 });
 function checkGamestate(){
 	if(totalenergyed>=50&&gameState==1){tabsunlocked[3]=1;gameState=2;fillTabsName(); notify("Tab \""+tabsName[3]+"\" unlocked");}
-	if(totalenergyed>=250&&gameState==2){tabsunlocked[4]=1;gameState=3;fillTabsName(); notify("Tab \""+tabsName[4]+"\" unlocked");}
-	if(totalenergyed>=750&&gameState==3){tabsunlocked[2]=1;gameState=4;fillTabsName(); notify("Tab \""+tabsName[2]+"\" unlocked");}
-	if(RealResearchPoints>=1&&gameState==4){tabsunlocked[1]=1;gameState=5;fillTabsName(); notify("Tab \""+tabsName[1]+"\" unlocked");}
+	if(totalenergyed>=750&&gameState==2){tabsunlocked[2]=1;gameState=3;fillTabsName(); notify("Tab \""+tabsName[2]+"\" unlocked");}
+	if(RealResearchPoints>=1&&gameState==3){tabsunlocked[1]=1;gameState=4;fillTabsName(); notify("Tab \""+tabsName[1]+"\" unlocked");}
 }
  setInterval(checkGamestate, 500);
  //ADD RESOURCE
@@ -1328,6 +1327,7 @@ function limit(val,max){
 calculateEverything();
 addResource();
 stats();
+ updateAchievement();
  function updateValues(){
 	calculateEverything();
  }
@@ -1349,19 +1349,19 @@ stats();
 	 function useCost(costE,costR){
 	   thetotal=thetotal-costE;
 	   RealResearchPoints=RealResearchPoints-costR;
- }	
-	drawIcon(10,280,50,50,30,40,'/website/tools/research.png',"unqID9000","upgrade9000","cost9000","Unlock research","Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.");
+	}
+    //INITIALIZATION PHASE
+	drawIcon(10,280,50,50,30,40,'./website/tools/research.png',"unqID9000","upgrade9000","cost9000","Unlock research","Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.");
     drawLink(60,302,20,5,"unqID0000");
-	drawLink(80,185,5,255,"unqID0001");
-	drawLink(85,185,20,5,"unqID0002");
-	//E branch
-		drawIcon(105,160,50,50,30,40,'/website/tools/EPOWunlock.png',"unqID9001","upgrade9001","cost9001","Energy multipler","Increase energy multiplyier by 0.10");
+	drawLink(80,200,5,200,"unqID0001");
+	//Bot branch
+		drawIcon(57.5,152.5,50,50,40,40,'./website/tools/bot.png',"unqID9001","upgrade9001","cost9001","Unlock bot research","Need more and better bots?");
 	linkIcon("unqID9000");
 	//PRO bar branch
 	drawLink(85,302,20,5,"unqID0800");
-	    drawIcon(105,280,50,50,30,40,'/website/tools/probarenergy1.png',"unqID8000","upgrade8000","cost8000","Speed up pro bar","Reduce time taken for progress bar to complete 200ms each, max level 5. Cost increases by 0.05 each level.");
+	    drawIcon(105,280,50,50,30,40,'./website/tools/probarenergy1.png',"unqID8000","upgrade8000","cost8000","Energy production and storage boost I","Increase multiplyier for both by 0.2");
     //9
-	drawIcon(58,440,50,50,30,40,'/website/tools/researchD.png',"unqID6000","upgrade6000","cost6000","Unlock new research tree","Unlock the ability to research new, perharps more sinister technologies.");
+	drawIcon(58,440,50,50,30,40,'./website/tools/researchD.png',"unqID6000","upgrade6000","cost6000","Unlock new research tree","Unlock the ability to research new, perharps more sinister technologies.");
 	//onload functions
  
 		upgrade9000Pack("onload");
