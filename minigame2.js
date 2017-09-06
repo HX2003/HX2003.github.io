@@ -1337,7 +1337,7 @@ stats();
  //RESEARCH SECTION
 	zoom1=100;
 	padding = 5;
-	yoffset =-10;
+	yoffset = 10;
     function research(){
 	function checkCostER(costE,costR){
 	    if(thetotal>=costE&&RealResearchPoints>=costR){
@@ -1599,8 +1599,8 @@ stats();
 	   linkIcon("unqID8000"); 
 	   linkIcon("unqID6000");
 	       //reveal new links and icons
-	  drawLink(155,185,20,5,"unqID0901");
-	      drawIcon(175,160,50,50,30,40,'/website/tools/nil.png',"unqID9002","upgrade9002","cost9002","Energy multipler T2","Increase energy multiplyier by 0.20");
+	  drawLink(107.5,177.5,10,5,"unqID0901");
+	      drawIcon(117.5,152.5,50,50,30,40,'/website/tools/nil.png',"unqID9002","upgrade9002","cost9002","Bot efficiency","Increase Bot efficiency multiplyier by 0.20");
 	   drawLink(155,302,20,5,"unqID0801");
 	      drawIcon(175,280,50,50,30,40,'/website/tools/probarenergy2.png',"unqID8001","upgrade8001","cost8001","Speed up pro bar T2","Reduce time taken for progress bar to complete 150ms each, max level 5.");
 	   drawLink(127,330,5,30,"unqID0881");
