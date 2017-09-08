@@ -1,4 +1,3 @@
-
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
@@ -24,10 +23,10 @@ function setCookie(cname, cvalue) {
 
 function setCookieJson(name, value) {
 	var exdate=new Date();
-	exdate.setDate(exdate.getDate() + 30);
+	exdate.setDate(exdate.getDate() + 99999);
 	 
 	var cookie = [name, '=',  LZString.compressToBase64(JSON.stringify(value)),';'].join('');
-	document.cookie = cookie;
+	document.cookie = cookie + "expires=" + exdate + ";";
 }
  
 function cookietoviarble(cname){
