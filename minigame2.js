@@ -74,30 +74,6 @@ function move() {
 	RealResearchPointscap:0
  }
  InitVar4 = {
- cost9000E:50,
- cost9000R:0,
- cost8000E:125,
- cost8000R:0.5,
- cost8081E:400,
- cost8081R:1,
- cost8001E:500,
- cost8001R:1.25,
- cost8002E:10000,
- cost8002R:4,
- cost8091E:1500,
- cost8091R:2,
- cost6000E:566000,
- cost6000R:16,
- cost6001E:750000,
- cost6001R:5,
- cost6001Cancel:750000000,
- cost6002E:750000,
- cost6002R:5,
- cost6002Cancel:750000000,
- cost9001E:200,
- cost9001R:0.75,
- cost9002E:10000,
- cost9002R:3,
  unqID9000lvl:0,
  unqID8000lvl:0,
  unqID8001lvl:0,
@@ -109,7 +85,33 @@ function move() {
  unqID9001lvl:0,
  unqID9002lvl:0
  }
- 
+ //fixed variables
+ staticVar1 = {
+ cost9000E:10000,
+ cost9000R:0,
+ cost8000E:12500,
+ cost8000R:0.5,
+ cost8081E:400,
+ cost8081R:1,
+ cost8001E:500,
+ cost8001R:1.25,
+ cost8002E:10000,
+ cost8002R:4,
+ cost8091E:1500,
+ cost8091R:2,
+ cost6000E:5666000,
+ cost6000R:16,
+ cost6001E:750000,
+ cost6001R:5,
+ cost6001Cancel:750000000,
+ cost6002E:750000,
+ cost6002R:5,
+ cost6002Cancel:750000000,
+ cost9001E:100000,
+ cost9001R:5,
+ cost9002E:150000,
+ cost9002R:3, 
+ }
  Cookieresult = getCookie("Var1");
  if(Cookieresult!=""){
 	 loadCookies("Var1","1");
@@ -238,30 +240,6 @@ function move() {
 	RealResearchPoints=loadedVar3.RealResearchPoints;
 	RealResearchPointscap=loadedVar3.RealResearchPointscap;
 /////////////////////////////////////////////////////////////////////	
-	cost9000E=loadedVar4.cost9000E;
-	cost9000R=loadedVar4.cost9000R;
-	cost8000E=loadedVar4.cost8000E;
-	cost8000R=loadedVar4.cost8000R;
-	cost8081E=loadedVar4.cost8081E;
-	cost8081R=loadedVar4.cost8081R;
-	cost8001E=loadedVar4.cost8001E;
-	cost8001R=loadedVar4.cost8001R;
-	cost8002E=loadedVar4.cost8002E;
-	cost8002R=loadedVar4.cost8002R;
-	cost8091E=loadedVar4.cost8091E;
-	cost8091R=loadedVar4.cost8091R;
-	cost6000E=loadedVar4.cost6000E;
-	cost6000R=loadedVar4.cost6000R;
-	cost6001E=loadedVar4.cost6001E;
-	cost6001R=loadedVar4.cost6001R;
-	cost6001Cancel=loadedVar4.cost6001Cancel;
-	cost6002E=loadedVar4.cost6002E;
-	cost6002R=loadedVar4.cost6002R;
-    cost6002Cancel=loadedVar4.cost6002Cancel;
-    cost9001E=loadedVar4.cost9001E;
-	cost9001R=loadedVar4.cost9001R;
-	cost9002E=loadedVar4.cost9002E;
-	cost9002R=loadedVar4.cost9002R;
 	unqID9000lvl=loadedVar4.unqID9000lvl;
 	unqID8000lvl=loadedVar4.unqID8000lvl;
 	unqID8001lvl=loadedVar4.unqID8001lvl;
@@ -272,7 +250,31 @@ function move() {
 	unqID6002lvl=loadedVar4.unqID6002lvl;
 	unqID9001lvl=loadedVar4.unqID9001lvl;
 	unqID9002lvl=loadedVar4.unqID9002lvl;
-	
+/////////////////////////////////////////////////////////////////////
+	cost9000E=staticVar1.cost9000E;
+	cost9000R=staticVar1.cost9000R;
+	cost8000E=staticVar1.cost8000E;
+	cost8000R=staticVar1.cost8000R;
+	cost8081E=staticVar1.cost8081E;
+	cost8081R=staticVar1.cost8081R;
+	cost8001E=staticVar1.cost8001E;
+	cost8001R=staticVar1.cost8001R;
+	cost8002E=staticVar1.cost8002E;
+	cost8002R=staticVar1.cost8002R;
+	cost8091E=staticVar1.cost8091E;
+	cost8091R=staticVar1.cost8091R;
+	cost6000E=staticVar1.cost6000E;
+	cost6000R=staticVar1.cost6000R;
+	cost6001E=staticVar1.cost6001E;
+	cost6001R=staticVar1.cost6001R;
+	cost6001Cancel=staticVar1.cost6001Cancel;
+	cost6002E=staticVar1.cost6002E;
+	cost6002R=staticVar1.cost6002R;
+    cost6002Cancel=staticVar1.cost6002Cancel;
+    cost9001E=staticVar1.cost9001E;
+	cost9001R=staticVar1.cost9001R;
+	cost9002E=staticVar1.cost9002E;
+	cost9002R=staticVar1.cost9002R;	
 	
  }
  //others
@@ -350,6 +352,7 @@ function move() {
 	
  }
  saveVar4 = {
+/*
  cost9000E:cost9000E,
  cost9000R:cost9000R,
  cost8000E:cost8000E,
@@ -374,6 +377,7 @@ function move() {
  cost9001R:cost9001R,
  cost9002E:cost9002E,
  cost9002R:cost9002R,
+ */
  unqID9000lvl:unqID9000lvl,
  unqID8000lvl:unqID8000lvl,
  unqID8001lvl:unqID8001lvl,
@@ -799,6 +803,10 @@ function calcresearchplustotal(){
  }
  achievementBonusArray=[0,5,10,20,35,50];
  achievementTotalEmultiplyBonus=[0,15,20,40,80,160];
+ function calcmultiply(){
+	estoremultiplytotal=1+unqID8000lvl*0.2;
+	estoremultiplytotal=1+unqID8000lvl*0.2;
+ }
  function calcemultiply(){
 	 TotalEmultiply=0;
 for(var i=0; i<6; i++){
@@ -1076,7 +1084,8 @@ if(workerbotsEcost0000<= thetotal && workerbotsRcost0000<= RealResearchPoints) {
 
 function calculateEverything(){
 	calcworkerbots();
-	calcemultiply();
+	calcemultiply(); //global multiplyer
+	calcmultiply();  //individual multiplyer
 	calcestore();
 	calcrStore();
     calcrProd();
@@ -1351,17 +1360,17 @@ stats();
 	   RealResearchPoints=RealResearchPoints-costR;
 	}
     //INITIALIZATION PHASE
-	drawIcon(10,280,50,50,30,40,'./website/tools/research.png',"unqID9000","upgrade9000","cost9000","Unlock research","Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.");
+	drawIcon(10,280,50,50,40,40,'./website/tools/research.png',"unqID9000","upgrade9000","cost9000","Unlock research","Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","The beginning");
     drawLink(60,302,20,5,"unqID0000");
 	drawLink(80,200,5,200,"unqID0001");
 	//Bot branch
-		drawIcon(57.5,152.5,50,50,40,40,'./website/tools/bot.png',"unqID9001","upgrade9001","cost9001","Unlock bot research","Need more and better bots?");
+		drawIcon(57.5,152.5,50,50,40,40,'./website/tools/bot.png',"unqID9001","upgrade9001","cost9001","Unlock bot research","","Need more and better bots?");
 	linkIcon("unqID9000");
 	//PRO bar branch
 	drawLink(85,302,20,5,"unqID0800");
-	    drawIcon(105,280,50,50,30,40,'./website/tools/probarenergy1.png',"unqID8000","upgrade8000","cost8000","Energy production and storage boost I","Increase multiplyier for both by 0.2");
+	    drawIcon(105,280,50,50,30,40,'./website/tools/hammer.png',"unqID8000","upgrade8000","cost8000","Energy production and storage boost I","Increase multiplyier for both by 0.2","Better maintenance");
     //9
-	drawIcon(58,440,50,50,30,40,'./website/tools/researchD.png',"unqID6000","upgrade6000","cost6000","Unlock new research tree","Unlock the ability to research new, perharps more sinister technologies.");
+	drawIcon(58,400,50,50,30,40,'./website/tools/researchD.png',"unqID6000","upgrade6000","cost6000","Unlock new research tree","Unlock the ability to research new, perharps more sinister technologies.");
 	//onload functions
  
 		upgrade9000Pack("onload");
@@ -1600,7 +1609,7 @@ stats();
 	   linkIcon("unqID6000");
 	       //reveal new links and icons
 	  drawLink(107.5,177.5,10,5,"unqID0901");
-	      drawIcon(117.5,152.5,50,50,30,40,'/website/tools/nil.png',"unqID9002","upgrade9002","cost9002","Bot efficiency","Increase Bot efficiency multiplyier by 0.20");
+	      drawIcon(117.5,152.5,50,50,30,40,'/website/tools/nil.png',"unqID9002","upgrade9002","cost9002","Bot efficiency","Increase Bot efficiency multiplyier by 0.20","Better gears");
 	   drawLink(155,302,20,5,"unqID0801");
 	      drawIcon(175,280,50,50,30,40,'/website/tools/probarenergy2.png',"unqID8001","upgrade8001","cost8001","Speed up pro bar T2","Reduce time taken for progress bar to complete 150ms each, max level 5.");
 	   drawLink(127,330,5,30,"unqID0881");
@@ -1611,7 +1620,7 @@ stats();
 	      drawIcon(140,220,50,50,30,40,'/website/tools/nil.png',"unqID8091","upgrade8091","cost8091","Energy per click gains additional +2% Eps","Energy per click gains additional +1% Eps for each level, max level 5.");
 	   //research 
 	   drawRect(120,480,300,140,"unqIDRect0600");
-	   drawLink(80,490,5,200,"unqID0601");
+	   drawLink(80,450,5,200,"unqID0601");
 	   drawLink(85,550,40,5,"unqID0610");
 	   drawLink(125,510,5,80,"unqID0611");
 	   drawLink(130,510,20,5,"unqID0612");
@@ -1865,12 +1874,12 @@ stats();
 		 }
 	}
  
-	function drawIcon(x,y,boxw,boxh,imgw,imgh,url,unqID,upgradeID,costID,title,desc){
-		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\"></span></b>&nbsp<span>Energy</span><p><b><span id=\""+costID+"R\"></span></b> Research Points</p><p style=\"text-align:left; padding-left:5px;padding-right:5px;\">"+desc+"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
+	function drawIcon(x,y,boxw,boxh,imgw,imgh,url,unqID,upgradeID,costID,title,desc,caption){
+		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\"></span></b>&nbsp<span>Energy</span><p><b><span id=\""+costID+"R\"></span></b> Research Points</p><p style=\"text-align:left; padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18	px;\">\""+caption+"\"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
 		drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content);
 	}
-	function drawIconRevokable(x,y,boxw,boxh,imgw,imgh,url,unqID,upgradeID,costID,title,desc){
-		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\"></span></b>&nbsp<span>Energy</span><p><b><span id=\""+costID+"R\"></span></b> Research Points</p><p>Canceling Cost:&nbsp<b><span id=\""+costID+"Cancel\"></span></b>&nbsp<span>Energy</span></p><p style=\"text-align:left; padding-left:5px;padding-right:5px;\">"+desc+"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
+	function drawIconRevokable(x,y,boxw,boxh,imgw,imgh,url,unqID,upgradeID,costID,title,desc,caption){
+		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\"></span></b>&nbsp<span>Energy</span><p><b><span id=\""+costID+"R\"></span></b> Research Points</p><p>Canceling Cost:&nbsp<b><span id=\""+costID+"Cancel\"></span></b>&nbsp<span>Energy</span></p><p style=\"text-align:left; padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18	px;\">\""+caption+"\"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
 		drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content);
 	}
  
@@ -1880,7 +1889,7 @@ stats();
 		calc2 = ((boxh-imgh-border)/2);	
 		
 	$( "#overlay2contents" ).append( "<div class=\"upgradeIcon IconnotLinked\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+boxw+"px;height:"+boxh+"px;\"></div>" );	
-    $( "#"+unqID+"" ).append("<b><span class=\"upgradeLevel\" id=\""+unqID+"lvl\"></span></b>");
+    $( "#"+unqID+"" ).append("<b><span class=\"upgradeLevel\" style=\"z-index: 1;\" id=\""+unqID+"lvl\"></span></b>");
 	$( "#"+unqID+"" ).append("<img src=\""+url+"\" class=\"divsImg\" id=\""+unqID+"Img\" style=\"position:absolute;top:"+calc2 +"px;left:"+calc1+"px;width:"+imgw+"px;height:"+imgh+"px;\">");
     $( "#"+unqID+"" ).append("<span class=\"upgradetooltiptext notLinkedTooltip \" id=\""+unqID+"tt\">"+content+"</span>");
 	$( "#"+unqID+"" ).append("<span class=\"upgradebridge notLinkedTooltip\" id=\""+unqID+"ttb\"></span>");
