@@ -83,7 +83,9 @@ function move() {
  unqID6001lvl:0,
  unqID6002lvl:0,
  unqID9001lvl:0,
- unqID9002lvl:0
+ unqID9002lvl:0,
+ unqID9003lvl:0,
+ unqID9004lvl:0
  }
  //fixed variables
  staticVar1 = {
@@ -93,9 +95,9 @@ function move() {
  cost8000R:0.5,
  cost8081E:400,
  cost8081R:1,
- cost8001E:500,
- cost8001R:1.25,
- cost8002E:10000,
+ cost8001E:100000,
+ cost8001R:1.5,
+ cost8002E:500000,
  cost8002R:4,
  cost8091E:1500,
  cost8091R:2,
@@ -107,10 +109,14 @@ function move() {
  cost6002E:750000,
  cost6002R:5,
  cost6002Cancel:750000000,
- cost9001E:100000,
+ cost9001E:1000000,
  cost9001R:5,
- cost9002E:150000,
+ cost9002E:1500000,
  cost9002R:3, 
+ cost9003E:4500000,
+ cost9003R:5,
+ cost9004E:10000000,
+ cost9004R:7.5
  }
  Cookieresult = getCookie("Var1");
  if(Cookieresult!=""){
@@ -250,6 +256,8 @@ function move() {
 	unqID6002lvl=loadedVar4.unqID6002lvl;
 	unqID9001lvl=loadedVar4.unqID9001lvl;
 	unqID9002lvl=loadedVar4.unqID9002lvl;
+	unqID9003lvl=loadedVar4.unqID9003lvl;
+	unqID9004lvl=loadedVar4.unqID9004lvl;
 /////////////////////////////////////////////////////////////////////
 	cost9000E=staticVar1.cost9000E;
 	cost9000R=staticVar1.cost9000R;
@@ -274,7 +282,11 @@ function move() {
     cost9001E=staticVar1.cost9001E;
 	cost9001R=staticVar1.cost9001R;
 	cost9002E=staticVar1.cost9002E;
-	cost9002R=staticVar1.cost9002R;	
+	cost9002R=staticVar1.cost9002R;
+	cost9003E=staticVar1.cost9003E;
+	cost9003R=staticVar1.cost9003R;
+	cost9004E=staticVar1.cost9004E;
+	cost9004R=staticVar1.cost9004R;
 	
  }
  //others
@@ -387,7 +399,9 @@ function move() {
  unqID6001lvl:unqID6001lvl,
  unqID6002lvl:unqID6002lvl,
  unqID9001lvl:unqID9001lvl,
- unqID9002lvl:unqID9002lvl
+ unqID9002lvl:unqID9002lvl,
+ unqID9003lvl:unqID9003lvl,
+ unqID9004lvl:unqID9004lvl
  }
 	 
  }
@@ -588,10 +602,6 @@ function calcworkerbots(){
 	$("#workerbotsT3").html(workerbotsRESEARCHPRODUCTION);
 	$("#workerbotsT4").html(workerbotsRESEARCHSTORAGE);
 }
-function calcestore(){
-	energycap=((BuildingEstoreOrginalValue0000*BuildingEstoreNumber0000) + (BuildingEstoreOrginalValue0001*BuildingEstoreNumber0001) + (BuildingEstoreOrginalValue0002*BuildingEstoreNumber0002) + (BuildingEstoreOrginalValue0003*BuildingEstoreNumber0003))*estoremultiplytotal*workerbotsStore;
-    energycap = Math.round(energycap * 1000) / 1000;
-}
 function calcrProd(){
 	rProdgain=((BuildingrProd[0][2]*BuildingrProd[0][0]))*rProdmultiplytotal*workerbotsrProd;
     rProdgain = Math.round(rProdgain * 1000) / 1000;
@@ -600,7 +610,7 @@ function calcrStore(){
 	RealResearchPointscap=((BuildingrStore[0][2]*BuildingrStore[0][0]))*rStoremultiplytotal*workerbotsrStore;
     RealResearchPointscap = Math.round(RealResearchPointscap * 10000) / 10000;
 }
-function calcestoreplus(){
+function calcestorebuildings(){
 	calcB1 = (BuildingEstoreOrginalValue0000*estoremultiply[0])*estoremultiplytotal*workerbotsStore;
 	calcB2 = (BuildingEstoreOrginalValue0001*estoremultiply[1])*estoremultiplytotal*workerbotsStore;
 	calcB3 = (BuildingEstoreOrginalValue0002*estoremultiply[2])*estoremultiplytotal*workerbotsStore;
@@ -614,10 +624,8 @@ function calcestoreplus(){
 	$("#estoreplus1").html(formatNumber(calcB1));
 	$("#estoreplus2").html(formatNumber(calcB2));
 	$("#estoreplus3").html(formatNumber(calcB3));	
-	$("#estoreplus4").html(formatNumber(calcB4));	
-}
-
-function calcestoregaintotal(){
+	$("#estoreplus4").html(formatNumber(calcB4));
+//////////////////////////////////////////////////////////////////////////////////////////////
 	estoretotal1 = (BuildingEstoreOrginalValue0000*BuildingEstoreNumber0000*estoremultiply[0])*estoremultiplytotal*workerbotsStore;
 	estoretotal2 = (BuildingEstoreOrginalValue0001*BuildingEstoreNumber0001*estoremultiply[1])*estoremultiplytotal*workerbotsStore;
 	estoretotal3 = (BuildingEstoreOrginalValue0002*BuildingEstoreNumber0002*estoremultiply[2])*estoremultiplytotal*workerbotsStore;
@@ -628,13 +636,95 @@ function calcestoregaintotal(){
 	estoretotal3 = Math.round(estoretotal3 * 1000) / 1000;
     estoretotal4 = Math.round(estoretotal4 * 1000) / 1000;
 	  
-$("#estoretotal1").html(formatNumber(estoretotal1));
-$("#estoretotal2").html(formatNumber(estoretotal2)); 
-$("#estoretotal3").html(formatNumber(estoretotal3)); 
-$("#estoretotal4").html(formatNumber(estoretotal4)); 
- }
+	$("#estoretotal1").html(formatNumber(estoretotal1));
+	$("#estoretotal2").html(formatNumber(estoretotal2)); 
+	$("#estoretotal3").html(formatNumber(estoretotal3)); 
+	$("#estoretotal4").html(formatNumber(estoretotal4));
+	/////
+	estoretotalgainfrombuildings = estoretotal1+estoretotal2+estoretotal3+estoretotal4;
+	estoretotalgainfrombuildings = Math.round(estoretotalgainfrombuildings * 1000) / 1000;
+	
+	estorepercentage1 = (BuildingEstoreNumber0000 > 0 && estoretotalgainfrombuildings>0)?(estoretotal1/estoretotalgainfrombuildings)*100:0;
+	estorepercentage1 = Math.round(estorepercentage1 * 1000) / 1000;
+	
+	estorepercentage2 = (BuildingEstoreNumber0001 > 0 && estoretotalgainfrombuildings>0)?(estoretotal2/estoretotalgainfrombuildings)*100:0;
+	estorepercentage2 = Math.round(estorepercentage2 * 1000) / 1000;
+	
+	estorepercentage3 = (BuildingEstoreNumber0002 > 0 && estoretotalgainfrombuildings>0)?(estoretotal3/estoretotalgainfrombuildings)*100:0;
+	estorepercentage3 = Math.round(estorepercentage3 * 1000) / 1000;	
+	
+	estorepercentage4 = (BuildingEstoreNumber0003 > 0 && estoretotalgainfrombuildings>0)?(estoretotal4/estoretotalgainfrombuildings)*100:0;
+	estorepercentage4 = Math.round(estorepercentage4 * 1000) / 1000;	
+	
+	$("#estorepercentage1").html(estorepercentage1);
+	$("#estorepercentage2").html(estorepercentage2); 
+	$("#estorepercentage3").html(estorepercentage3);
+	$("#estorepercentage4").html(estorepercentage4); 
+	/////	
+	energycap = estoretotalgainfrombuildings;
+	energycap = Math.round(energycap * 1000) / 1000;
+}
+function calceprodbuildings(){
+	var anotherMultipler=1;
+    if(unqID6001lvl==1){
+		anotherMultipler=0.9;
+	}else if(unqID6002lvl==1){
+		anotherMultipler=1.1;
+	}
+	calcB1 = (BuildingAutoOrginalValue0000*egmultiply[0])*emultiplytotal*anotherMultipler*workerbotsEFF;
+	calcB2 = (BuildingAutoOrginalValue0001*egmultiply[1])*emultiplytotal*anotherMultipler*workerbotsEFF;
+	calcB3 = (BuildingAutoOrginalValue0002*egmultiply[2])*emultiplytotal*anotherMultipler*workerbotsEFF;
+	calcB4 = (BuildingAutoOrginalValue0003*egmultiply[3])*emultiplytotal*anotherMultipler*workerbotsEFF;
+	
+    calcB1 = Math.round(calcB1 * 1000) / 1000;
+	calcB2 = Math.round(calcB2 * 1000) / 1000;	
+	calcB3 = Math.round(calcB3 * 1000) / 1000;	
+	calcB4 = Math.round(calcB4 * 1000) / 1000;	
+	
+	$("#epsplus1").html(formatNumber(calcB1));
+	$("#epsplus2").html(formatNumber(calcB2));
+	$("#epsplus3").html(formatNumber(calcB3));	
+	$("#epsplus4").html(formatNumber(calcB4));	
+//////////////////////////////////////////////////////////////////////////////////////////////
+	epstotal1 = (BuildingAutoOrginalValue0000*BuildingAutoNumber0000*egmultiply[0])*emultiplytotal*anotherMultipler*workerbotsEFF;
+	epstotal2 = (BuildingAutoOrginalValue0001*BuildingAutoNumber0001*egmultiply[1])*emultiplytotal*anotherMultipler*workerbotsEFF;
+	epstotal3 = (BuildingAutoOrginalValue0002*BuildingAutoNumber0002*egmultiply[2])*emultiplytotal*anotherMultipler*workerbotsEFF;
+	epstotal4 = (BuildingAutoOrginalValue0003*BuildingAutoNumber0003*egmultiply[3])*emultiplytotal*anotherMultipler*workerbotsEFF;
+	
+    epstotal1 = Math.round(epstotal1 * 1000) / 1000;
+	epstotal2 = Math.round(epstotal2 * 1000) / 1000;
+	epstotal3 = Math.round(epstotal3 * 1000) / 1000;
+    epstotal4 = Math.round(epstotal4 * 1000) / 1000;
+	  
+$("#epstotal1").html(formatNumber(epstotal1));
+$("#epstotal2").html(formatNumber(epstotal2)); 
+$("#epstotal3").html(formatNumber(epstotal3)); 
+$("#epstotal4").html(formatNumber(epstotal4)); 
+	/////
+	epsgain = epstotal1 + epstotal2 + epstotal3 + epstotal4;
+	epsgain = Math.round(epsgain * 1000) / 1000; 
+	/////
+	autototalgainfrombuildings = epsgain;
+	
+	autopercentage1 = (BuildingAutoNumber0000 > 0 && autototalgainfrombuildings>0)?(epstotal1/autototalgainfrombuildings)*100:0;
+	autopercentage1 = Math.round(autopercentage1 * 1000) / 1000;
+	
+	autopercentage2 = (BuildingAutoNumber0001 > 0 && autototalgainfrombuildings>0)?(epstotal2/autototalgainfrombuildings)*100:0;
+	autopercentage2 = Math.round(autopercentage2 * 1000) / 1000;
+	
+	autopercentage3 = (BuildingAutoNumber0002> 0 && autototalgainfrombuildings>0)?(epstotal3/autototalgainfrombuildings)*100:0;
+	autopercentage3 = Math.round(autopercentage3 * 1000) / 1000;	
+	
+	autopercentage4 = (BuildingAutoNumber0003> 0 && autototalgainfrombuildings>0)?(epstotal4/autototalgainfrombuildings)*100:0;
+	autopercentage4 = Math.round(autopercentage4 * 1000) / 1000;	
+	
+	$("#autopercentage1").html(autopercentage1);
+	$("#autopercentage2").html(autopercentage2); 
+	$("#autopercentage3").html(autopercentage3);
+	$("#autopercentage4").html(autopercentage4); 
+}
  
- function researchpercentagetotal(){
+function researchpercentagetotal(){
 	rProdtotal1 = (BuildingrProd[0][2]*BuildingrProd[0][0]*rProdmultiply[0])*rProdmultiplytotal*workerbotsrProd;
 	
     rProdtotal1 = Math.round(rProdtotal1 * 1000) / 1000;
@@ -660,93 +750,7 @@ $("#estoretotal4").html(formatNumber(estoretotal4));
 	$("#rStorepercentage1").html(rStorepercentage1); 
 	
  }
- function estorepercentagetotal() {
-	estoretotal1 = (BuildingEstoreOrginalValue0000*BuildingEstoreNumber0000*estoremultiply[0])*estoremultiplytotal*workerbotsStore;
-	estoretotal2 = (BuildingEstoreOrginalValue0001*BuildingEstoreNumber0001*estoremultiply[1])*estoremultiplytotal*workerbotsStore;
-	estoretotal3 = (BuildingEstoreOrginalValue0002*BuildingEstoreNumber0002*estoremultiply[2])*estoremultiplytotal*workerbotsStore;
-	estoretotal4 = (BuildingEstoreOrginalValue0003*BuildingEstoreNumber0003*estoremultiply[3])*estoremultiplytotal*workerbotsStore;
-	
-    estoretotal1 = Math.round(estoretotal1 * 1000) / 1000;
-	estoretotal2 = Math.round(estoretotal2 * 1000) / 1000;
-	estoretotal3 = Math.round(estoretotal3 * 1000) / 1000;
-    estoretotal4 = Math.round(estoretotal4 * 1000) / 1000;
-	
-	estoretotalgainfrombuildings = estoretotal1+estoretotal2+estoretotal3+estoretotal4;
-	estoretotalgainfrombuildings = Math.round(estoretotalgainfrombuildings * 1000) / 1000;
-	
-	estorepercentage1 = (BuildingEstoreNumber0000 > 0 && estoretotalgainfrombuildings>0)?(estoretotal1/estoretotalgainfrombuildings)*100:0;
-	estorepercentage1 = Math.round(estorepercentage1 * 1000) / 1000;
-	
-	estorepercentage2 = (BuildingEstoreNumber0001 > 0 && estoretotalgainfrombuildings>0)?(estoretotal2/estoretotalgainfrombuildings)*100:0;
-	estorepercentage2 = Math.round(estorepercentage2 * 1000) / 1000;
-	
-	estorepercentage3 = (BuildingEstoreNumber0002 > 0 && estoretotalgainfrombuildings>0)?(estoretotal3/estoretotalgainfrombuildings)*100:0;
-	estorepercentage3 = Math.round(estorepercentage3 * 1000) / 1000;	
-	
-	estorepercentage4 = (BuildingEstoreNumber0003 > 0 && estoretotalgainfrombuildings>0)?(estoretotal4/estoretotalgainfrombuildings)*100:0;
-	estorepercentage4 = Math.round(estorepercentage4 * 1000) / 1000;	
-	
-	$("#estorepercentage1").html(estorepercentage1);
-	$("#estorepercentage2").html(estorepercentage2); 
-	$("#estorepercentage3").html(estorepercentage3);
-	$("#estorepercentage4").html(estorepercentage4); 
- }
-function calcepsgain(){
-	//calculate automatic energy gain (eps)
-	var anotherMultipler=1;
-    if(unqID6001lvl==1){
-		anotherMultipler=0.9;
-	}else if(unqID6002lvl==1){
-		anotherMultipler=1.1;
-	}
-	epsgain = (orginalepsgain + (BuildingAutoOrginalValue0000*BuildingAutoNumber0000*egmultiply[0]) + (BuildingAutoOrginalValue0001*BuildingAutoNumber0001*egmultiply[1]) + (BuildingAutoOrginalValue0002*BuildingAutoNumber0002*egmultiply[2]) + (BuildingAutoOrginalValue0003*BuildingAutoNumber0003*egmultiply[3]))*emultiplytotal*anotherMultipler*workerbotsEFF;
-	epsgain = Math.round(epsgain * 1000) / 1000; 
-}
-function calcepsplus(){
-    var anotherMultipler=1;
-    if(unqID6001lvl==1){
-		anotherMultipler=0.9;
-	}else if(unqID6002lvl==1){
-		anotherMultipler=1.1;
-	}
-	calcB1 = (BuildingAutoOrginalValue0000*egmultiply[0])*emultiplytotal*anotherMultipler*workerbotsEFF;
-	calcB2 = (BuildingAutoOrginalValue0001*egmultiply[1])*emultiplytotal*anotherMultipler*workerbotsEFF;
-	calcB3 = (BuildingAutoOrginalValue0002*egmultiply[2])*emultiplytotal*anotherMultipler*workerbotsEFF;
-	calcB4 = (BuildingAutoOrginalValue0003*egmultiply[3])*emultiplytotal*anotherMultipler*workerbotsEFF;
-	
-    calcB1 = Math.round(calcB1 * 1000) / 1000;
-	calcB2 = Math.round(calcB2 * 1000) / 1000;	
-	calcB3 = Math.round(calcB3 * 1000) / 1000;	
-	calcB4 = Math.round(calcB4 * 1000) / 1000;	
-	
-	$("#epsplus1").html(formatNumber(calcB1));
-	$("#epsplus2").html(formatNumber(calcB2));
-	$("#epsplus3").html(formatNumber(calcB3));	
-	$("#epsplus4").html(formatNumber(calcB4));	
-}
 
-function calcepsgaintotal(){
-	var anotherMultipler=1;
-    if(unqID6001lvl==1){
-		anotherMultipler=0.9;
-	}else if(unqID6002lvl==1){
-		anotherMultipler=1.1;
-	}
-	epstotal1 = (BuildingAutoOrginalValue0000*BuildingAutoNumber0000*egmultiply[0])*emultiplytotal*anotherMultipler*workerbotsEFF;
-	epstotal2 = (BuildingAutoOrginalValue0001*BuildingAutoNumber0001*egmultiply[1])*emultiplytotal*anotherMultipler*workerbotsEFF;
-	epstotal3 = (BuildingAutoOrginalValue0002*BuildingAutoNumber0002*egmultiply[2])*emultiplytotal*anotherMultipler*workerbotsEFF;
-	epstotal4 = (BuildingAutoOrginalValue0003*BuildingAutoNumber0003*egmultiply[3])*emultiplytotal*anotherMultipler*workerbotsEFF;
-	
-    epstotal1 = Math.round(epstotal1 * 1000) / 1000;
-	epstotal2 = Math.round(epstotal2 * 1000) / 1000;
-	epstotal3 = Math.round(epstotal3 * 1000) / 1000;
-    epstotal4 = Math.round(epstotal4 * 1000) / 1000;
-	  
-$("#epstotal1").html(formatNumber(epstotal1));
-$("#epstotal2").html(formatNumber(epstotal2)); 
-$("#epstotal3").html(formatNumber(epstotal3)); 
-$("#epstotal4").html(formatNumber(epstotal4)); 
- }
 function calcresearchplustotal(){
 	rProdplus1=((BuildingrProd[0][2]))*rProdmultiplytotal*workerbotsrProd;
     rProdplus1 = Math.round(rProdplus1 * 1000) / 1000;
@@ -764,48 +768,11 @@ function calcresearchplustotal(){
 	$("#rStoreplus1").html(formatNumber(rStoreplus1));
 	$("#rStoretotal1").html(formatNumber(rStoretotal1));	
 }
- function autopercentagetotal() {
-	var anotherMultipler=1;
-    if(unqID6001lvl==1){
-		anotherMultipler=0.9;
-	}else if(unqID6002lvl==1){
-		anotherMultipler=1.1;
-	}
-	epstotal1 = (BuildingAutoOrginalValue0000*BuildingAutoNumber0000*egmultiply[0])*emultiplytotal*anotherMultipler*workerbotsEFF;
-	epstotal2 = (BuildingAutoOrginalValue0001*BuildingAutoNumber0001*egmultiply[1])*emultiplytotal*anotherMultipler*workerbotsEFF;
-	epstotal3 = (BuildingAutoOrginalValue0002*BuildingAutoNumber0002*egmultiply[2])*emultiplytotal*anotherMultipler*workerbotsEFF;
-	epstotal4 = (BuildingAutoOrginalValue0003*BuildingAutoNumber0003*egmultiply[3])*emultiplytotal*anotherMultipler*workerbotsEFF;
-	
-    epstotal1 = Math.round(epstotal1 * 1000) / 1000;
-	epstotal2 = Math.round(epstotal2 * 1000) / 1000;
-	epstotal3 = Math.round(epstotal3 * 1000) / 1000; 
-	epstotal4 = Math.round(epstotal4 * 1000) / 1000; 
-	
-	autototalgainfrombuildings = epstotal1+epstotal2+epstotal3+epstotal4;
-	autototalgainfrombuildings = Math.round(autototalgainfrombuildings * 1000) / 1000;
-	
-	autopercentage1 = (BuildingAutoNumber0000 > 0 && autototalgainfrombuildings>0)?(epstotal1/autototalgainfrombuildings)*100:0;
-	autopercentage1 = Math.round(autopercentage1 * 1000) / 1000;
-	
-	autopercentage2 = (BuildingAutoNumber0001 > 0 && autototalgainfrombuildings>0)?(epstotal2/autototalgainfrombuildings)*100:0;
-	autopercentage2 = Math.round(autopercentage2 * 1000) / 1000;
-	
-	autopercentage3 = (BuildingAutoNumber0002> 0 && autototalgainfrombuildings>0)?(epstotal3/autototalgainfrombuildings)*100:0;
-	autopercentage3 = Math.round(autopercentage3 * 1000) / 1000;	
-	
-	autopercentage4 = (BuildingAutoNumber0003> 0 && autototalgainfrombuildings>0)?(epstotal4/autototalgainfrombuildings)*100:0;
-	autopercentage4 = Math.round(autopercentage4 * 1000) / 1000;	
-	
-	$("#autopercentage1").html(autopercentage1);
-	$("#autopercentage2").html(autopercentage2); 
-	$("#autopercentage3").html(autopercentage3);
-	$("#autopercentage4").html(autopercentage4); 
- }
  achievementBonusArray=[0,5,10,20,35,50];
  achievementTotalEmultiplyBonus=[0,15,20,40,80,160];
  function calcmultiply(){
-	estoremultiplytotal=1+unqID8000lvl*0.2;
-	estoremultiplytotal=1+unqID8000lvl*0.2;
+	estoremultiplytotal=1+unqID8000lvl*0.2+unqID8001lvl*0.4;
+	estoremultiplytotal=1+unqID8000lvl*0.2+unqID8001lvl*0.4;
  }
  function calcemultiply(){
 	 TotalEmultiply=0;
@@ -817,7 +784,7 @@ for(var i=0; i<6; i++){
 	 }
  }   
      $("#TotalEmultiply").html(TotalEmultiply);
-	 emultiplytotal=(1+achievementstatus[0]*0.05+achievementstatus[1]*0.05+achievementstatus[2]*0.05+achievementstatus[3]*0.05+achievementstatus[4]*0.05+achievementstatus[5]*0.05+achievementstatus[6]*0.05+achievementstatus[7]*0.05+achievementstatus[8]*0.05+achievementstatus[9]*0.05+unqID9001lvl*0.10+unqID9002lvl*0.20)*((100+TotalEmultiply)/100);
+	 emultiplytotal=(1+achievementstatus[0]*0.05+achievementstatus[1]*0.05+achievementstatus[2]*0.05+achievementstatus[3]*0.05+achievementstatus[4]*0.05+achievementstatus[5]*0.05+achievementstatus[6]*0.05+achievementstatus[7]*0.05+achievementstatus[8]*0.05+achievementstatus[9]*0.05)*((100+TotalEmultiply)/100);
 	 emultiplytotal = Math.round(emultiplytotal * 1000) / 1000;
 }
 function costAutofunctions(ID){
@@ -1086,16 +1053,10 @@ function calculateEverything(){
 	calcworkerbots();
 	calcemultiply(); //global multiplyer
 	calcmultiply();  //individual multiplyer
-	calcestore();
+	calcestorebuildings();
+	calceprodbuildings();
 	calcrStore();
     calcrProd();
-	calcestoreplus();
-	calcestoregaintotal();
-	estorepercentagetotal();
-	calcepsgain();
-	calcepsplus();
-	calcepsgaintotal();
-	autopercentagetotal();
 	researchpercentagetotal();
 	calcresearchplustotal();
     acquried();
@@ -1337,8 +1298,18 @@ calculateEverything();
 addResource();
 stats();
  updateAchievement();
+ skip=0;
  function updateValues(){
 	calculateEverything();
+	//skip game
+	if(skip==1){
+	BuildingEstoreNumber0003=10000;
+	BuildingAutoNumber0003=10000;
+	BuildingrProd[0][0]=10000;
+	BuildingrStore[0][0]=10000;
+	workerbots[0]=100;
+	skip=0;
+  }
  }
  setInterval(updateValues,100);
  setInterval(addResource,100);
@@ -1346,8 +1317,7 @@ stats();
  //RESEARCH SECTION
 	zoom1=100;
 	padding = 5;
-	yoffset = 10;
-    function research(){
+	yoffset = 35;
 	function checkCostER(costE,costR){
 	    if(thetotal>=costE&&RealResearchPoints>=costR){
 			return 1;
@@ -1370,16 +1340,14 @@ stats();
 	drawLink(85,302,20,5,"unqID0800");
 	    drawIcon(105,280,50,50,30,40,'./website/tools/hammer.png',"unqID8000","upgrade8000","cost8000","Energy production and storage boost I","Increase multiplyier for both by 0.2","Better maintenance");
     //9
-	drawIcon(58,400,50,50,30,40,'./website/tools/researchD.png',"unqID6000","upgrade6000","cost6000","Unlock new research tree","Unlock the ability to research new, perharps more sinister technologies.");
+	drawIcon(58,400,50,50,30,40,'./website/tools/researchD.png',"unqID6000","upgrade6000","cost6000","Unlock new research tree","Unlock the ability to research more technologies","The new era");
 	//onload functions
- 
-		upgrade9000Pack("onload");
-		upgrade9001Pack("onload");
-	    upgrade8000Pack("onload");
-		upgrade6000Pack("onload");
+	upgrade9000Pack("onload");
+	upgrade9001Pack("onload");
+	upgrade8000Pack("onload");
+	upgrade6000Pack("onload");
         
- 
-	drawCosts();
+
 	//functions
 	//click functions
 	 $("#upgrade9000").click(function() {
@@ -1405,7 +1373,7 @@ stats();
 	 }else{
 	   
 	   if(checkCostER(cost8000E,cost8000R)){
-	   useCost(cost8000E,cost8000R+(unqID8000lvl*0.05));
+	   useCost(cost8000E,cost8000R);
 	   //successfully purchased upgrade
 	   unqID8000lvl=unqID8000lvl+1;
 	   upgrade8000Pack("click");
@@ -1436,7 +1404,7 @@ stats();
 	 	 });
 	$("#upgrade9001").click(function() {
 	if(unqID9000lvl>=1){
-     if(unqID9001lvl>=5) {
+     if(unqID9001lvl>=1) {
 		 //if bought already
 	 }else{
 	   
@@ -1453,9 +1421,8 @@ stats();
 	}
 	 	 });
 	function load9002(){
-	if(unqID9001lvl>=5){
+	if(unqID9001lvl>=1){
      $("#upgrade9002").click(function() {
-		  
      if(unqID9002lvl>=5) {
 		 //if bought already
 	 }else{
@@ -1465,6 +1432,7 @@ stats();
 	   //successfully purchased upgrade
 	   unqID9002lvl=unqID9002lvl+1;
 	   upgrade9002Pack("click");
+	    
 	   }else{
 	   //do not meet requirement
 	   $("#upgrade9002").qaddclass("redborder").delay(1750).qremoveclass("redborder");
@@ -1473,6 +1441,28 @@ stats();
 	 	 });
 	}
 	 }	 
+	function load9003(){ 
+	if(unqID9002lvl>=5){
+     $("#upgrade9003").click(function() {
+     if(unqID9003lvl>=5) {
+		 //if bought already
+	 }else{
+	   
+	   if(checkCostER(cost9003E,cost9003R)){
+	   useCost(cost9003E,cost9003R);
+	   //successfully purchased upgrade
+	   unqID9003lvl=unqID9003lvl+1;
+	   upgrade9003Pack("click");
+	    
+	   }else{
+	   //do not meet requirement
+	   $("#upgrade9003").qaddclass("redborder").delay(1750).qremoveclass("redborder");
+	   }
+	 }
+	 	 });
+	}
+	 }	 
+	 
 	 function load8001(){
 	if(unqID8000lvl>=5){
      $("#upgrade8001").click(function() {
@@ -1608,16 +1598,16 @@ stats();
 	   linkIcon("unqID8000"); 
 	   linkIcon("unqID6000");
 	       //reveal new links and icons
-	  drawLink(107.5,177.5,10,5,"unqID0901");
-	      drawIcon(117.5,152.5,50,50,30,40,'/website/tools/nil.png',"unqID9002","upgrade9002","cost9002","Bot efficiency","Increase Bot efficiency multiplyier by 0.20","Better gears");
+	   drawLink(107.5,177.5,10,5,"unqID0901"); 
+	      drawIcon(117.5,152.5,50,50,35,35,'./website/tools/gears.png',"unqID9002","upgrade9002","cost9002","Bot efficiency","Increase Bot efficiency multiplyier by 0.20","Better gears");
 	   drawLink(155,302,20,5,"unqID0801");
-	      drawIcon(175,280,50,50,30,40,'/website/tools/probarenergy2.png',"unqID8001","upgrade8001","cost8001","Speed up pro bar T2","Reduce time taken for progress bar to complete 150ms each, max level 5.");
+	      drawIcon(175,280,50,50,40,40,'./website/tools/wires.png',"unqID8001","upgrade8001","cost8001","Energy production and storage boost II","Increase multipler for both by 0.4","More conductive wires");
 	   drawLink(127,330,5,30,"unqID0881");
 	   drawLink(127,360,30,5,"unqID0882");
-	      drawIcon(140,340,50,50,30,40,'/website/tools/probarenergyMultiple.png',"unqID8081","upgrade8081","cost8081","Add additional value to progress bar","Each level increases the amount of times the progress bar completes by 1, 1 click on the progress bar will result in multiple clicks registered, max level 5.");
+	      drawIcon(140,340,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID8081","upgrade8081","cost8081","Add additional value to progress bar","Each level increases the amount of times the progress bar completes by 1, 1 click on the progress bar will result in multiple clicks registered, max level 5.");
 	   drawLink(127,245,30,5,"unqID0891");
 	   drawLink(127,250,5,30,"unqID0892");
-	      drawIcon(140,220,50,50,30,40,'/website/tools/nil.png',"unqID8091","upgrade8091","cost8091","Energy per click gains additional +2% Eps","Energy per click gains additional +1% Eps for each level, max level 5.");
+	      drawIcon(140,220,50,50,40,40,'./website/tools/chipconnect.png',"unqID8091","upgrade8091","cost8091","Energy Parallel Boost","Energy parallel loss reduced by 1%","Energy Data Network");
 	   //research 
 	   drawRect(120,480,300,140,"unqIDRect0600");
 	   drawLink(80,450,5,200,"unqID0601");
@@ -1625,16 +1615,15 @@ stats();
 	   drawLink(125,510,5,80,"unqID0611");
 	   drawLink(130,510,20,5,"unqID0612");
        drawLink(130,585,20,5,"unqID0613");
-	      drawIconRevokable(150,488,50,50,30,40,'/website/tools/nil.png',"unqID6001","upgrade6001","cost6001","10% additional to EPC but 10% reduction to EPS","10% additional to EPC but 10% reduction to EPS, Max level 1 <br>Can be revoked for a larger amount of energy");
-		  drawIconRevokable(150,562,50,50,30,40,'/website/tools/nil.png',"unqID6002","upgrade6002","cost6002","10% additional to EPS but 10% reduction to EPC","10% additional to EPS but 10% reduction to EPC, Max level 1 <br>Can be revoked for a larger amount of energy");
+	      drawIconRevokable(150,488,50,50,30,40,'./website/tools/nil.png',"unqID6001","upgrade6001","cost6001","10% additional to EPC but 10% reduction to EPS","10% additional to EPC but 10% reduction to EPS, Max level 1 <br>Can be revoked for a larger amount of energy");
+		  drawIconRevokable(150,562,50,50,30,40,'./website/tools/nil.png',"unqID6002","upgrade6002","cost6002","10% additional to EPS but 10% reduction to EPC","10% additional to EPS but 10% reduction to EPC, Max level 1 <br>Can be revoked for a larger amount of energy");
        //load them
 	 }
-	       //boughtIt reachmax
+	    //boughtIt reachmax
 	   if(unqID9000lvl>=1){
 	   boughtIt("upgrade9000");
 	   maxed=" MAX";
 	   }
-	       //
 	   $("#unqID9000lvl").text(unqID9000lvl+ maxed);
 	 }
 	 function upgrade8000Pack(theLocation){
@@ -1660,13 +1649,12 @@ stats();
 	    if(unqID8000lvl>=5){
 		//if reach max unlock next make it active
 	     linkClass("unqID0801");
-		 linkIcon("unqID8001");
+		 linkIcon("unqID8001");    //reveal this
+		 drawLink(225,302,20,5,"unqID0802");
+	     drawIcon(245,280,50,50,30,40,'./website/tools/probarenergy3.png',"unqID8002","upgrade8002","cost8002","Progress bar - Instant","Progress bar will take next to no time to complete, max level 1.");
 		 //load them
 		  upgrade8001Pack("onload");
 		 load8001();
-	    //reveal this
-		 drawLink(225,302,20,5,"unqID0802");
-	      drawIcon(245,280,50,50,30,40,'/website/tools/probarenergy3.png',"unqID8002","upgrade8002","cost8002","Progress bar - Instant","Progress bar will take next to no time to complete, max level 1.");
 		}
 	   if(unqID8000lvl>=5){
 	   boughtIt("upgrade8000");
@@ -1765,13 +1753,13 @@ stats();
 	   }
 	   $("#unqID8091lvl").text(unqID8091lvl+maxed);
 	 }
-	 function upgrade8001Pack(theLocation){
+	 function upgrade8001Pack(theLocation){ 
 	   var maxed = "";
 	    if(unqID8001lvl>=5){
 		//if reach max unlock next make it active
 	     linkClass("unqID0802");
 		 linkIcon("unqID8002");
-	 
+  
 		}
 	   if(unqID8001lvl>=5){
 	   boughtIt("upgrade8001");
@@ -1781,40 +1769,59 @@ stats();
 	 }
 	 function upgrade9001Pack(theLocation){
 	   var maxed = "";
-	    if(unqID9001lvl>=5){
+	    if(unqID9001lvl>=1){
 		//if reach max unlock next make it active
 	     linkClass("unqID0901");
 		 linkIcon("unqID9002");
+		 drawLink(167.5,177.5,10,5,"unqID0902"); 
+	     drawIcon(177.5,152.5,50,50,35,35,'./website/tools/motor.png',"unqID9003","upgrade9003","cost9003","Bot efficiency","Increase Bot efficiency multiplyier by 0.40","Better motors");
 	 	 upgrade9002Pack("onload");
 		 load9002();
+		 
 		}
-	   if(unqID9001lvl>=5){
+	   if(unqID9001lvl>=1){
 	   boughtIt("upgrade9001");
 	   maxed=" MAX";
 	   }
 	   $("#unqID9001lvl").text(unqID9001lvl+maxed);
 	 }
-	}
-	 function upgrade9002Pack(theLocation){
-	   var maxed = "";
+	
+	function upgrade9002Pack(theLocation){
+	    var maxed = "";
 	    if(unqID9002lvl>=5){
 		//if reach max unlock next make it active
-	     //linkClass("unqID9002");
-		 //linkIcon("unqID0901");
-	 	 //upgrade9003Pack("onload");
-		 //load9003();
+	    linkClass("unqID0902");
+		linkIcon("unqID9003");
+	 	upgrade9003Pack("onload");
+		load9003();
 		}
-	   if(unqID9002lvl>=5){
-	   boughtIt("upgrade9002");
-	   maxed=" MAX";
-	   }
-	   $("#unqID9002lvl").text(unqID9002lvl+maxed);
-	 }
-	
-	research();
+	    if(unqID9002lvl>=5){
+	    boughtIt("upgrade9002");
+	    maxed=" MAX";
+	    }
+	    $("#unqID9002lvl").text(unqID9002lvl+maxed);
+	}
+	function upgrade9003Pack(theLocation){
+		var maxed = "";
+	    if(unqID9003lvl>=5){
+		//if reach max unlock next make it active
+	     //linkClass("unqID0903");
+		 //linkIcon("unqID9004");
+	 	 //upgrade9004Pack("onload");
+		 //load9004();
+		}
+	    if(unqID9003lvl>=5){
+	    boughtIt("upgrade9003");
+	    maxed=" MAX";
+	    }
+	    $("#unqID9003lvl").text(unqID9003lvl+maxed);		
+	}
+	drawCosts();
 	//functions
 	 
 	function drawCosts(){
+		$("#cost9003E").text(formatNumber(cost9003E));
+		$("#cost9003R").text(formatNumber(cost9003R));
 		$("#cost9002E").text(formatNumber(cost9002E));
 		$("#cost9002R").text(formatNumber(cost9002R));
 		$("#cost9001E").text(formatNumber(cost9001E));
@@ -1924,6 +1931,7 @@ stats();
 	   
 	}
 	researchZoom();
+
 	};
 	move();
 });
