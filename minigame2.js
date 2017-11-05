@@ -1,6 +1,5 @@
 $(document).ready(function(){ 
-function move() { 
-  currentVersion="2.0.0";
+  currentVersion="2.0.1";
   //Init VARAIABLES starting game 
   //BuildingEstore [ID][NUM,COST,VALUE, CALC COST]
     InitVar1 = {
@@ -9,14 +8,11 @@ function move() {
 		workerbots:[0,0,0,0,0],
 		workerbotscost:[[1,0],[2,100000]],
 		tabsunlocked:[1,0,0,0,0,1],
-		time:10,
 		totalenergyed:0,
+		totalachievements:0,
+		totalbuildings:0,
+		totalresearch:0,
 		energycap:50,
-		probarcounter:0,
-		widthpercentage:0,
-		probarstartdate:0,
-		probarstartdateI:0,
-		probarreduction:0,
 		epsgaintotal1:0,
 		epsgaintotal2:0,
 		epsgaintotal3:0,
@@ -72,8 +68,12 @@ function move() {
 	ResearchPoints:0,
 	RealResearchPoints:0,
 	RealResearchPointscap:0
- }
- InitVar4 = {
+ } 
+  InitVar4 = {
+	  
+  }
+  
+ InitResearchLVL = {
  unqID9000lvl:0,
  unqID8000lvl:0,
  unqID8001lvl:0,
@@ -88,35 +88,21 @@ function move() {
  unqID9004lvl:0
  }
  //fixed variables
+ //research9000 [energy cost, research cost , energy cancel cost, max levels]
  staticVar1 = {
- cost9000E:10000,
- cost9000R:0,
- cost8000E:12500,
- cost8000R:0.5,
- cost8081E:400,
- cost8081R:1,
- cost8001E:100000,
- cost8001R:1.5,
- cost8002E:500000,
- cost8002R:4,
- cost8091E:1500,
- cost8091R:2,
- cost6000E:5666000,
- cost6000R:16,
- cost6001E:750000,
- cost6001R:5,
- cost6001Cancel:750000000,
- cost6002E:750000,
- cost6002R:5,
- cost6002Cancel:750000000,
- cost9001E:1000000,
- cost9001R:5,
- cost9002E:1500000,
- cost9002R:3, 
- cost9003E:4500000,
- cost9003R:5,
- cost9004E:10000000,
- cost9004R:7.5
+ research9000:[10000,0,0,1],
+ research8000:[12500,0.5,0,5],
+ research8081:[50000,1.5,0,5],
+ research8001:[100000,1.5,0,5],
+ research8002:[500000,4,0,5],
+ research8091:[150000,2,0,5],
+ research6000:[5666000000,16,0,1],
+ research6001:[7500000,5,7500000000,1],
+ research6002:[7500000,5,7500000000,1],
+ research9001:[1000000,5,0,1],
+ research9002:[1500000,3,0,5],
+ research9003:[4500000,5,0,5],
+ research9004:[10000000,7.5,0,5]
  }
  Cookieresult = getCookie("Var1");
  if(Cookieresult!=""){
@@ -154,7 +140,15 @@ function move() {
 	 setCookieJson("Var4",InitVar4);
 	 loadCookies("Var4","4");
  }
- 
+  
+ Cookieresult = getCookie("ResearchLVL");
+ if(Cookieresult!=""){
+	 loadCookies("ResearchLVL","5");
+ }else{
+	 console.log("Cookie ResearchLVL not found, creating ResearchLVL");
+	 setCookieJson("ResearchLVL",InitResearchLVL);
+	 loadCookies("ResearchLVL","5");
+ }
  function loadCookies(cookieName,variableName){
 	cookieResult = getCookie(cookieName);
 	if(cookieResult!=""){
@@ -169,6 +163,9 @@ function move() {
 	 }
 	 if(variableName=="4"){
 	  loadedVar4=JSON.parse(LZString.decompressFromBase64(cookieResult)); 
+	 }
+	 if(variableName=="5"){
+	  ResearchLVL=JSON.parse(LZString.decompressFromBase64(cookieResult)); 
 	 }
 	}else{ 
 	  alert("cookie not valid");
@@ -186,14 +183,11 @@ function move() {
 	workerbots=loadedVar1.workerbots;
 	workerbotscost=loadedVar1.workerbotscost;
 	tabsunlocked=loadedVar1.tabsunlocked;
-    time=loadedVar1.time;
 	totalenergyed=loadedVar1.totalenergyed;
+	totalachievements=loadedVar1.totalachievements;
+	totalbuildings=loadedVar1.totalbuildings;
+	totalresearch=loadedVar1.totalresearch;
 	energycap=loadedVar1.energycap;
-	probarcounter=loadedVar1.probarcounter;
-	widthpercentage=loadedVar1.widthpercentage;
-	probarstartdate=loadedVar1.probarstartdate;
-	probarstartdateI=loadedVar1.probarstartdateI;
-	probarreduction=loadedVar1.probarreduction;
 	epsgaintotal1=loadedVar1.epsgaintotal1;
 	epsgaintotal2=loadedVar1.epsgaintotal2;
 	epsgaintotal3=loadedVar1.epsgaintotal3;
@@ -246,6 +240,7 @@ function move() {
 	RealResearchPoints=loadedVar3.RealResearchPoints;
 	RealResearchPointscap=loadedVar3.RealResearchPointscap;
 /////////////////////////////////////////////////////////////////////	
+/*
 	unqID9000lvl=loadedVar4.unqID9000lvl;
 	unqID8000lvl=loadedVar4.unqID8000lvl;
 	unqID8001lvl=loadedVar4.unqID8001lvl;
@@ -258,35 +253,21 @@ function move() {
 	unqID9002lvl=loadedVar4.unqID9002lvl;
 	unqID9003lvl=loadedVar4.unqID9003lvl;
 	unqID9004lvl=loadedVar4.unqID9004lvl;
+	*/
 /////////////////////////////////////////////////////////////////////
-	cost9000E=staticVar1.cost9000E;
-	cost9000R=staticVar1.cost9000R;
-	cost8000E=staticVar1.cost8000E;
-	cost8000R=staticVar1.cost8000R;
-	cost8081E=staticVar1.cost8081E;
-	cost8081R=staticVar1.cost8081R;
-	cost8001E=staticVar1.cost8001E;
-	cost8001R=staticVar1.cost8001R;
-	cost8002E=staticVar1.cost8002E;
-	cost8002R=staticVar1.cost8002R;
-	cost8091E=staticVar1.cost8091E;
-	cost8091R=staticVar1.cost8091R;
-	cost6000E=staticVar1.cost6000E;
-	cost6000R=staticVar1.cost6000R;
-	cost6001E=staticVar1.cost6001E;
-	cost6001R=staticVar1.cost6001R;
-	cost6001Cancel=staticVar1.cost6001Cancel;
-	cost6002E=staticVar1.cost6002E;
-	cost6002R=staticVar1.cost6002R;
-    cost6002Cancel=staticVar1.cost6002Cancel;
-    cost9001E=staticVar1.cost9001E;
-	cost9001R=staticVar1.cost9001R;
-	cost9002E=staticVar1.cost9002E;
-	cost9002R=staticVar1.cost9002R;
-	cost9003E=staticVar1.cost9003E;
-	cost9003R=staticVar1.cost9003R;
-	cost9004E=staticVar1.cost9004E;
-	cost9004R=staticVar1.cost9004R;
+	research9000=staticVar1.research9000;
+	research8000=staticVar1.research8000;
+	research8081=staticVar1.research8081;
+	research8001=staticVar1.research8001;
+	research8002=staticVar1.research8002;
+	research8091=staticVar1.research8091;
+	research6000=staticVar1.research6000;
+	research6001=staticVar1.research6001;
+	research6002=staticVar1.research6002;
+	research9001=staticVar1.research9001;
+	research9002=staticVar1.research9002;
+	research9003=staticVar1.research9003;
+	research9004=staticVar1.research9004;
 	
  }
  //others
@@ -295,18 +276,15 @@ function move() {
  function setSaveVar(){
 	saveVar1 = {
 		version:version,
-		time:time,
 		workerbots:workerbots,
 		workerbotscost:workerbotscost,
 		tabsunlocked:tabsunlocked,
 		gameState:gameState,
 		totalenergyed:totalenergyed,
+		totalachievements:totalachievements,
+		totalbuildings:totalbuildings,
+		totalresearch:totalresearch,
 		energycap:energycap,
-		probarcounter:probarcounter,
-		widthpercentage:widthpercentage,
-		probarstartdate:probarstartdate,
-		probarstartdateI:probarstartdateI,
-		probarreduction:probarreduction,
 		epsgaintotal1:epsgaintotal1,
 		epsgaintotal2:epsgaintotal2,
 		epsgaintotal3:epsgaintotal3,
@@ -390,6 +368,7 @@ function move() {
  cost9002E:cost9002E,
  cost9002R:cost9002R,
  */
+ /*
  unqID9000lvl:unqID9000lvl,
  unqID8000lvl:unqID8000lvl,
  unqID8001lvl:unqID8001lvl,
@@ -402,18 +381,19 @@ function move() {
  unqID9002lvl:unqID9002lvl,
  unqID9003lvl:unqID9003lvl,
  unqID9004lvl:unqID9004lvl
+ */
  }
-	 
+ saveResearchLVL=ResearchLVL; 
  }
 probarcounterbasevalue = 2000;
 function savegamecookie(){
- notify("Saving game...");
  setSaveVar();
  setCookieJson("Var1",saveVar1);
  setCookieJson("Var2",saveVar2);
  setCookieJson("Var3",saveVar3);
  setCookieJson("Var4",saveVar4);
- notify("Game saved");
+ setCookieJson("ResearchLVL",saveResearchLVL);
+ notify("Game saved",0);
 }
 setTimeout(function() {
   setInterval(savegamecookie, 30000);
@@ -423,12 +403,17 @@ setTimeout(function() {
 savegamecookie();
  });
 number = 0;
-function notify(data){
-	
-	$("#centernotify").append("<div id=\"notification"+ number +"\" class=\"notificationclass\" style=\"display:none;\">"+ data + "</div>")
-	$("#notification" + number).show("fast").delay(5000).hide("fast").queue(function(next) {$(this).remove();next();});
-	
-	number = $(".notificationclass").length;
+function removeNotification(evt){
+	$("#"+evt.target.id).parent().remove();
+}
+function notify(data,priority){
+	$("#bottomcontainer").append("<div id=\"notification"+ number +"\" class=\"notificationclass\" style=\"display:none;\">"+ data + "\<span id=\"notificationRemove"+number+"\"class=\"remove\" style=\"float:right; margin-right:5px;\"\">&times;</span></div>")
+	if(priority==0){
+	$("#notification" + number).show("fast").delay(2000).hide("fast").queue(function(next) {$(this).remove();next();});
+	}else{
+	$("#notification" + number).show("fast").delay(30000).hide("fast").queue(function(next) {$(this).remove();next();});	
+	}
+	$("#notificationRemove" + number).on('click', removeNotification);
 	number = number + 1;
 }
 function AddEvent(html_element, event_name, event_function) 
@@ -666,9 +651,9 @@ function calcestorebuildings(){
 }
 function calceprodbuildings(){
 	var anotherMultipler=1;
-    if(unqID6001lvl==1){
+    if(ResearchLVL.unqID6001lvl==1){
 		anotherMultipler=0.9;
-	}else if(unqID6002lvl==1){
+	}else if(ResearchLVL.unqID6002lvl==1){
 		anotherMultipler=1.1;
 	}
 	calcB1 = (BuildingAutoOrginalValue0000*egmultiply[0])*emultiplytotal*anotherMultipler*workerbotsEFF;
@@ -770,22 +755,44 @@ function calcresearchplustotal(){
 }
  achievementBonusArray=[0,5,10,20,35,50];
  achievementTotalEmultiplyBonus=[0,15,20,40,80,160];
+
+function calcstats(){
+	totalachievements = 0;
+	for(var i=0; i<achievementstatus.length; i++){
+	totalachievements = totalachievements+achievementstatus[i];
+	}
+	
+	totalbuildings = BuildingAutoNumber0000 + BuildingAutoNumber0001 + BuildingAutoNumber0002 + BuildingAutoNumber0003 + BuildingEstoreNumber0000 + BuildingEstoreNumber0001 + BuildingEstoreNumber0002 + BuildingEstoreNumber0003 + BuildingrProd[0][0] + BuildingrStore[0][0];
+	
+	totalresearch = 0;
+	for (var i in ResearchLVL){
+    var value = ResearchLVL[i];
+      totalresearch = totalresearch+value; 
+	}
+ 
+	totalresearch = totalresearch+ResearchLVL[i];
+	 
+}
  function calcmultiply(){
-	estoremultiplytotal=1+unqID8000lvl*0.2+unqID8001lvl*0.4;
-	estoremultiplytotal=1+unqID8000lvl*0.2+unqID8001lvl*0.4;
+	estoremultiplytotal=1+ResearchLVL.unqID8000lvl*0.2+ResearchLVL.unqID8001lvl*0.4;
+	estoremultiplytotal=1+ResearchLVL.unqID8000lvl*0.2+ResearchLVL.unqID8001lvl*0.4;
  }
  function calcemultiply(){
-	 TotalEmultiply=0;
-for(var i=0; i<6; i++){
-	 if(achievementstatus[0]+achievementstatus[1]+achievementstatus[2]+achievementstatus[3]+achievementstatus[4]+achievementstatus[5]+achievementstatus[6]+achievementstatus[7]+achievementstatus[8]+achievementstatus[9]>=achievementBonusArray[i]){
+	TotalEmultiply=0;
+	for(var i=0; i<6; i++){
+	 if(totalachievements>=achievementBonusArray[i]){
 	  TotalEmultiply=TotalEmultiply+achievementTotalEmultiplyBonus[i];
-	 }else{
-		 i=999;
-	 }
- }   
-     $("#TotalEmultiply").html(TotalEmultiply);
-	 emultiplytotal=(1+achievementstatus[0]*0.05+achievementstatus[1]*0.05+achievementstatus[2]*0.05+achievementstatus[3]*0.05+achievementstatus[4]*0.05+achievementstatus[5]*0.05+achievementstatus[6]*0.05+achievementstatus[7]*0.05+achievementstatus[8]*0.05+achievementstatus[9]*0.05)*((100+TotalEmultiply)/100);
-	 emultiplytotal = Math.round(emultiplytotal * 1000) / 1000;
+	}else{
+		break;
+	}
+	}   
+    $("#TotalEmultiply").html(TotalEmultiply);
+	emultiplytotal = 1;
+	for(var i=0; i<achievementstatus.length; i++){
+	emultiplytotal = emultiplytotal+achievementstatus[i]*0.05;
+	} 
+	emultiplytotal=emultiplytotal*((100+TotalEmultiply)/100);
+	emultiplytotal = Math.round(emultiplytotal * 1000) / 1000;
 }
 function costAutofunctions(ID){
 	eval("BuildingAutoCostMultiplier"+ID+" = Math.pow(1.15, BuildingAutoNumber"+ID+");\
@@ -1014,7 +1021,7 @@ if(workerbotsEcost0000<= thetotal && workerbotsRcost0000<= RealResearchPoints) {
   if(thetotal>=calculatedvalue1){
     EnergyGoalLevel = EnergyGoalLevel+1;
 	ResearchPoints = ResearchPoints+rewardcalculatedvalue1;
-	notify("Energy Goal ("+calculatedvalue1+") acquried! Reward: "+rewardcalculatedvalue1+" Research Points");
+	notify("Energy Goal ("+calculatedvalue1+") acquried! Reward: "+rewardcalculatedvalue1+" Research Points",1);
   }
   calculatedvalue1 = multiply(EnergyGoalStart,EnergyGoalLevel);
   calculatedvalue2 = multiply(EnergyGoalStart,EnergyGoalLevel+1);
@@ -1051,6 +1058,7 @@ if(workerbotsEcost0000<= thetotal && workerbotsRcost0000<= RealResearchPoints) {
 
 function calculateEverything(){
 	calcworkerbots();
+	calcstats();
 	calcemultiply(); //global multiplyer
 	calcmultiply();  //individual multiplyer
 	calcestorebuildings();
@@ -1065,7 +1073,7 @@ function calculateEverything(){
     widthpercentage=(thetotal/energycap)*100;
 	}else{widthpercentage=0;}
     if(widthpercentage>100){widthpercentage=100;}
-      document.getElementById("bar1").style.width = widthpercentage + '%'; 
+      $("#bar1").width(widthpercentage + '%'); 
 	  $(".thetotal").html(formatNumber(thetotal)+"/"+formatNumber(energycap));
 	  $("#epsgain").html(formatNumber(epsgain));
 	  $("#rProdgain").html(formatNumber(rProdgain));
@@ -1102,6 +1110,7 @@ location.reload();
  
  achievementEnergyGoalArray=[1,3,5,10,15,20,30,40,50,60];
  achievementTotalBuildingsArray=[5,10,25,50,100,250,500,1000,1500,2500];
+ achievementTotalResearchArray=[1,3,5,10,15,30,45,75,100,150];
  achievementTotalworkerbotsArray=[3,4,5,6,7,8,9,10,11,12];
  displayAchievementInit();
  function displayAchievementInit(){
@@ -1112,13 +1121,19 @@ location.reload();
 	 for(var i=totalAchievement;i>0;i--){
 	 $( "#achievementTotalBuildingsGRP" ).after("<div id=\"achievementTotalBuildings"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Acquire "+achievementTotalBuildingsArray[i-1]+" buildings<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
      }
-	
+	 for(var i=totalAchievement;i>0;i--){
+	 $( "#achievementTotalResearchGRP" ).after("<div id=\"achievementTotalResearch"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Acquire "+achievementTotalResearchArray[i-1]+" research levels<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
+     }
+		
 	 for(var i=totalAchievement;i>0;i--){
 	 $( "#achievementTotalworkerbotsGRP" ).after("<div id=\"achievementTotalworkerbots"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Acquire "+achievementTotalworkerbotsArray[i-1]+" worker bots<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
      }
+	 
+	 //$( "#achievementSpecialtyGRP" ).after("<div id=\"achievementSpecialty1\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Produce 0 energy per sec<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
  }
  
  function updateAchievement(){
+ calculateEverything();
 	 //for initial update
  for(var i=0; i<achievementstatus[0]+1;i++){
 	 eval("$(\"#achievementEnergyGoal"+i+"\").addClass(\"achievementachieved\");");
@@ -1127,18 +1142,21 @@ location.reload();
 	 eval("$(\"#achievementTotalBuildings"+i+"\").addClass(\"achievementachieved\");");
  }
  for(var i=0; i<achievementstatus[2]+1;i++){
+	 eval("$(\"#achievementTotalResearch"+i+"\").addClass(\"achievementachieved\");");
+ }
+ for(var i=0; i<achievementstatus[3]+1;i++){
 	 eval("$(\"#achievementTotalworkerbots"+i+"\").addClass(\"achievementachieved\");");
  }
  
- var width=(achievementstatus[0]+achievementstatus[1]+achievementstatus[2]+achievementstatus[3]+achievementstatus[4]+achievementstatus[5]+achievementstatus[6]+achievementstatus[7]+achievementstatus[8]+achievementstatus[9])/50*100;
+ var width=totalachievements/50*100;
  for(var i=0; i<6; i++){
-	 if(achievementstatus[0]+achievementstatus[1]+achievementstatus[2]+achievementstatus[3]+achievementstatus[4]+achievementstatus[5]+achievementstatus[6]+achievementstatus[7]+achievementstatus[8]+achievementstatus[9]>=achievementBonusArray[i]){
+	 if(totalachievements>=achievementBonusArray[i]){
 	 eval("$(\"#achievementBonusTarget"+i+"\").addClass(\"achievementBonusAchieved\");");
 	 }else{
-		 i=999;
+		break;
 	 }
  }
- document.getElementById("achievementBonusBar").style.width = width+ '%'; 
+ $("#achievementBonusBar").width(width+ '%'); 
  }
  
  setInterval(achievement, 1000);
@@ -1147,21 +1165,28 @@ location.reload();
 	achievementstatus[0]=achievementstatus[0]+1;
 	//calculateEverything();
 	updateAchievement();
-	notify("Achievement \"Energy Goal Level "+achievementEnergyGoalArray[achievementstatus[0]-1]+"\" acquried. Energy multiplyier increased to "+ emultiplytotal +"");
+	notify("Achievement \"Energy Goal Level "+achievementEnergyGoalArray[achievementstatus[0]-1]+"\" acquried. Energy multiplyier increased to "+ emultiplytotal +"",1);
 	eval("$(\"#achievementEnergyGoal"+achievementstatus[0]+"\").addClass(\"achievementachieved\");");
  }
  if(totalbuildings>=achievementTotalBuildingsArray[achievementstatus[1]]){
 	achievementstatus[1]=achievementstatus[1]+1;
     //calculateEverything();
 	updateAchievement();
-	notify("Achievement \"Acquire "+achievementTotalBuildingsArray[achievementstatus[1]-1]+" buildings \" acquried. Energy multiplyier increased to "+ emultiplytotal +"");
+	notify("Achievement \"Acquire "+achievementTotalBuildingsArray[achievementstatus[1]-1]+" buildings \" acquried. Energy multiplyier increased to "+ emultiplytotal +"",1);
 	eval("$(\"#achievementTotalBuildings"+achievementstatus[1]+"\").addClass(\"achievementachieved\");");
  } 
- if(totalworkerbots>=achievementTotalworkerbotsArray[achievementstatus[2]]){
+ if(totalresearch>=achievementTotalResearchArray[achievementstatus[2]]){
 	achievementstatus[2]=achievementstatus[2]+1;
+    //calculateEverything();
+	updateAchievement();
+	notify("Achievement \"Acquire "+achievementTotalResearchArray[achievementstatus[2]-1]+" research levels \" acquried. Energy multiplyier increased to "+ emultiplytotal +"",1);
+	eval("$(\"#achievementTotalResearch"+achievementstatus[2]+"\").addClass(\"achievementachieved\");");
+ }
+ if(totalworkerbots>=achievementTotalworkerbotsArray[achievementstatus[3]]){
+	achievementstatus[3]=achievementstatus[3]+1;
 	//calculateEverything();
-	notify("Achievement \"Acquire "+formatNumber(achievementTotalworkerbotsArray[achievementstatus[2]-1])+" worker bots \" acquried. Energy multiplyier increased to "+ emultiplytotal +"");
-	eval("$(\"#achievementTotalworkerbots"+achievementstatus[2]+"\").addClass(\"achievementachieved\");");
+	notify("Achievement \"Acquire "+formatNumber(achievementTotalworkerbotsArray[achievementstatus[3]-1])+" worker bots \" acquried. Energy multiplyier increased to "+ emultiplytotal +"",1);
+	eval("$(\"#achievementTotalworkerbots"+achievementstatus[3]+"\").addClass(\"achievementachieved\");");
  } 
   }
   //end
@@ -1170,15 +1195,14 @@ location.reload();
  setInterval(stats, 2000);
  
  function stats(){
-totalachievements = achievementstatus[0]+achievementstatus[1]+achievementstatus[2]+achievementstatus[3]+achievementstatus[4]+achievementstatus[5]+achievementstatus[6]+achievementstatus[7]+achievementstatus[8]+achievementstatus[9]
-totalbuildings = BuildingAutoNumber0000 + BuildingAutoNumber0001 + BuildingAutoNumber0002 + BuildingAutoNumber0003 + BuildingEstoreNumber0000 + BuildingEstoreNumber0001 + BuildingEstoreNumber0002 + BuildingEstoreNumber0003 + BuildingrProd[0][0] + BuildingrStore[0][0];
 $("#createdenergy").html(formatNumber(totalenergyed)); 
 $("#totalachievements").html(totalachievements); 
 $("#totalbuildings").html(totalbuildings); 	  
+$("#totalresearch").html(totalresearch);
 $("#htmltotalworkerbots").html(totalworkerbots);
 $("#emultiply").html("x" + emultiplytotal); 	
-$("#version").html(version); 
 $("#currentVersionSettings").html(" Current version: "+version);
+$("#version").html(version); 
  }
  
   //TABS CODE
@@ -1250,9 +1274,9 @@ $( "#progress1" ).click(function() {
 	}
 });
 function checkGamestate(){
-	if(totalenergyed>=50&&gameState==1){tabsunlocked[3]=1;gameState=2;fillTabsName(); notify("Tab \""+tabsName[3]+"\" unlocked");}
-	if(totalenergyed>=750&&gameState==2){tabsunlocked[2]=1;gameState=3;fillTabsName(); notify("Tab \""+tabsName[2]+"\" unlocked");}
-	if(RealResearchPoints>=1&&gameState==3){tabsunlocked[1]=1;gameState=4;fillTabsName(); notify("Tab \""+tabsName[1]+"\" unlocked");}
+	if(totalenergyed>=50&&gameState==1){tabsunlocked[3]=1;gameState=2;fillTabsName(); notify("Tab \""+tabsName[3]+"\" unlocked",1);}
+	if(totalenergyed>=750&&gameState==2){tabsunlocked[2]=1;gameState=3;fillTabsName(); notify("Tab \""+tabsName[2]+"\" unlocked",1);}
+	if(RealResearchPoints>=1&&gameState==3){tabsunlocked[1]=1;gameState=4;fillTabsName(); notify("Tab \""+tabsName[1]+"\" unlocked",1);}
 }
  setInterval(checkGamestate, 500);
  //ADD RESOURCE
@@ -1308,6 +1332,8 @@ stats();
 	BuildingrProd[0][0]=10000;
 	BuildingrStore[0][0]=10000;
 	workerbots[0]=100;
+	workerbots[3]=10;
+	workerbots[4]=10;
 	skip=0;
   }
  }
@@ -1318,546 +1344,516 @@ stats();
 	zoom1=100;
 	padding = 5;
 	yoffset = 35;
-	function checkCostER(costE,costR){
-	    if(thetotal>=costE&&RealResearchPoints>=costR){
+	function checkCostER(costID){
+	    if(thetotal>=costID[0]&&RealResearchPoints>=costID[1]){
 			return 1;
 		}else{
 			return 0;
 		}
 	}
-	 function useCost(costE,costR){
-	   thetotal=thetotal-costE;
-	   RealResearchPoints=RealResearchPoints-costR;
+	function useCancel(costID){
+		thetotal=thetotal-costID[2];
 	}
-    //INITIALIZATION PHASE
+	function useCost(costID){
+		thetotal=thetotal-costID[0];
+		RealResearchPoints=RealResearchPoints-costID[1];
+	}
+	function researchFail(id){
+		$("#"+id).qaddclass("redborder").delay(1750).qremoveclass("redborder");
+	}
+	function researchMax(id){
+		boughtIt(id);
+	    maxed=" MAX";
+	}//$("#unqID9000lvl").text(unqID9000lvl+ maxed);
+	function researchClick(id){
+		if(id=="upgrade9000"){
+			if(ResearchLVL.unqID9000lvl >= research9000[3]) {
+			//if bought already
+			}else{
+			if(checkCostER(research9000)){
+			useCost(research9000);
+			//successfully purchased upgrade
+			ResearchLVL.unqID9000lvl=ResearchLVL.unqID9000lvl+1;
+			}else{
+			//do not meet requirement
+			researchFail("upgrade9000");
+			}
+			} 
+		}else if(id=="upgrade8000"){
+			if(ResearchLVL.unqID9000lvl >= research9000[3]){
+			if(ResearchLVL.unqID8000lvl >= research8000[3]) {
+			//if bought already
+			}else{
+			if(checkCostER(research8000)){
+			useCost(research8000);
+			//successfully purchased upgrade
+			ResearchLVL.unqID8000lvl=ResearchLVL.unqID8000lvl+1;
+			}else{
+			//do not meet requirement
+			researchFail("upgrade8000");
+			}
+			}
+			}
+		}else if(id=="upgrade6000"){
+			if(ResearchLVL.unqID9000lvl >= research9000[3]){
+			if(ResearchLVL.unqID6000lvl >= research6000[3]){
+			//if bought already
+			}else{
+			if(checkCostER(research6000)){
+			useCost(research6000);
+			//successfully purchased upgrade
+			ResearchLVL.unqID6000lvl=ResearchLVL.unqID6000lvl+1;
+			}else{
+			//do not meet requirement
+			researchFail("upgrade6000");
+			}
+			}
+			}
+		}else if(id=="upgrade9001"){
+			if(ResearchLVL.unqID9000lvl >= research9000[3]){
+			if(ResearchLVL.unqID9001lvl >= research9001[3]) {
+			//if bought already
+			}else{
+			if(checkCostER(research9001)){
+			useCost(research9001);
+			//successfully purchased upgrade
+			ResearchLVL.unqID9001lvl=ResearchLVL.unqID9001lvl+1;
+			}else{
+			//do not meet requirement
+			researchFail("upgrade9001");
+			}
+			}
+			}
+		}else if(id=="upgrade9002"){
+			if(ResearchLVL.unqID9001lvl >= research9001[3]){
+			if(ResearchLVL.unqID9002lvl >= research9002[3]) {
+			//if bought already
+			}else{
+			if(checkCostER(research9002)){
+			useCost(research9002);
+			//successfully purchased upgrade
+			ResearchLVL.unqID9002lvl=ResearchLVL.unqID9002lvl+1;
+			}else{
+			//do not meet requirement
+			researchFail("upgrade9002");
+			}
+			}	
+			}
+		}else if(id=="upgrade9003"){
+			if(ResearchLVL.unqID9002lvl >= research9002[3]){
+			if(ResearchLVL.unqID9003lvl >= research9003[3]) {
+			//if bought already
+			}else{
+			if(checkCostER(research9003)){
+			useCost(research9003);
+			//successfully purchased upgrade
+			ResearchLVL.unqID9003lvl=ResearchLVL.unqID9003lvl+1;
+			}else{
+			//do not meet requirement
+			researchFail("upgrade9003");
+			}
+			}
+			}
+		}else if(id=="upgrade8001"){
+			if(ResearchLVL.unqID8000lvl >= research8000[3]){
+			if(ResearchLVL.unqID8001lvl >= research8001[3]) {
+			//if bought already
+			}else{
+			if(checkCostER(research8001)){
+			useCost(research8001);
+			//successfully purchased upgrade
+			ResearchLVL.unqID8001lvl=ResearchLVL.unqID8001lvl+1;
+			}else{
+			//do not meet requirement
+			researchFail("upgrade8001");
+			}
+			}
+			} 
+		}else if(id=="upgrade8081"){
+			if(ResearchLVL.unqID8000lvl >= research8000[3]){
+			if(ResearchLVL.unqID8081lvl >= research8081[3]) {
+			//if bought already
+			}else{
+			if(checkCostER(research8081)){
+			useCost(research8081);
+			//successfully purchased upgrade
+			ResearchLVL.unqID8081lvl=ResearchLVL.unqID8081lvl+1;
+			}else{
+			//do not meet requirement
+			researchFail("upgrade8081");
+			}
+			}
+			}
+		}else if(id=="upgrade8091"){
+			if(ResearchLVL.unqID8000lvl>=1){
+			if(ResearchLVL.unqID8091lvl>=5) {
+			//if bought already
+			}else{
+			if(checkCostER(research8091)){
+			useCost(research8091);
+			//successfully purchased upgrade
+			ResearchLVL.unqID8091lvl=ResearchLVL.unqID8091lvl+1;
+			}else{
+			//do not meet requirement
+			researchFail("upgrade8091");
+			}
+			}
+			}
+		}else if(id=="upgrade6001"){
+			if(ResearchLVL.unqID6000lvl >= research6000[3]){
+			if(ResearchLVL.unqID6002lvl==0){
+			if(ResearchLVL.unqID6001lvl >= research6001[3]) {
+				//if bought already now cancel it
+				if(thetotal>=research6000[2]){
+				useCancel(research6000);
+				//successfully purchased upgrade
+				ResearchLVL.unqID6001lvl=0;
+				}else{
+				//do not meet requirement
+				researchFail("upgrade6001");
+				}
+			}else{
+			if(checkCostER(research6001)){
+				useCost(research6001);
+				//successfully purchased upgrade
+				ResearchLVL.unqID6001lvl=ResearchLVL.unqID6001lvl+1;
+				}else{
+				//do not meet requirement
+				researchFail("upgrade6001");
+				}
+			}
+			}
+			}
+		}else if(id=="upgrade6002"){
+			if(ResearchLVL.unqID6000lvl >= research6000[3]){
+			if(ResearchLVL.unqID6001lvl==0){
+			if(ResearchLVL.unqID6002lvl >= research6002[3]) {
+				//if bought already
+				if(thetotal>=research6000[2]){
+				useCancel(research6000);
+				//successfully purchased upgrade
+				ResearchLVL.unqID6002lvl=0;
+				}else{
+				//do not meet requirement
+				researchFail("upgrade6002");
+				}
+			}else{
+				if(checkCostER(research6002)){
+				useCost(research6002);
+				//successfully purchased upgrade
+				ResearchLVL.unqID6002lvl=ResearchLVL.unqID6002lvl+1;
+				}else{
+				//do not meet requirement
+                researchFail("upgrade6002");
+				}
+			}
+			}
+			}
+		}
+			updateResearchTree();
+	}
+	updateResearchTree();
+	function generateResearchTree(){
+	//INITIALIZATION PHASE
 	drawIcon(10,280,50,50,40,40,'./website/tools/research.png',"unqID9000","upgrade9000","cost9000","Unlock research","Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","The beginning");
     drawLink(60,302,20,5,"unqID0000");
 	drawLink(80,200,5,200,"unqID0001");
 	//Bot branch
-		drawIcon(57.5,152.5,50,50,40,40,'./website/tools/bot.png',"unqID9001","upgrade9001","cost9001","Unlock bot research","","Need more and better bots?");
+	drawIcon(57.5,152.5,50,50,40,40,'./website/tools/bot.png',"unqID9001","upgrade9001","cost9001","Unlock bot research","","Need more and better bots?");
 	linkIcon("unqID9000");
-	//PRO bar branch
+	//Bot Physical upgrade branch
+	drawLink(107.5,177.5,10,5,"unqID0901"); 
+	drawIcon(117.5,152.5,50,50,35,35,'./website/tools/gears.png',"unqID9002","upgrade9002","cost9002","Bot efficiency","Increase Bot efficiency multiplyier by 0.20","Better gears");
+	drawLink(167.5,177.5,10,5,"unqID0902"); 
+	drawIcon(177.5,152.5,50,50,35,35,'./website/tools/motor.png',"unqID9003","upgrade9003","cost9003","Bot efficiency","Increase Bot efficiency multiplyier by 0.40","Better motors");
+	//Bot maintenance branch
+	drawLink(80,130,5,22.5,"unqID0911"); 
+	drawIcon(57.5,82.5,50,50,30,40,'./website/tools/hammer.png',"unqID9012","upgrade9012","cost9012","Bot efficiency","Increase Bot efficiency multiplyier by 0.30","Bot maintenance");	
+	//
 	drawLink(85,302,20,5,"unqID0800");
-	    drawIcon(105,280,50,50,30,40,'./website/tools/hammer.png',"unqID8000","upgrade8000","cost8000","Energy production and storage boost I","Increase multiplyier for both by 0.2","Better maintenance");
-    //9
-	drawIcon(58,400,50,50,30,40,'./website/tools/researchD.png',"unqID6000","upgrade6000","cost6000","Unlock new research tree","Unlock the ability to research more technologies","The new era");
-	//onload functions
-	upgrade9000Pack("onload");
-	upgrade9001Pack("onload");
-	upgrade8000Pack("onload");
-	upgrade6000Pack("onload");
-        
-
-	//functions
-	//click functions
-	 $("#upgrade9000").click(function() {
-     if(unqID9000lvl >=1) {
-		 //if bought already
-	 }else{
-	   
-	   if(checkCostER(cost9000E,cost9000R)){
-	   useCost(cost9000E,cost9000R);
-	   //successfully purchased upgrade
-	   unqID9000lvl=unqID9000lvl+1;
-	   upgrade9000Pack("click");
-	   }else{
-	   //do not meet requirement
-	   $("#upgrade9000").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-	   }
-	 }
-	 	 });
-     $("#upgrade8000").click(function() { 
-	 if(unqID9000lvl>=1){
-     if(unqID8000lvl>=5) {
-		 //if bought already
-	 }else{
-	   
-	   if(checkCostER(cost8000E,cost8000R)){
-	   useCost(cost8000E,cost8000R);
-	   //successfully purchased upgrade
-	   unqID8000lvl=unqID8000lvl+1;
-	   upgrade8000Pack("click");
-	   }else{
-	   //do not meet requirement
-	   $("#upgrade8000").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-	   }
-	 }
-	 }
-	 	 });
-	    $("#upgrade6000").click(function() { 
-	 if(unqID9000lvl>=1){
-     if(unqID6000lvl>=1) {
-		 //if bought already
-	 }else{
-	   
-	   if(checkCostER(cost6000E,cost6000R)){
-	   useCost(cost6000E,cost6000R);
-	   //successfully purchased upgrade
-	   unqID6000lvl=unqID6000lvl+1;
-	   upgrade6000Pack("click");
-	   }else{
-	   //do not meet requirement
-	   $("#upgrade6000").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-	   }
-	 }
-	 }
-	 	 });
-	$("#upgrade9001").click(function() {
-	if(unqID9000lvl>=1){
-     if(unqID9001lvl>=1) {
-		 //if bought already
-	 }else{
-	   
-	   if(checkCostER(cost9001E,cost9001R)){
-	   useCost(cost9001E,cost9001R);
-	   //successfully purchased upgrade
-	   unqID9001lvl=unqID9001lvl+1;
-	   upgrade9001Pack("click");
-	   }else{
-	   //do not meet requirement
-	   $("#upgrade9001").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-	   }
-	 }
-	}
-	 	 });
-	function load9002(){
-	if(unqID9001lvl>=1){
-     $("#upgrade9002").click(function() {
-     if(unqID9002lvl>=5) {
-		 //if bought already
-	 }else{
-	   
-	   if(checkCostER(cost9002E,cost9002R)){
-	   useCost(cost9002E,cost9002R);
-	   //successfully purchased upgrade
-	   unqID9002lvl=unqID9002lvl+1;
-	   upgrade9002Pack("click");
-	    
-	   }else{
-	   //do not meet requirement
-	   $("#upgrade9002").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-	   }
-	 }
-	 	 });
-	}
-	 }	 
-	function load9003(){ 
-	if(unqID9002lvl>=5){
-     $("#upgrade9003").click(function() {
-     if(unqID9003lvl>=5) {
-		 //if bought already
-	 }else{
-	   
-	   if(checkCostER(cost9003E,cost9003R)){
-	   useCost(cost9003E,cost9003R);
-	   //successfully purchased upgrade
-	   unqID9003lvl=unqID9003lvl+1;
-	   upgrade9003Pack("click");
-	    
-	   }else{
-	   //do not meet requirement
-	   $("#upgrade9003").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-	   }
-	 }
-	 	 });
-	}
-	 }	 
-	 
-	 function load8001(){
-	if(unqID8000lvl>=5){
-     $("#upgrade8001").click(function() {
-		  
-     if(unqID8001lvl>=5) {
-		 //if bought already
-	 }else{
-	   
-	   if(checkCostER(cost8001E,cost8001R)){
-	   useCost(cost8001E,cost8001R);
-	   //successfully purchased upgrade
-	   unqID8001lvl=unqID8001lvl+1;
-	   upgrade8001Pack("click");
-	   }else{
-	   //do not meet requirement
-	   $("#upgrade8001").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-	   }
-	 }
-	 	 });
-	}
-	 }
-	 function load8081(){
-     $("#upgrade8081").click(function() {
-     if(unqID8081lvl>=5) {
-		 //if bought already
-	 }else{
-	   
-	   if(checkCostER(cost8081E,cost8081R)){
-	   useCost(cost8081E,cost8081R);
-	   //successfully purchased upgrade
-	   unqID8081lvl=unqID8081lvl+1;
-	   upgrade8081Pack("click");
-	   }else{
-	   //do not meet requirement
-	   $("#upgrade8081").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-	   }
-	 }
-	 	 });
-	 }
-	 function load8091(){
-     if(unqID8000lvl>=1){
-     $("#upgrade8091").click(function() {
-     if(unqID8091lvl>=5) {
-		 //if bought already
-	 }else{
-	   
-	   if(checkCostER(cost8091E,cost8091R)){
-	   useCost(cost8091E,cost8091R);
-	   //successfully purchased upgrade
-	   unqID8091lvl=unqID8091lvl+1;
-	   upgrade8091Pack("click");
-	   }else{
-	   //do not meet requirement
-	   $("#upgrade8091").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-	   }
-	 }
-	 	 });
-	 }
-	 }
-	 	 function load6001(){
-	if(unqID6000lvl>=1){
-     $("#upgrade6001").click(function() {
-	 if(unqID6002lvl==0){
-     if(unqID6001lvl>=1) {
-		 //if bought already now cancel it
-	 if(thetotal>=cost6001Cancel){
-	   useCost(cost6001Cancel,0);
-	   //successfully purchased upgrade
-	   unqID6001lvl=0;
-	   upgrade6001Pack("click");
-	   }else{
-	   //do not meet requirement
-	   $("#upgrade6001").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-	   }
-	 }else{
-	   
-	   if(checkCostER(cost6001E,cost6001R)){
-	   useCost(cost6001E,cost6001R);
-	   //successfully purchased upgrade
-	   unqID6001lvl=unqID6001lvl+1;
-	   upgrade6001Pack("click");
-	   }else{
-	   //do not meet requirement
-	   $("#upgrade6001").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-	   }
-	 }
-	 }
-	 	 });
-	}
-	 }
-	 	 function load6002(){
-	if(unqID6000lvl>=1){
-     $("#upgrade6002").click(function() {
-     if(unqID6001lvl==0){
-     if(unqID6002lvl>=1) {
-		 //if bought already
-	 if(thetotal>=cost6002Cancel){
-	   useCost(cost6002Cancel,0);
-	   //successfully purchased upgrade
-	   unqID6002lvl=0;
-	   upgrade6002Pack("click");
-	   }else{
-	   //do not meet requirement
-	   $("#upgrade6002").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-	   }
-	 }else{
-	   if(checkCostER(cost6002E,cost6002R)){
-	   useCost(cost6002E,cost6002R);
-	   //successfully purchased upgrade
-	   unqID6002lvl=unqID6002lvl+1;
-	   upgrade6002Pack("click");
-	   }else{
-	   //do not meet requirement
-	   $("#upgrade6002").qaddclass("redborder").delay(1750).qremoveclass("redborder");
-	   }
-	 }
-	 }
-	 	 });
-	}
-	 }
-	 //link packs
-	 function upgrade9000Pack(theLocation){
-		   //link
-	 var maxed = "";
-	 if(unqID9000lvl>=1){
-	   linkClass("unqID0000");
-	   linkClass("unqID0001");
-	   linkClass("unqID0002");
-	   linkClass("unqID0800");
-	   
-	       //link icons
-	   linkIcon("unqID9001"); 
-	   linkIcon("unqID8000"); 
-	   linkIcon("unqID6000");
-	       //reveal new links and icons
-	   drawLink(107.5,177.5,10,5,"unqID0901"); 
-	      drawIcon(117.5,152.5,50,50,35,35,'./website/tools/gears.png',"unqID9002","upgrade9002","cost9002","Bot efficiency","Increase Bot efficiency multiplyier by 0.20","Better gears");
-	   drawLink(155,302,20,5,"unqID0801");
-	      drawIcon(175,280,50,50,40,40,'./website/tools/wires.png',"unqID8001","upgrade8001","cost8001","Energy production and storage boost II","Increase multipler for both by 0.4","More conductive wires");
-	   drawLink(127,330,5,30,"unqID0881");
-	   drawLink(127,360,30,5,"unqID0882");
-	      drawIcon(140,340,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID8081","upgrade8081","cost8081","Add additional value to progress bar","Each level increases the amount of times the progress bar completes by 1, 1 click on the progress bar will result in multiple clicks registered, max level 5.");
-	   drawLink(127,245,30,5,"unqID0891");
-	   drawLink(127,250,5,30,"unqID0892");
-	      drawIcon(140,220,50,50,40,40,'./website/tools/chipconnect.png',"unqID8091","upgrade8091","cost8091","Energy Parallel Boost","Energy parallel loss reduced by 1%","Energy Data Network");
-	   //research 
-	   drawRect(120,480,300,140,"unqIDRect0600");
-	   drawLink(80,450,5,200,"unqID0601");
-	   drawLink(85,550,40,5,"unqID0610");
-	   drawLink(125,510,5,80,"unqID0611");
-	   drawLink(130,510,20,5,"unqID0612");
-       drawLink(130,585,20,5,"unqID0613");
-	      drawIconRevokable(150,488,50,50,30,40,'./website/tools/nil.png',"unqID6001","upgrade6001","cost6001","10% additional to EPC but 10% reduction to EPS","10% additional to EPC but 10% reduction to EPS, Max level 1 <br>Can be revoked for a larger amount of energy");
-		  drawIconRevokable(150,562,50,50,30,40,'./website/tools/nil.png',"unqID6002","upgrade6002","cost6002","10% additional to EPS but 10% reduction to EPC","10% additional to EPS but 10% reduction to EPC, Max level 1 <br>Can be revoked for a larger amount of energy");
-       //load them
-	 }
-	    //boughtIt reachmax
-	   if(unqID9000lvl>=1){
-	   boughtIt("upgrade9000");
-	   maxed=" MAX";
-	   }
-	   $("#unqID9000lvl").text(unqID9000lvl+ maxed);
-	 }
-	 function upgrade8000Pack(theLocation){
-		  
-	   var maxed = "";
-	   	 if(unqID8000lvl==1||(theLocation=="onload"&&unqID8000lvl>=1)){
-		//if reach max unlock next make it active
-	     linkClass("unqID0881");
-		 linkClass("unqID0882");
-		 
-		 linkIcon("unqID8081");
-
-	     linkClass("unqID0891");
-		 linkClass("unqID0892");
-		 
-		 linkIcon("unqID8091");
-	     //load them
-		 upgrade8081Pack("onload");
-		 load8081();
-		 upgrade8091Pack("onload");
-		 load8091();
-		}
-	    if(unqID8000lvl>=5){
-		//if reach max unlock next make it active
-	     linkClass("unqID0801");
-		 linkIcon("unqID8001");    //reveal this
-		 drawLink(225,302,20,5,"unqID0802");
-	     drawIcon(245,280,50,50,30,40,'./website/tools/probarenergy3.png',"unqID8002","upgrade8002","cost8002","Progress bar - Instant","Progress bar will take next to no time to complete, max level 1.");
-		 //load them
-		  upgrade8001Pack("onload");
-		 load8001();
-		}
-	   if(unqID8000lvl>=5){
-	   boughtIt("upgrade8000");
-	   maxed=" MAX";
-	   }
-	   $("#unqID8000lvl").text(unqID8000lvl+maxed);
-	 }
-	 function upgrade6000Pack(theLocation){
-		  
-	   var maxed = "";
-	   	 if(unqID6000lvl==1){
-		//if reach max unlock next make it active
-	     linkClass("unqID0601");
-		 linkClass("unqID0610");
-         linkClass("unqID0611");
-         linkClass("unqID0612");
-         linkClass("unqID0613");
-		 
-		 linkIcon("unqID6001");
-         linkIcon("unqID6002");
-	     //load them
-         upgrade6001Pack("onload");
-		 load6001();
-		 upgrade6002Pack("onload");
-		 load6002();
-		}
-	   
-	   if(unqID6000lvl>=1){
-	   boughtIt("upgrade6000");
-	   maxed=" MAX";
-	   }
-	   
-	   $("#unqID6000lvl").text(unqID6000lvl+maxed);
-	 }
-	 function upgrade6001Pack(theLocation){
-		  
-	   var maxed = "";
-	   	 if(unqID6001lvl==1){
-           
-		}
-	   
-	   if(unqID6001lvl>=1){
-	   unlinkIcon("unqID6002");
-	   boughtItCancel("upgrade6001","buy");
-	   maxed=" MAX";
-	   }
-	   if(unqID6001lvl==0){
-		   //cancel
-		  linkIcon("unqID6002"); 
-		  boughtItCancel("upgrade6001","cancel");
-	   }
-	   $("#unqID6001lvl").text(unqID6001lvl+maxed);
-	 }
-	 function upgrade6002Pack(theLocation){
-		  
-	   var maxed = "";
-	   	 if(unqID6002lvl==1){
-		//if reach max unlock next make it active
-	     //load them
-         
-		}
-	   
-	   if(unqID6002lvl>=1){
-	   unlinkIcon("unqID6001");
-	   boughtItCancel("upgrade6002","buy");
-	   maxed=" MAX";
-	   }
-	   	if(unqID6002lvl==0){
-		   //cancel
-		  linkIcon("unqID6001"); 
-		  boughtItCancel("upgrade6002","cancel");
-	   }
-	   $("#unqID6002lvl").text(unqID6002lvl+maxed);
-	 }
-     function upgrade8081Pack(theLocation){
-	   var maxed = "";
-	    if(unqID8081lvl>=5){
-		//if reach max unlock next make it active
-	  
-		}
-	   if(unqID8081lvl>=5){
-	   boughtIt("upgrade8081");
-	   maxed=" MAX";
-	   }
-	   $("#unqID8081lvl").text(unqID8081lvl+maxed);
-	 }
-     function upgrade8091Pack(theLocation){
-	   var maxed = "";
-	    if(unqID8091lvl>=5){
-		//if reach max unlock next make it active
-	  
-		}
-	   if(unqID8091lvl>=5){
-	   boughtIt("upgrade8091");
-	   maxed=" MAX";
-	   }
-	   $("#unqID8091lvl").text(unqID8091lvl+maxed);
-	 }
-	 function upgrade8001Pack(theLocation){ 
-	   var maxed = "";
-	    if(unqID8001lvl>=5){
-		//if reach max unlock next make it active
-	     linkClass("unqID0802");
-		 linkIcon("unqID8002");
-  
-		}
-	   if(unqID8001lvl>=5){
-	   boughtIt("upgrade8001");
-	   maxed=" MAX";
-	   }
-	   $("#unqID8001lvl").text(unqID8001lvl+maxed);
-	 }
-	 function upgrade9001Pack(theLocation){
-	   var maxed = "";
-	    if(unqID9001lvl>=1){
-		//if reach max unlock next make it active
-	     linkClass("unqID0901");
-		 linkIcon("unqID9002");
-		 drawLink(167.5,177.5,10,5,"unqID0902"); 
-	     drawIcon(177.5,152.5,50,50,35,35,'./website/tools/motor.png',"unqID9003","upgrade9003","cost9003","Bot efficiency","Increase Bot efficiency multiplyier by 0.40","Better motors");
-	 	 upgrade9002Pack("onload");
-		 load9002();
-		 
-		}
-	   if(unqID9001lvl>=1){
-	   boughtIt("upgrade9001");
-	   maxed=" MAX";
-	   }
-	   $("#unqID9001lvl").text(unqID9001lvl+maxed);
-	 }
+	drawIcon(105,280,50,50,30,40,'./website/tools/hammer.png',"unqID8000","upgrade8000","cost8000","Energy production and storage boost I","Increase multiplyier for both by 0.2","Better maintenance");
+	drawLink(225,302,20,5,"unqID0802");
+	drawIcon(245,280,50,50,30,40,'./website/tools/probarenergy3.png',"unqID8002","upgrade8002","cost8002","Progress bar - Instant","Progress bar will take next to no time to complete, max level 1.");
+		
+	drawLink(155,302,20,5,"unqID0801");
+	drawIcon(175,280,50,50,40,40,'./website/tools/wires.png',"unqID8001","upgrade8001","cost8001","Energy production and storage boost II","Increase multipler for both by 0.4","More conductive wires");
 	
-	function upgrade9002Pack(theLocation){
-	    var maxed = "";
-	    if(unqID9002lvl>=5){
-		//if reach max unlock next make it active
-	    linkClass("unqID0902");
-		linkIcon("unqID9003");
-	 	upgrade9003Pack("onload");
-		load9003();
+	drawLink(127,245,30,5,"unqID0891");
+	drawLink(127,250,5,30,"unqID0892");
+	drawIcon(140,220,50,50,40,40,'./website/tools/chipconnect.png',"unqID8091","upgrade8091","cost8091","Energy Parallel Boost","Energy parallel loss reduced by 1%","Energy data network");
+	drawLink(180,245,30,5,"unqID0893");
+	drawIcon(210,220,50,50,40,40,'./website/tools/chipconnect.png',"unqID8092","upgrade8092","cost8092","Energy Parallel Boost T2","Energy parallel loss reduced by 2%","Integrated energy data network");
+	
+	drawIcon(140,375,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID8081","upgrade8081","cost8081","Energy production boost","Increase multipler by 0.3","Energy production studies");
+	drawIcon(140,515,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID8082","upgrade8082","cost8082","Energy storage boost","Increase multiplyer by 0.3","Energy storage studies");
+	drawIcon(210,340,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID80810","upgrade80810","cost80810","Spatial energy generator boost","Increase multiplyer by 0.5","Better spatial studies");
+	drawIcon(210,410,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID80811","upgrade80811","cost80811","Plasma energy generator boost","Increase multiplyer by 0.5","Better plasmanomic studes");
+    drawIcon(210,480,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID80820","upgrade80820","cost80820","Dense field storage boost","Increase multiplyer by 0.5","Better dense field studies");
+	drawIcon(210,550,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID80821","upgrade80821","cost80821","Batteries boost","Increase multiplyer by 0.5","Better chemistry");
+   
+	drawLink(127,330,5,210,"unqID0881");
+	drawLink(127,397.5,13,5,"unqID0882");
+	drawLink(127,537.5,13,5,"unqID0883");
+
+	linkIcon("unqID9012",2);
+	linkClass("unqID0911",2);		
+	linkIcon("unqID80810",2);
+	linkIcon("unqID80811",2);
+	linkIcon("unqID80820",2);
+	linkIcon("unqID80821",2);
+	   
+	drawIcon(58,400,50,50,30,40,'./website/tools/researchD.png',"unqID6000","upgrade6000","cost6000","Unlock new research tree","Unlock the ability to research more technologies","The new era");
+	drawRect(120,600,300,140,"unqIDRect0600");
+	drawLink(80,450,5,350,"unqID0601");
+	drawLink(85,670,40,5,"unqID0610");
+	drawLink(125,630,5,80,"unqID0611");
+	drawLink(130,630,20,5,"unqID0612");
+    drawLink(130,705,20,5,"unqID0613");
+	drawIconRevokable(150,608,50,50,30,40,'./website/tools/nil.png',"unqID6001","upgrade6001","cost6001","10% additional to EPC but 10% reduction to EPS","10% additional to EPC but 10% reduction to EPS, Max level 1 <br>Can be revoked for a larger amount of energy");
+	drawIconRevokable(150,682,50,50,30,40,'./website/tools/nil.png',"unqID6002","upgrade6002","cost6002","10% additional to EPS but 10% reduction to EPC","10% additional to EPS but 10% reduction to EPC, Max level 1 <br>Can be revoked for a larger amount of energy");
+	} 
+	 
+	function researchLevel(ID1,level,max){
+		if(level>=max[3]){
+		$("#"+ID1).text(level+" MAX");
+		}else{
+		$("#"+ID1).text(level);	
 		}
-	    if(unqID9002lvl>=5){
+	}
+	function updateResearchTree(){
+		linkIcon("unqID9000",2);
+		if(ResearchLVL.unqID9000lvl >= research9000[3]){
+		linkClass("unqID0000",2);
+		linkClass("unqID0001",2);
+		linkClass("unqID0002",2);
+		linkClass("unqID0800",2);
+	       //link icons
+		linkIcon("unqID9001",2); 
+		linkIcon("unqID8000",2); 
+		linkIcon("unqID6000",2);
+		boughtIt("upgrade9000");
+		}else{
+		linkClass("unqID0000",0);
+		linkClass("unqID0001",0);
+		linkClass("unqID0002",0);
+		linkClass("unqID0800",0);
+	       //link icons
+		linkIcon("unqID9001",0); 
+		linkIcon("unqID8000",0); 
+		linkIcon("unqID6000",0);			
+		}
+		
+	   	if(ResearchLVL.unqID8000lvl >= research8000[3]){
+		//if reach max unlock next make it active
+	    linkClass("unqID0881",2);
+		linkClass("unqID0882",2);
+		linkClass("unqID0883",2);
+		
+		linkIcon("unqID8081",2);
+		linkIcon("unqID8082",2);
+	    linkClass("unqID0891",2);
+		linkClass("unqID0892",2);
+		 
+		linkIcon("unqID8091",2);
+		 
+	    linkClass("unqID0801",2);
+		linkIcon("unqID8001",2);
+		boughtIt("upgrade8000");
+		}else if(ResearchLVL.unqID9000lvl >= research9000[3]){
+		linkClass("unqID0881",0);
+		linkClass("unqID0882",0);
+		linkClass("unqID0883",0);
+		
+		linkIcon("unqID8081",0);
+		linkIcon("unqID8082",0);
+
+	    linkClass("unqID0891",0);
+		linkClass("unqID0892",0);
+		 
+		linkIcon("unqID8091",0);
+		 
+	    linkClass("unqID0801",0);
+		linkIcon("unqID8001",0);
+		}
+		
+		if(ResearchLVL.unqID6000lvl >= research6000[3]){
+		//if reach max unlock next make it active
+	    linkClass("unqID0601",2);
+		linkClass("unqID0610",2);
+        linkClass("unqID0611",2);
+        linkClass("unqID0612",2);
+        linkClass("unqID0613",2);
+		 
+		linkIcon("unqID6001",2);
+        linkIcon("unqID6002",2);
+		boughtIt("upgrade6000");
+		}else if(ResearchLVL.unqID9000lvl >= research9000[3]){
+		linkClass("unqID0601",0);
+		linkClass("unqID0610",0);
+        linkClass("unqID0611",0);
+        linkClass("unqID0612",0);
+        linkClass("unqID0613",0);
+		 
+		linkIcon("unqID6001",0);
+        linkIcon("unqID6002",0);	
+		}
+		
+		if(ResearchLVL.unqID6001lvl >= research6001[3]){
+		unlinkIcon("unqID6002");
+		boughtItCancel("upgrade6001","buy");
+		}
+		if(ResearchLVL.unqID6001lvl==0){
+		//cancel
+		linkIcon("unqID6002",2); 
+		boughtItCancel("upgrade6001","cancel");
+	    }
+		
+		if(ResearchLVL.unqID6002lvl >= research6002[3]){
+		unlinkIcon("unqID6001");
+		boughtItCancel("upgrade6002","buy");
+		}
+	   	if(ResearchLVL.unqID6002lvl==0){
+		   //cancel
+		  linkIcon("unqID6001",2); 
+		  boughtItCancel("upgrade6002","cancel");
+		}
+		
+		if(ResearchLVL.unqID8081lvl >= research8081[3]){
+		//if reach max unlock next make it active
+	    boughtIt("upgrade8081");
+		}
+ 
+		if(ResearchLVL.unqID8091lvl >= research8091[3]){
+		//if reach max unlock next make it active
+		linkClass("unqID0893",2);
+	    linkIcon("unqID8092",2);
+		boughtIt("upgrade8091");
+		}else if(ResearchLVL.unqID8000lvl >= research8000[3]){
+		linkClass("unqID0893",0);
+		linkIcon("unqID8092",0);
+		}
+  
+		if(ResearchLVL.unqID8001lvl >= research8001[3]){
+		//if reach max unlock next make it active
+	    linkClass("unqID0802",2);
+		linkIcon("unqID8002",2);
+	
+		boughtIt("upgrade8001"); 
+		}else if(ResearchLVL.unqID8000lvl >= research8000[3]){
+		linkClass("unqID0802",0);
+		linkIcon("unqID8002",0);	
+		}
+		
+		if(ResearchLVL.unqID9001lvl >= research9001[3]){
+		//if reach max unlock next make it active
+	    linkClass("unqID0901",2);
+		linkIcon("unqID9002",2);
+		 
+		boughtIt("upgrade9001");
+		}else if(ResearchLVL.unqID9000lvl >= research9000[3]){
+		linkClass("unqID0901",0);
+		linkIcon("unqID9002",0);
+		}
+	       
+		if(ResearchLVL.unqID9002lvl >= research9002[3]){
+		//if reach max unlock next make it active
+	    linkClass("unqID0902",2);
+		linkIcon("unqID9003",2);
+
 	    boughtIt("upgrade9002");
-	    maxed=" MAX";
-	    }
-	    $("#unqID9002lvl").text(unqID9002lvl+maxed);
-	}
-	function upgrade9003Pack(theLocation){
-		var maxed = "";
-	    if(unqID9003lvl>=5){
-		//if reach max unlock next make it active
-	     //linkClass("unqID0903");
-		 //linkIcon("unqID9004");
-	 	 //upgrade9004Pack("onload");
-		 //load9004();
+	    }else if(ResearchLVL.unqID9000lvl >= research9000[3]){
+		linkClass("unqID0902",0);
+		linkIcon("unqID9003",0);
 		}
-	    if(unqID9003lvl>=5){
+		
+		if(ResearchLVL.unqID9003lvl >= research9003[3]){
+		//if reach max unlock next make it active
+	     //linkClass("unqID0903",2);
+		 //linkIcon("unqID9004",2);
 	    boughtIt("upgrade9003");
-	    maxed=" MAX";
-	    }
-	    $("#unqID9003lvl").text(unqID9003lvl+maxed);		
+	    }else if(ResearchLVL.unqID9000lvl >= research9000[3]){
+		//linkClass("unqID0903",0);
+	    //linkIcon("unqID9004",0);	
+		}
+		
+		researchLevel("unqID9000lvl",ResearchLVL.unqID9000lvl,research9000);
+		
+		researchLevel("unqID8000lvl",ResearchLVL.unqID8000lvl,research8000);
+		researchLevel("unqID8001lvl",ResearchLVL.unqID8001lvl,research8001);
+		researchLevel("unqID8002lvl",ResearchLVL.unqID8001lvl,research8001);
+
+		researchLevel("unqID8081lvl",ResearchLVL.unqID8081lvl,research8081);
+		researchLevel("unqID8091lvl",ResearchLVL.unqID8091lvl,research8091);
+		
+		researchLevel("unqID9001lvl",ResearchLVL.unqID9001lvl,research9001);
+		researchLevel("unqID9002lvl",ResearchLVL.unqID9002lvl,research9002);
+		researchLevel("unqID9003lvl",ResearchLVL.unqID9003lvl,research9003);
+				
+		researchLevel("unqID6000lvl",ResearchLVL.unqID6000lvl,research6000);
+		researchLevel("unqID6001lvl",ResearchLVL.unqID6001lvl,research6001);
+		researchLevel("unqID6002lvl",ResearchLVL.unqID6001lvl,research6002);
 	}
+	generateResearchTree();
+	updateResearchTree(); 
+
+	     		
+
 	drawCosts();
 	//functions
 	 
 	function drawCosts(){
-		$("#cost9003E").text(formatNumber(cost9003E));
-		$("#cost9003R").text(formatNumber(cost9003R));
-		$("#cost9002E").text(formatNumber(cost9002E));
-		$("#cost9002R").text(formatNumber(cost9002R));
-		$("#cost9001E").text(formatNumber(cost9001E));
-		$("#cost9001R").text(formatNumber(cost9001R));
-		$("#cost9000E").text(formatNumber(cost9000E));
-		$("#cost9000R").text(formatNumber(cost9000R));
-		$("#cost8000E").text(formatNumber(cost8000E));
-		$("#cost8000R").text(formatNumber(cost8000R+(unqID8000lvl*0.05)));
-		$("#cost8001E").text(formatNumber(cost8001E));
-		$("#cost8001R").text(formatNumber(cost8001R));
-	    $("#cost8002E").text(formatNumber(cost8002E));
-		$("#cost8002R").text(formatNumber(cost8002R));
-		$("#cost8081E").text(formatNumber(cost8081E));
-		$("#cost8081R").text(formatNumber(cost8081R));
-		$("#cost8091E").text(formatNumber(cost8091E));
-		$("#cost8091R").text(formatNumber(cost8091R));
-		$("#cost6000E").text(formatNumber(cost6000E));
-		$("#cost6000R").text(formatNumber(cost6000R));
-		$("#cost6001E").text(formatNumber(cost6001E));
-		$("#cost6001R").text(formatNumber(cost6001R));
-		$("#cost6001Cancel").text(formatNumber(cost6001Cancel));
-		$("#cost6002E").text(formatNumber(cost6002E));
-		$("#cost6002R").text(formatNumber(cost6002R));
-		$("#cost6002Cancel").text(formatNumber(cost6002Cancel));
+		$("#cost9003E").text(formatNumber(research9003[0]));
+		$("#cost9003R").text(formatNumber(research9003[1]));
+		$("#cost9002E").text(formatNumber(research9002[0]));
+		$("#cost9002R").text(formatNumber(research9002[1]));
+		$("#cost9001E").text(formatNumber(research9001[0]));
+		$("#cost9001R").text(formatNumber(research9001[1]));
+		$("#cost9000E").text(formatNumber(research9000[0]));
+		$("#cost9000R").text(formatNumber(research9000[1]));
+		$("#cost8000E").text(formatNumber(research8000[0]));
+		$("#cost8000R").text(formatNumber(research8000[1]));
+		$("#cost8001E").text(formatNumber(research8001[0]));
+		$("#cost8001R").text(formatNumber(research8001[1]));
+	    $("#cost8002E").text(formatNumber(research8002[0]));
+		$("#cost8002R").text(formatNumber(research8002[1]));
+		$("#cost8081E").text(formatNumber(research8081[0]));
+		$("#cost8081R").text(formatNumber(research8081[1]));
+		$("#cost8091E").text(formatNumber(research8091[0]));
+		$("#cost8091R").text(formatNumber(research8091[1]));
+		$("#cost6000E").text(formatNumber(research6000[0]));
+		$("#cost6000R").text(formatNumber(research6000[1]));
+		$("#cost6001E").text(formatNumber(research6001[0]));
+		$("#cost6001R").text(formatNumber(research6001[1]));
+		$("#cost6001Cancel").text(formatNumber(research6001[3]));
+		$("#cost6002E").text(formatNumber(research6002[0]));
+		$("#cost6002R").text(formatNumber(research6002[1]));
+		$("#cost6002Cancel").text(formatNumber(research6002[2]));
 	}
-	function linkClass(unqID){
+	function linkClass(unqID,state){
+		if(state==0){
+			$("#"+unqID+"").removeClass("hide");
+		}else if(state==1){
 		$("#"+unqID+"").removeClass("notLinked");
 		$("#"+unqID+"").addClass("isLinked");
+		}else if(state==2){
+			linkClass(unqID,0);
+			linkClass(unqID,1);
+		}
 	}
-	function linkIcon(unqID){
+	function linkIcon(unqID,state){
+		if(state==0){
+			$("#"+unqID+"").removeClass("hide");
+		}else if(state==1){
 		$("#"+unqID+"").removeClass("IconnotLinked");
 		$("#"+unqID+"").addClass("IconisLinked");
 		$("#"+unqID+"tt").removeClass("notLinkedTooltip");
 		$("#"+unqID+"tt").addClass("isLinkedTooltip");
 		$("#"+unqID+"ttb").removeClass("notLinkedTooltip");
 		$("#"+unqID+"ttb").addClass("isLinkedTooltip");
+		}else if(state==2){
+			linkIcon(unqID,0);
+			linkIcon(unqID,1);
+		}
 	}
 	function unlinkIcon(unqID){
 		$("#"+unqID+"").addClass("IconnotLinked");
@@ -1882,12 +1878,14 @@ stats();
 	}
  
 	function drawIcon(x,y,boxw,boxh,imgw,imgh,url,unqID,upgradeID,costID,title,desc,caption){
-		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\"></span></b>&nbsp<span>Energy</span><p><b><span id=\""+costID+"R\"></span></b> Research Points</p><p style=\"text-align:left; padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18	px;\">\""+caption+"\"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
+		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\"></span></b>&nbsp<span>Energy</span><p><b><span id=\""+costID+"R\"></span></b> Research Points</p><p style=\"padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18px;\">\""+caption+"\"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
 		drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content);
+		document.getElementById(unqID).addEventListener('click',function(){researchClick(upgradeID);},false);
 	}
 	function drawIconRevokable(x,y,boxw,boxh,imgw,imgh,url,unqID,upgradeID,costID,title,desc,caption){
-		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\"></span></b>&nbsp<span>Energy</span><p><b><span id=\""+costID+"R\"></span></b> Research Points</p><p>Canceling Cost:&nbsp<b><span id=\""+costID+"Cancel\"></span></b>&nbsp<span>Energy</span></p><p style=\"text-align:left; padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18	px;\">\""+caption+"\"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
+		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\"></span></b>&nbsp<span>Energy</span><p><b><span id=\""+costID+"R\"></span></b> Research Points</p><p>Canceling Cost:&nbsp<b><span id=\""+costID+"Cancel\"></span></b>&nbsp<span>Energy</span></p><p style=\"padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18	px;\">\""+caption+"\"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
 		drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content);
+		document.getElementById(unqID).addEventListener('click',function(){researchClick(upgradeID);},false);
 	}
  
 	function drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content){
@@ -1895,7 +1893,7 @@ stats();
 		calc1 = ((boxw-imgw-border)/2);
 		calc2 = ((boxh-imgh-border)/2);	
 		
-	$( "#overlay2contents" ).append( "<div class=\"upgradeIcon IconnotLinked\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+boxw+"px;height:"+boxh+"px;\"></div>" );	
+	$( "#overlay2contents" ).append( "<div class=\"upgradeIcon IconnotLinked hide\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+boxw+"px;height:"+boxh+"px;\"></div>" );	
     $( "#"+unqID+"" ).append("<b><span class=\"upgradeLevel\" style=\"z-index: 1;\" id=\""+unqID+"lvl\"></span></b>");
 	$( "#"+unqID+"" ).append("<img src=\""+url+"\" class=\"divsImg\" id=\""+unqID+"Img\" style=\"position:absolute;top:"+calc2 +"px;left:"+calc1+"px;width:"+imgw+"px;height:"+imgh+"px;\">");
     $( "#"+unqID+"" ).append("<span class=\"upgradetooltiptext notLinkedTooltip \" id=\""+unqID+"tt\">"+content+"</span>");
@@ -1903,10 +1901,10 @@ stats();
    }
    //next function
    function drawLink(x,y,linkw,linkh,unqID){
-	   	$( "#overlay2contents" ).append( "<div class=\"researchLink notLinked\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
+	   	$( "#overlay2contents" ).append( "<div class=\"researchLink notLinked hide\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
    }
    function drawRect(x,y,linkw,linkh,unqIDRect){
-	   	$( "#overlay2contents" ).append( "<div class=\"rect\" id=\""+unqIDRect+"\" style=\"background-color:transparent; border-width:2px; border-color:#FFFFFF; border-style:solid; position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
+	   	$( "#overlay2contents" ).append( "<div class=\"rect hide\" id=\""+unqIDRect+"\" style=\"background-color:transparent; border-width:2px; border-color:#FFFFFF; border-style:solid; position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
    }
    function researchZoom(){
       sliderrange1 = $('#range-slider__range1');
@@ -1931,55 +1929,4 @@ stats();
 	   
 	}
 	researchZoom();
-
-	};
-	move();
 });
- 
- /*
- //running at 100 times a second (10 milliseconds)
-  run();
-  setInterval(run, 100);
-  function run() { 
-    thedatenow = new Date().getTime();
- 
-   Probarpercentage=(thedatenow-probarstartdateI)/(probarcounter*ClickTimes)*100;
-   ProbarpercentageA=(thedatenow-probarstartdateI)/(probarcounter*ClickTimes)*100*ClickTimes;
-      
-    if(ProbarpercentageA<100){
-		elem.style.backgroundColor = "#4CAF50"; 
-	}else if(ProbarpercentageA<200){
-		elem.style.backgroundColor = "#fff71c"; 
-	}else if(ProbarpercentageA<300){
-		elem.style.backgroundColor = "#ffb200"; 
-	}else if(ProbarpercentageA<400){
-		elem.style.backgroundColor = "#ff731c"; 
-	}else if(ProbarpercentageA<500){
-		elem.style.backgroundColor = "#ff4300"; 
-	}else if(ProbarpercentageA<600){
-		elem.style.backgroundColor = "#ff0000"; 
-	} 
-	
-  }
-
- function holderplaceholder(){
-	  //x , y, boxw, boxh, img w, img h, imgurl
-   var canvas = document.getElementById("myCanvas");
-    var ctx = canvas.getContext("2d");
-	container = $('#myCanvas').parent();
-	drawLink(150,35,20,5,"unqID0003");
-		drawImageBox(170,10,50,50,30,40,'/website/tools/EMUL.png',"unqID9002","<p style=\"font-size:26px;position: relative;\"> Energy multipler T1</p><p>Cost:<span></span><span>Increase energy multiplyier T1 by 0.05, Stacks with other tiers</p></p><br>");
-	drawLink(220,35,20,5,"unqID0004");	
-		drawImageBox(240,10,50,50,30,40,'/website/tools/EMUL2.png',"unqID9003","<p style=\"font-size:26px;position: relative;\"> Energy multipler T1</p><p>Cost:<span></span><span>Increase energy multiplyier T1 by 0.05, Stacks with other tiers</p></p><br>");
-	drawLink(290,35,20,5,"unqID0005");
-	    drawImageBox(310,10,50,50,30,40,'/website/tools/EMUL3.png',"unqID9004","<p style=\"font-size:26px;position: relative;\"> Energy multipler T1</p><p>Cost:<span></span><span>Increase energy multiplyier T1 by 0.05, Stacks with other tiers</p></p><br>");
-	 
-	drawLink(192,60,5,20,"unqID0100");
-	    drawImageBox(170,70,50,50,30,40,'/website/tools/EPOW.png',"unqID9100","<p style=\"font-size:26px;position: relative;\"> Energy pow T1</p><p>Cost:<span></span><span>Increase energy multiplyier T1 by 0.05, Stacks with other tiers</p></p><br>");
-	drawLink(220,95,20,5,"unqID0101");
-	    drawImageBox(240,70,50,50,30,40,'/website/tools/EPOW2.png',"unqID9101","<p style=\"font-size:26px;position: relative;\"> Energy pow T1</p><p>Cost:<span></span><span>Increase energy multiplyier T1 by 0.05, Stacks with other tiers</p></p><br>");
-	drawLink(290,95,20,5,"unqID0102");
-	    drawImageBox(310,70,50,50,30,40,'/website/tools/EPOW3.png',"unqID9102","<p style=\"font-size:26px;position: relative;\"> Energy pow T1</p><p>Cost:<span></span><span>Increase energy multiplyier T1 by 0.05, Stacks with other tiers</p></p><br>");
-	//
-}
-*/
