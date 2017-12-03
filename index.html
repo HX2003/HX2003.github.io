@@ -338,22 +338,40 @@ border-color:#FFFFFF;
 	height:100%;	
 }
 #upgradeboxcontainer {
-	padding:5px;
- 
-}
-#upgradescontainer {
 	height:100%;
 	border-width:1px;
 	border-style:solid;
-	border-color:#FFFFFF;	 	
+	border-color:#FFFFFF;	
+	padding:5px;
+	position: relative;
 }
-#overlay2{
-    position:relative;
-	height:450px;
-	overflow: auto;
+#overlay2container{
+	position:relative;
+	width:100%;
+	overflow:hidden;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	 -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+#overlay2zoom{
+	width:100%;
+	height:auto;
 }
 #overlay2contents{
     min-height: 450px;
+}
+#overlay2research{
+	width:1000px;
+	height:1000px;
+	position:absolute;
 }
 .upgradeIcon:hover{
     transition: border-color 0.3s ease;
@@ -1112,7 +1130,6 @@ input[type=range]:active::-moz-range-thumb {
 <script type="text/javascript"src="./js/formatting.js"></script>
 <script type="text/javascript"src="./js/lz-string.js"></script>
 <script type="text/javascript" src="./minigame2.js"></script>
-<script type="text/javascript" src="./js/dragscroll.js"></script>
 <link rel="icon" 
       type="image/png" 
       href="./favicon.png">
@@ -1385,7 +1402,6 @@ Do you really want to delete this save?
 <div id="tabB" class="tabClass">
 
 <div id="upgradesmaincontainer">
-<div id="upgradescontainer">
 <div id="upgradeboxcontainer">
 <div class="clear"></div>
 <div id="overlay">
@@ -1397,15 +1413,19 @@ Do you really want to delete this save?
   <div class="clear"></div>
   <br>
   	 <div class="range-slider">
-     <input class="range-slider__range" id="range-slider__range1" type="range" value="100" min="25" max="200">
+     <input class="range-slider__range" id="range-slider__range1" type="range" value="100" min="25" max="175">
      <span class="range-slider__value" id="range-slider__value1">err</span>
      </div>
-  <div id="overlay2" class="free dragscroll" homeview="">
-  <div id="overlay2contents"></div>
-  </div>
+	<div id="overlay2container">
+	<div id="overlay2zoom">
+	<div id="overlay2contents">
+	<div id="overlay2research">
+	</div>
+	</div>
+	</div>
+	</div>
 </div>
 </div><div class="clear"></div>
- </div>
 </div>
 </div>
 
@@ -1525,34 +1545,5 @@ Do you really want to delete this save?
 <div id="bottomcontainer">
 <div id="centernotify"><div id="notifyTitle" style="font-size:24px;"></div></div>
 </div>
-<!--
-BOTTOM
-
-<div id="bottom">
-<div id="menucontainer">
-<div id="achievementmenu" class="menubutton menubutton1">
-Achievements
-</div>
-<div id="centernotify"></div>
-<div id="settingsmenu" class="menubutton menubutton3">
-Settings n Stuff
-</div>
-<div class="clear"></div>
-<div id="statsmenu" class="menubutton menubutton2">
-Stats
-</div>
-<div id="unlockedupgradesmenu" class="menubutton menubutton4">
-Upgrades Unlocked
-</div>
-</div>
-<div class="clear"></div>
-
-<h
-
-
-<div id="unlockedupgrades" class="menu4 menu">
-<div id="settingshead"><b>Unlocked upgrades</b></div>
-</div>
-!-->
 </body>
 </html>

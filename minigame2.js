@@ -1581,11 +1581,11 @@ stats();
 	drawLink(127,245,30,5,"unqID0891");
 	drawLink(127,250,5,30,"unqID0892");
 	drawIcon(140,220,50,50,40,40,'./website/tools/chipconnect.png',"unqID8091","upgrade8091","cost8091","Energy Parallel Boost","Energy parallel loss reduced by 1%","Energy data network");
-	drawLink(180,245,30,5,"unqID0893");
-	drawIcon(210,220,50,50,40,40,'./website/tools/chipconnect.png',"unqID8092","upgrade8092","cost8092","Energy Parallel Boost T2","Energy parallel loss reduced by 2%","Integrated energy data network");
+	drawLink(190,245,20,5,"unqID0893");
+	drawIcon(210,220,50,50,40,40,'./website/tools/pcbconnect.png',"unqID8092","upgrade8092","cost8092","Energy Parallel Boost T2","Energy parallel loss reduced by 2%","Integrated energy data network");
 	
-	drawIcon(140,375,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID8081","upgrade8081","cost8081","Energy production boost","Increase multipler by 0.3","Energy production studies");
-	drawIcon(140,515,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID8082","upgrade8082","cost8082","Energy storage boost","Increase multiplyer by 0.3","Energy storage studies");
+	drawIcon(140,375,50,50,40,40,'./website/tools/book_energy.png',"unqID8081","upgrade8081","cost8081","Energy production boost","Increase multipler by 0.3","Energy production studies");
+	drawIcon(140,515,50,50,40,40,'./website/tools/book_energystore.png',"unqID8082","upgrade8082","cost8082","Energy storage boost","Increase multiplyer by 0.3","Energy storage studies");
 	drawIcon(210,340,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID80810","upgrade80810","cost80810","Spatial energy generator boost","Increase multiplyer by 0.5","Better spatial studies");
 	drawIcon(210,410,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID80811","upgrade80811","cost80811","Plasma energy generator boost","Increase multiplyer by 0.5","Better plasmanomic studes");
     drawIcon(210,480,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID80820","upgrade80820","cost80820","Dense field storage boost","Increase multiplyer by 0.5","Better dense field studies");
@@ -1893,7 +1893,7 @@ stats();
 		calc1 = ((boxw-imgw-border)/2);
 		calc2 = ((boxh-imgh-border)/2);	
 		
-	$( "#overlay2contents" ).append( "<div class=\"upgradeIcon IconnotLinked hide\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+boxw+"px;height:"+boxh+"px;\"></div>" );	
+	$( "#overlay2research" ).append( "<div class=\"upgradeIcon IconnotLinked hide\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+boxw+"px;height:"+boxh+"px;\"></div>" );	
     $( "#"+unqID+"" ).append("<b><span class=\"upgradeLevel\" style=\"z-index: 1;\" id=\""+unqID+"lvl\"></span></b>");
 	$( "#"+unqID+"" ).append("<img src=\""+url+"\" class=\"divsImg\" id=\""+unqID+"Img\" style=\"position:absolute;top:"+calc2 +"px;left:"+calc1+"px;width:"+imgw+"px;height:"+imgh+"px;\">");
     $( "#"+unqID+"" ).append("<span class=\"upgradetooltiptext notLinkedTooltip \" id=\""+unqID+"tt\">"+content+"</span>");
@@ -1901,32 +1901,77 @@ stats();
    }
    //next function
    function drawLink(x,y,linkw,linkh,unqID){
-	   	$( "#overlay2contents" ).append( "<div class=\"researchLink notLinked hide\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
+	   	$( "#overlay2research" ).append( "<div class=\"researchLink notLinked hide\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
    }
    function drawRect(x,y,linkw,linkh,unqIDRect){
-	   	$( "#overlay2contents" ).append( "<div class=\"rect hide\" id=\""+unqIDRect+"\" style=\"background-color:transparent; border-width:2px; border-color:#FFFFFF; border-style:solid; position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
+	   	$( "#overlay2research" ).append( "<div class=\"rect hide\" id=\""+unqIDRect+"\" style=\"background-color:transparent; border-width:2px; border-color:#FFFFFF; border-style:solid; position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
    }
-   function researchZoom(){
-      sliderrange1 = $('#range-slider__range1');
-	  overlay2contents = $('#overlay2contents');
-      slidervalue1 = $('#range-slider__value1');
-     
+   function bound(val,min,max){
+	   if(val>max){
+		  val=max;
+	   }
+	   if(val<min){
+		  val=min;
+	   }
+	   return val;
+   };
+    sliderrange1 = $('#range-slider__range1');
+	overlay2research=$('#overlay2research');
+	overlay2contents = $('#overlay2contents');
+	overlay2zoom = $('#overlay2zoom');
+    slidervalue1 = $('#range-slider__value1');
+	overlay2research.on("mousedown",function(me){
+    var move = $(this);
+    
+    var lastOffset = move.data('lastTransform');
+    var lastOffsetX = lastOffset ? lastOffset.dx : 0,
+        lastOffsetY = lastOffset ? lastOffset.dy : 0;
+         
+    var startX = me.pageX - lastOffsetX, startY = me.pageY - lastOffsetY;
+    
+    $(document).on("mousemove",function(e){
+        var newDx = e.pageX - startX,
+            newDy = e.pageY - startY;
+			newDx = bound(newDx,0,300);
+			newDy = bound(newDy,-500,0);
+        move.css('transform','translate(' + newDx + 'px, ' + newDy + 'px)');
+        
+        // we need to save last made offset
+        move.data('lastTransform', {dx: newDx, dy: newDy });
+    });
+});
+$(document).on("mouseup",function(){
+    $(this).off("mousemove");
+});
       zoom1 = sliderrange1.val();
       slidervalue1.html(zoom1+"%");
-	  
-      sliderrange1.on('input', function(){
-		 zoom1 = sliderrange1.val();
-		slidervalue1.html(zoom1+"%");  
+	function setZoom(){
+		sliderrange1.val(zoom1);
+		slidervalue1.html(zoom1+"%"); 
 		var scaling = "scale("+zoom1/100+","+zoom1/100+")";
 		var marginLeft=0;
 		if(zoom1>100){
-			marginLeft=(zoom1-100)*overlay2contents.width()/100/2;
+			marginLeft=(zoom1-100)*overlay2zoom.width()/100/3;
 		}
 		var marginLeftpx = ""+marginLeft+"px";
-		$('#overlay2contents').css("transform", scaling);
-		$('#overlay2contents').css("marginLeft", marginLeftpx);
+		overlay2zoom.css("transform", scaling);
+		overlay2contents.css("marginLeft", marginLeftpx);
+	}  
+      sliderrange1.on('input', function(){
+		zoom1 = sliderrange1.val(); 
+		setZoom();
       });
-	   
-	}
-	researchZoom();
+	  overlay2research.bind('wheel', function (e) {
+		if (e.originalEvent.deltaY > 0) {
+			zoom1=zoom1+5;
+			zoom1=bound(zoom1,25,175);
+		} else {
+			zoom1=zoom1-5;
+			zoom1=bound(zoom1,25,175);
+		}
+	  	setZoom();
+	  });
+ 
+	  
+	 
 });
