@@ -1,5 +1,5 @@
 $(document).ready(function(){ 
-  currentVersion="2.0.1";
+  currentVersion="2.0.2";
   //Init VARAIABLES starting game 
   //BuildingEstore [ID][NUM,COST,VALUE, CALC COST]
     InitVar1 = {
@@ -1043,15 +1043,15 @@ if(workerbotsEcost0000<= thetotal && workerbotsRcost0000<= RealResearchPoints) {
   rewardcalculatedvalue8 = Math.ceil(Math.pow(1*((EnergyGoalLevel+8)/2),2));
   rewardcalculatedvalue9 = Math.ceil(Math.pow(1*((EnergyGoalLevel+9)/2),2));
   
-  energyGoal1.html("Requirement: "+formatNumber(calculatedvalue1)+" Energy || Reward: "+rewardcalculatedvalue1);
-  energyGoal2.html("Requirement: "+formatNumber(calculatedvalue2)+" Energy || Reward: "+rewardcalculatedvalue2);
-  energyGoal3.html("Requirement: "+formatNumber(calculatedvalue3)+" Energy || Reward: "+rewardcalculatedvalue3);
-  energyGoal4.html("Requirement: "+formatNumber(calculatedvalue4)+" Energy || Reward: "+rewardcalculatedvalue4);
-  energyGoal5.html("Requirement: "+formatNumber(calculatedvalue5)+" Energy || Reward: "+rewardcalculatedvalue5);
-  energyGoal6.html("Requirement: "+formatNumber(calculatedvalue6)+" Energy || Reward: "+rewardcalculatedvalue6);
-  energyGoal7.html("Requirement: "+formatNumber(calculatedvalue7)+" Energy || Reward: "+rewardcalculatedvalue7);
-  energyGoal8.html("Requirement: "+formatNumber(calculatedvalue8)+" Energy || Reward: "+rewardcalculatedvalue8);
-  energyGoal9.html("Requirement: "+formatNumber(calculatedvalue9)+" Energy || Reward: "+rewardcalculatedvalue9);
+  energyGoal1.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue1)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue1+"</span>");
+  energyGoal2.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue2)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue2+"</span>");
+  energyGoal3.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue3)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue3+"</span>");
+  energyGoal4.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue4)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue4+"</span>");
+  energyGoal5.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue5)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue5+"</span>");
+  energyGoal6.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue6)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue6+"</span>");
+  energyGoal7.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue7)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue7+"</span>");
+  energyGoal8.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue8)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue8+"</span>");
+  energyGoal9.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue9)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue9+"</span>");
   
  $(".EnergyGoalLevel").html(EnergyGoalLevel);
   } 
@@ -1878,12 +1878,12 @@ stats();
 	}
  
 	function drawIcon(x,y,boxw,boxh,imgw,imgh,url,unqID,upgradeID,costID,title,desc,caption){
-		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\"></span></b>&nbsp<span>Energy</span><p><b><span id=\""+costID+"R\"></span></b> Research Points</p><p style=\"padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18px;\">\""+caption+"\"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
+		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\" class=\"cur_energy\"></span></b><b><span id=\""+costID+"R\" class=\"cur_research\"></span></b><p style=\"padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18px;\">\""+caption+"\"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
 		drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content);
 		document.getElementById(unqID).addEventListener('click',function(){researchClick(upgradeID);},false);
 	}
 	function drawIconRevokable(x,y,boxw,boxh,imgw,imgh,url,unqID,upgradeID,costID,title,desc,caption){
-		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\"></span></b>&nbsp<span>Energy</span><p><b><span id=\""+costID+"R\"></span></b> Research Points</p><p>Canceling Cost:&nbsp<b><span id=\""+costID+"Cancel\"></span></b>&nbsp<span>Energy</span></p><p style=\"padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18	px;\">\""+caption+"\"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
+		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\" class=\"cur_energy\"></span></b><b><span id=\""+costID+"R\" class=\"cur_research\"></span></b><p>Canceling Cost:&nbsp<b><span id=\""+costID+"Cancel\"></span></b>&nbsp<span>Energy</span></p><p style=\"padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18	px;\">\""+caption+"\"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
 		drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content);
 		document.getElementById(unqID).addEventListener('click',function(){researchClick(upgradeID);},false);
 	}
@@ -1932,8 +1932,8 @@ stats();
     $(document).on("mousemove",function(e){
         var newDx = e.pageX - startX,
             newDy = e.pageY - startY;
-			newDx = bound(newDx,0,300);
-			newDy = bound(newDy,-500,0);
+			newDx = bound(newDx,0,400);
+			newDy = bound(newDy,-500,200);
         move.css('transform','translate(' + newDx + 'px, ' + newDy + 'px)');
         
         // we need to save last made offset
@@ -1943,6 +1943,7 @@ stats();
 $(document).on("mouseup",function(){
     $(this).off("mousemove");
 });
+	  
       zoom1 = sliderrange1.val();
       slidervalue1.html(zoom1+"%");
 	function setZoom(){
@@ -1950,9 +1951,9 @@ $(document).on("mouseup",function(){
 		slidervalue1.html(zoom1+"%"); 
 		var scaling = "scale("+zoom1/100+","+zoom1/100+")";
 		var marginLeft=0;
-		if(zoom1>100){
-			marginLeft=(zoom1-100)*overlay2zoom.width()/100/3;
-		}
+		//if(zoom1>100){
+		//	marginLeft=(zoom1-100)*overlay2zoom.width()/100/3;
+		//}
 		var marginLeftpx = ""+marginLeft+"px";
 		overlay2zoom.css("transform", scaling);
 		overlay2contents.css("marginLeft", marginLeftpx);
@@ -1962,12 +1963,13 @@ $(document).on("mouseup",function(){
 		setZoom();
       });
 	  overlay2research.bind('wheel', function (e) {
+		zoom1=zoom1/1;
 		if (e.originalEvent.deltaY > 0) {
-			zoom1=zoom1+5;
-			zoom1=bound(zoom1,25,175);
+			zoom1=zoom1+10;
+			zoom1=bound(zoom1,25,200);
 		} else {
-			zoom1=zoom1-5;
-			zoom1=bound(zoom1,25,175);
+			zoom1=zoom1-10;
+			zoom1=bound(zoom1,25,200);
 		}
 	  	setZoom();
 	  });

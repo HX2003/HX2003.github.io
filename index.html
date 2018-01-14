@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -32,7 +32,7 @@ body {
 	font-size: 20px;
 	color: #FAFAFA;
 	height:100%;
-	line-height:115%;
+	line-height:100%;
 	text-align:justify;
 	position:relative;
 }
@@ -83,11 +83,22 @@ body {
   height: 100%;
   background-color: #4CAF50;
 }
-
-#amount,#amount2{
-	height: 30px;
-	text-align:left;
-	margin-top:8px;
+/*Currency Icons*/
+.cur_energy::before{
+    content: "";
+    display: inline-block;
+    background: url("./website/tools/low_res/currency_energy.png") no-repeat right top;
+	background-size: contain;
+    width: 16px;
+    height: 16px;
+}
+.cur_research::before{
+    content: "";
+    display: inline-block;
+    background: url("./website/tools/low_res/currency_research.png") no-repeat right top;
+	background-size: contain;
+    width: 16px;
+    height: 16px;
 }
 /*Buildings*/
 #buildingscontainer{
@@ -238,7 +249,7 @@ border-color:#FFFFFF;
     left: -50%; 
     margin-left: calc(100%/-2);
     position: absolute;
-    z-index: 1
+    z-index: 10;
 }
 .autobuildingbuy:hover .buytooltiptext {
     visibility: visible;
@@ -260,7 +271,7 @@ border-color:#FFFFFF;
     left: -50%; 
     margin-left: calc(100%/-2);
     position: absolute;
-    z-index: 1
+    z-index: 10;
 }
 .estorebuildingbuy:hover .buytooltiptext {
     visibility: visible;
@@ -364,6 +375,7 @@ border-color:#FFFFFF;
 #overlay2zoom{
 	width:100%;
 	height:auto;
+	transition: 0.2s ease;
 }
 #overlay2contents{
     min-height: 450px;
@@ -1165,8 +1177,8 @@ Do you really want to delete this save?
 <!-- Resource Bar!-->
 <div id="resourcebar">
 <b>
-<span id="span1" style="">Energy: <span class="thetotal" style=""></span></span>
-<span id="span2" style="">Research points:<span class="ResearchPoints"></span>-><span class="RealResearchPoints"></span>/<span class="RealResearchPointscap"></span></span>
+<span><span class="thetotal cur_energy"></span><span style="font-size:17px;">(<span id="epsgain"></span>/s)</span></span>
+<span class="cur_research"><span class="ResearchPoints"></span>-><span class="RealResearchPoints"></span>/<span class="RealResearchPointscap"></span><span style="font-size:17px">(<span id="rProdgain"></span>/s)</span></span>
 <span id="span3" style="">Worker bots:<span class="workerbotsINACTIVE" style=""></span>/<span class="totalworkerbots" style=""></span>
 </b>
 </div>
@@ -1189,17 +1201,10 @@ Do you really want to delete this save?
   <div id="bar1"></div> 
 </div>
 <br>
-<div class="clear"></div> 
-<div id=" ">
 <br>
-<span>Energy per second (eps): </span><span id="epsgain"></span>
-<div class="clear"></div> 
-<span>Research production per second (rps): </span><span id="rProdgain"></span>
-<table style="font-size:22px;"><tr><td><div style="">Total Energy: </div></td><td><div class="thetotal" style=""></div></td></tr></table>
-<table style="font-size:22px;"><tr><td><div style="">Total research points: </div></td><td><span class="ResearchPoints"></span>-><span class="RealResearchPoints"></span>/<span class="RealResearchPointscap"></span></td></tr></table>
-<table style="font-size:22px;"><tr><td><div style="">Available Worker Bots: </div></td><td><span class="workerbotsINACTIVE" style=""></span>/<span class="totalworkerbots" style=""></span></div></td></tr></table>
 <div class="clear"></div>
 <hr style="margin-right:3px;">
+<br>
 <div id="buildingscontainer">
 <div id="energyproduction">
 <b>Energy Production </b> <span>Assigned:<span id="workerbotsT1"></span></span><span class="workerbotsAction"><span id="workerbotsA1" class="workerbotsAssign">+</span><span id="workerbotsR1" class="workerbotsRemove">-</span></span>
@@ -1216,7 +1221,7 @@ Do you really want to delete this save?
 </span>
 </div>
 <p></p>
-<span class="details"><span>Cost: </span><span id="egcost0000" ></span><span id="autoerrorcost0000" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="egnum0000"></span></span>
+<span class="details"><span>Cost: </span><span id="egcost0000" class="cur_energy"></span><span id="autoerrorcost0000" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="egnum0000"></span></span>
 
 <div class="clear"></div>
 </div>
@@ -1233,7 +1238,7 @@ Do you really want to delete this save?
 </span>
 </div>
 <p></p>
-<span class="details"><span>Cost: </span><span id="egcost0001" ></span><span id="autoerrorcost0001" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="egnum0001"></span></span>
+<span class="details"><span>Cost: </span><span id="egcost0001" class="cur_energy"></span><span id="autoerrorcost0001" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="egnum0001"></span></span>
 
 <div class="clear"></div>
 </div>
@@ -1250,7 +1255,7 @@ Do you really want to delete this save?
 </span>
 </div>
 <p></p>
-<span class="details"><span>Cost: </span><span id="egcost0002" ></span><span id="autoerrorcost0002" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="egnum0002"></span></span>
+<span class="details"><span>Cost: </span><span id="egcost0002" class="cur_energy"></span><span id="autoerrorcost0002" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="egnum0002"></span></span>
 
 <div class="clear"></div>
 </div>
@@ -1267,7 +1272,7 @@ Do you really want to delete this save?
 </span>
 </div>
 <p></p>
-<span class="details"><span>Cost: </span><span id="egcost0003" ></span><span id="autoerrorcost0003" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="egnum0003"></span></span>
+<span class="details"><span>Cost: </span><span id="egcost0003" class="cur_energy"></span><span id="autoerrorcost0003" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="egnum0003"></span></span>
 </div>
 </div>
 <div id="energystorage">
@@ -1285,7 +1290,7 @@ Do you really want to delete this save?
 </span>
 </div>
 <p></p>
-<span class="details"><span>Cost: </span><span id="Estorecost0000" ></span><span id="Estoreerrorcost0000" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="Estorenum0000"></span></span>
+<span class="details"><span>Cost: </span><span id="Estorecost0000" class="cur_energy"></span><span id="Estoreerrorcost0000" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="Estorenum0000"></span></span>
 
 <div class="clear"></div>
 </div>
@@ -1302,7 +1307,7 @@ Do you really want to delete this save?
 </span>
 </div>
 <p></p>
-<span class="details"><span>Cost: </span><span id="Estorecost0001" ></span><span id="Estoreerrorcost0001" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="Estorenum0001"></span></span>
+<span class="details"><span>Cost: </span><span id="Estorecost0001" class="cur_energy"></span><span id="Estoreerrorcost0001" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="Estorenum0001"></span></span>
 
 <div class="clear"></div>
 </div>
@@ -1319,7 +1324,7 @@ Do you really want to delete this save?
 </span>
 </div>
 <p></p>
-<span class="details"><span>Cost: </span><span id="Estorecost0002" ></span><span id="Estoreerrorcost0002" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="Estorenum0002"></span></span>
+<span class="details"><span>Cost: </span><span id="Estorecost0002" class="cur_energy"></span><span id="Estoreerrorcost0002" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="Estorenum0002"></span></span>
 
 <div class="clear"></div>
 </div>
@@ -1336,7 +1341,7 @@ Do you really want to delete this save?
 </span>
 </div>
 <p></p>
-<span class="details"><span>Cost: </span><span id="Estorecost0003" ></span><span id="Estoreerrorcost0003" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="Estorenum0003"></span></span>
+<span class="details"><span>Cost: </span><span id="Estorecost0003" class="cur_energy"></span><span id="Estoreerrorcost0003" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="Estorenum0003"></span></span>
 </div>
 </div>
 </div>
@@ -1358,7 +1363,7 @@ Do you really want to delete this save?
 </span>
 </div>
 <p></p>
-<span class="details"><span>Cost: </span><span id="rProdcost0000" ></span><span id="rProderrorcost0000" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="rProdnum0000"></span></span>
+<span class="details"><span>Cost: </span><span id="rProdcost0000" class="cur_energy"></span><span id="rProderrorcost0000" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="rProdnum0000"></span></span>
 
 <div class="clear"></div>
 </div>
@@ -1378,7 +1383,7 @@ Do you really want to delete this save?
 </span>
 </div>
 <p></p>
-<span class="details"><span>Cost: </span><span id="rStorecost0000" ></span><span id="rStoreerrorcost0000" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="rStorenum0000"></span></span>
+<span class="details"><span>Cost: </span><span id="rStorecost0000" class="cur_energy"></span><span id="rStoreerrorcost0000" class="errorcost">Insufficient items</span><span> Acquired:</span><span id="rStorenum0000"></span></span>
 
 <div class="clear"></div>
 </div>
@@ -1390,15 +1395,12 @@ Do you really want to delete this save?
 <b>Build more worker bots<b>
 <div id="">
 <div id="workerbotsbuy0000">BUILD</div>
- Research cost: <span id="workerbotsRcost0000" ></span> Energy cost: <span id="workerbotsEcost0000" ></span><span id="workerbotserrorcost0000" class="errorcost">Insufficient items</span>
+Cost: <span id="workerbotsEcost0000" class="cur_research"></span> <span id="workerbotsRcost0000" class="cur_energy"></span><span id="workerbotserrorcost0000" class="errorcost">Insufficient items</span>
 </div>
 </div>
 </div>
 <br>
 <div id="won" style="font-size:40px; display:none;"><b>Congrats, you won the game! There's not much to do now</b></div>
-</div>
- 
-
 <div id="tabB" class="tabClass">
 
 <div id="upgradesmaincontainer">
@@ -1413,7 +1415,7 @@ Do you really want to delete this save?
   <div class="clear"></div>
   <br>
   	 <div class="range-slider">
-     <input class="range-slider__range" id="range-slider__range1" type="range" value="100" min="25" max="175">
+     <input class="range-slider__range" id="range-slider__range1" type="range" value="100" min="25" max="200">
      <span class="range-slider__value" id="range-slider__value1">err</span>
      </div>
 	<div id="overlay2container">
@@ -1516,6 +1518,9 @@ Do you really want to delete this save?
 <div id="deleteallcookies" >Delete Save</div><label style="margin-left:5px;	vertical-align: middle;">Delete <b style="color:#FF0000;">ALL</b> of you progress.</label>
 <br><hr><br>
 <b style="font-size:30px;">Update Logs</b><span id="currentVersionSettings" style="font-size:26px;"></span>
+<h3>Version:2.0.2</h3>
+<p>Updated UI.</p>
+<br><hr><br>
 <h3>Version:2.0.1</h3>
 <p>Reworked notifications. New achievement + stat.</p>
 <br><hr><br>
