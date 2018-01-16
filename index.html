@@ -1213,9 +1213,10 @@ Do you really want to delete this save?
 <div id="autobuilding1icon" class="autobuildingicons"><img src="./website/tools/spatialGenT1.png" class="divsImg" id="" style="width:50px;height:50px;"></div><span class="autobuildingtitles">Spatial Energy Generator T1 </span>
 <div id="autobuy0000" class="autobuildingbuy"><p class="autobuildingbuytext">Buy</p>
  <span class="buytooltiptext">
-<span>Increases eps by </span><b><span id="epsplus1"></span></b><span> each.</span>
+<span>Increases <span class="cur_energy">/s</span> by </span><b><span id="epsplus1"></span></b><span> each.</span>
+<span class="lvl1energybuildingtooltip hide">
 <br>
-<span>Increases eps by </span><b><span id="epstotal1"></span></b><span> in total.</span>
+<span>Increases <span class="cur_energy">/s</span> by </span><b><span id="epstotal1"></span></b><span> in total.</span>
 <br>
 <span>(</span><b><span id="autopercentage1"></span></b><span>% of total)</span>
 </span>
@@ -1230,11 +1231,13 @@ Do you really want to delete this save?
 <div id="autobuilding2icon" class="autobuildingicons"><img src="./website/tools/spatialGenT2.png" class="divsImg" id="" style="width:50px;height:50px;"></div><span class="autobuildingtitles">Spatial Energy Generator T2 </span>
 <div id="autobuy0001" class="autobuildingbuy"><p class="autobuildingbuytext">Buy</p>
  <span class="buytooltiptext">
-<span>Increases eps by </span><b><span id="epsplus2"></span></b><span> each.</span>
+<span>Increases <span class="cur_energy">/s</span> by </span><b><span id="epsplus2"></span></b><span> each.</span>
+<span class="lvl1energybuildingtooltip hide">
 <br>
-<span>Increases eps by </span><b><span id="epstotal2"></span></b><span> in total.</span>
+<span>Increases <span class="cur_energy">/s</span> by </span><b><span id="epstotal2"></span></b><span> in total.</span>
 <br>
 <span>(</span><b><span id="autopercentage2"></span></b><span>% of total)</span>
+</span>
 </span>
 </div>
 <p></p>
@@ -1247,11 +1250,13 @@ Do you really want to delete this save?
 <div id="autobuilding3icon" class="autobuildingicons"></div><span class="autobuildingtitles">Plasma Energy Generator T1 </span>
 <div id="autobuy0002" class="autobuildingbuy"><p class="autobuildingbuytext">Buy</p>
  <span class="buytooltiptext">
-<span>Increases eps by </span><b><span id="epsplus3"></span></b><span> each.</span>
+<span>Increases <span class="cur_energy">/s</span> by </span><b><span id="epsplus3"></span></b><span> each.</span>
+<span class="lvl1energybuildingtooltip hide">
 <br>
-<span>Increases eps by </span><b><span id="epstotal3"></span></b><span> in total.</span>
+<span>Increases <span class="cur_energy">/s</span> by </span><b><span id="epstotal3"></span></b><span> in total.</span>
 <br>
 <span>(</span><b><span id="autopercentage3"></span></b><span>% of total)</span>
+</span>
 </span>
 </div>
 <p></p>
@@ -1264,11 +1269,13 @@ Do you really want to delete this save?
 <div id="autobuilding4icon" class="autobuildingicons"></div><span class="autobuildingtitles">Plasma Energy Generator T2 </span>
 <div id="autobuy0003" class="autobuildingbuy"><p class="autobuildingbuytext">Buy</p>
  <span class="buytooltiptext">
-<span>Increases eps by </span><b><span id="epsplus4"></span></b><span> each.</span>
+<span>Increases <span class="cur_energy">/s</span> by </span><b><span id="epsplus4"></span></b><span> each.</span>
+<span class="lvl1energybuildingtooltip hide">
 <br>
-<span>Increases eps by </span><b><span id="epstotal4"></span></b><span> in total.</span>
+<span>Increases <span class="cur_energy">/s</span> by </span><b><span id="epstotal4"></span></b><span> in total.</span>
 <br>
 <span>(</span><b><span id="autopercentage4"></span></b><span>% of total)</span>
+</span>
 </span>
 </div>
 <p></p>
@@ -1282,11 +1289,13 @@ Do you really want to delete this save?
 <div id="estorebuilding1icon" class="estorebuildingicons"><img src="./website/tools/batteriesGen1.png" class="divsImg" id="" style="width:50px;height:50px;"></div><span class="estorebuildingtitles">Batteries Gen1</span>
 <div id="estorebuy0000" class="estorebuildingbuy"><p class="estorebuildingbuytext">Buy</p>
  <span class="buytooltiptext">
-<span>Increases energy storage by </span><b><span id="estoreplus1"></span></b><span> each.</span>
+<span>Increases <span class="cur_energy">storage</span> by </span><b><span id="estoreplus1"></span></b><span> each.</span>
+<span class="lvl1energybuildingtooltip hide">
 <br>
-<span>Increases energy storage by </span><b><span id="estoretotal1"></span></b><span> in total.</span>
+<span>Increases <span class="cur_energy">storage</span> by </span><b><span id="estoretotal1"></span></b><span> in total.</span>
 <br>
 <span>(</span><b><span id="estorepercentage1"></span></b><span>% of total)</span>
+</span>
 </span>
 </div>
 <p></p>
@@ -1299,11 +1308,13 @@ Do you really want to delete this save?
 <div id="estorebuilding2icon" class="estorebuildingicons"><img src="./website/tools/batteriesGen2.png" class="divsImg" id="" style="width:50px;height:50px;"></div><span class="estorebuildingtitles">Batteries Gen2</span>
 <div id="estorebuy0001" class="estorebuildingbuy"><p class="estorebuildingbuytext">Buy</p>
  <span class="buytooltiptext">
-<span>Increases energy storage by </span><b><span id="estoreplus2"></span></b><span> each.</span>
+<span>Increases <span class="cur_energy">storage</span> by </span><b><span id="estoreplus2"></span></b><span> each.</span>
+<span class="lvl1energybuildingtooltip hide">
 <br>
-<span>Increases energy storage by </span><b><span id="estoretotal2"></span></b><span> in total.</span>
+<span>Increases <span class="cur_energy">storage</span> by </span><b><span id="estoretotal2"></span></b><span> in total.</span>
 <br>
 <span>(</span><b><span id="estorepercentage2"></span></b><span>% of total)</span>
+</span>
 </span>
 </div>
 <p></p>
@@ -1316,11 +1327,13 @@ Do you really want to delete this save?
 <div id="estorebuilding3icon" class="estorebuildingicons"></div><span class="estorebuildingtitles">Dense field storage Gen1</span>
 <div id="estorebuy0002" class="estorebuildingbuy"><p class="estorebuildingbuytext">Buy</p>
  <span class="buytooltiptext">
-<span>Increases energy storage by </span><b><span id="estoreplus3"></span></b><span> each.</span>
+<span>Increases <span class="cur_energy">storage</span> by </span><b><span id="estoreplus3"></span></b><span> each.</span>
+<span class="lvl1energybuildingtooltip hide">
 <br>
-<span>Increases energy storage by </span><b><span id="estoretotal3"></span></b><span> in total.</span>
+<span>Increases <span class="cur_energy">storage</span> by </span><b><span id="estoretotal3"></span></b><span> in total.</span>
 <br>
 <span>(</span><b><span id="estorepercentage3"></span></b><span>% of total)</span>
+</span>
 </span>
 </div>
 <p></p>
@@ -1333,11 +1346,13 @@ Do you really want to delete this save?
 <div id="estorebuilding4icon" class="estorebuildingicons"></div><span class="estorebuildingtitles">Dense field storage Gen2</span>
 <div id="estorebuy0003" class="estorebuildingbuy"><p class="estorebuildingbuytext">Buy</p>
  <span class="buytooltiptext">
-<span>Increases energy storage by </span><b><span id="estoreplus4"></span></b><span> each.</span>
+<span>Increases <span class="cur_energy">storage</span> by </span><b><span id="estoreplus4"></span></b><span> each.</span>
+<span class="lvl1energybuildingtooltip hide">
 <br>
-<span>Increases energy storage by </span><b><span id="estoretotal4"></span></b><span> in total.</span>
+<span>Increases <span class="cur_energy">storage</span> by </span><b><span id="estoretotal4"></span></b><span> in total.</span>
 <br>
 <span>(</span><b><span id="estorepercentage4"></span></b><span>% of total)</span>
+</span>
 </span>
 </div>
 <p></p>
@@ -1356,10 +1371,12 @@ Do you really want to delete this save?
 <div id="rProdbuy0000" class="rProdbuildingbuy"><p class="rProdbuildingbuytext">Buy</p>
  <span class="buytooltiptext">
 <span>Increases research production from pool by </span><b><span id="rProdplus1"></span></b><span> each.</span>
+<span class="lvl1researchbuildingtooltip hide">
 <br>
 <span>Increases research production from pool by </span><b><span id="rProdtotal1"></span></b><span> in total.</span>
 <br>
 <span>(</span><b><span id="rProdpercentage1"></span></b><span>% of total)</span>
+</span>
 </span>
 </div>
 <p></p>
@@ -1376,10 +1393,12 @@ Do you really want to delete this save?
 <div id="rStorebuy0000" class="rStorebuildingbuy"><p class="rStorebuildingbuytext">Buy</p>
  <span class="buytooltiptext">
 <span>Increases research storage by </span><b><span id="rStoreplus1"></span></b><span> each.</span>
+<span class="lvl1researchbuildingtooltip hide">
 <br>
 <span>Increases research storage by </span><b><span id="rStoretotal1"></span></b><span> in total.</span>
 <br>
 <span>(</span><b><span id="rStorepercentage1"></span></b><span>% of total)</span>
+</span>
 </span>
 </div>
 <p></p>
@@ -1479,12 +1498,12 @@ Cost: <span id="workerbotsEcost0000" class="cur_research"></span> <span id="work
  <div id="BonusList">
  <h2 style="margin-left:5px;margin-top:5px;">Bonuses</h2>
  <div id="BonusListText" style="margin-left:5px;margin-top:5px;">
- <p>5 Achievements - +15% energy multiplyier</p>
- <p>10 Achievements - +20% energy multiplyier</p>
- <p>20 Achievements - +40% energy multiplyier</p>
- <p>35 Achievements - +80% energy multiplyier</p>
- <p>50 Achievements - +160% energy multiplyier</p>
- Total energy multiplyier bonus - <b>+<span id="TotalEmultiply">0</span><span>%</span></b>
+ <p>5 Achievements - +15% game multiplyier</p>
+ <p>10 Achievements - +20% game multiplyier</p>
+ <p>20 Achievements - +40% game multiplyier</p>
+ <p>35 Achievements - +80% game multiplyier</p>
+ <p>50 Achievements - +160% game multiplyier</p>
+ Total game multiplyier bonus - <b>+<span id="TotalMultiplyBonus">0</span><span>%</span></b>
  </div>
  </div>
 </div>
@@ -1518,6 +1537,9 @@ Cost: <span id="workerbotsEcost0000" class="cur_research"></span> <span id="work
 <div id="deleteallcookies" >Delete Save</div><label style="margin-left:5px;	vertical-align: middle;">Delete <b style="color:#FF0000;">ALL</b> of you progress.</label>
 <br><hr><br>
 <b style="font-size:30px;">Update Logs</b><span id="currentVersionSettings" style="font-size:26px;"></span>
+<h3>Version:2.0.3</h3>
+<p>UI fixes, refactored research and added new research.</p>
+<br><hr><br>
 <h3>Version:2.0.2</h3>
 <p>Updated UI.</p>
 <br><hr><br>

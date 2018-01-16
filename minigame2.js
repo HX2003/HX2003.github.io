@@ -1,7 +1,28 @@
 $(document).ready(function(){ 
-  currentVersion="2.0.2";
+  currentVersion="2.0.3";
   //Init VARAIABLES starting game 
   //BuildingEstore [ID][NUM,COST,VALUE, CALC COST]
+  	researchData = [
+	{"researchID":"unqID0000","researchName":"Unlock research","Ecost":10000,"Rcost":0,"xPos":110-75,"yPos":150,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/research.png","child":["unqID0001","unqID0010","unqID-0001"],"parent":[""],"sibling":[""],"description":"Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","quote":"The beginning"}, 
+	//right branch
+	{"researchID":"unqID0001","researchName":"Energy production and storage boost I","Ecost":12500,"Rcost":0.5,"customData":{"addmultiplier":0.2},"xPos":110,"yPos":200,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/hammer.png","child":["unqID0002"],"parent":["unqID0000"],"sibling":[""],"description":"Increase multiplyier for both by 0.2","quote":"Better maintenance"},
+	{"researchID":"unqID0002","researchName":"Energy production and storage boost II","Ecost":100000,"Rcost":1.5,"customData":{"addmultiplier":0.8},"xPos":110+75,"yPos":200,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/wires.png","child":["unqID0003"],"parent":["unqID0001"],"sibling":[""],"description":"Increase multiplyier for both by 0.8","quote":"More conductive wires"},
+	{"researchID":"unqID0003","researchName":"Energy production and storage boost III","Ecost":250000,"Rcost":2.5,"customData":{"addmultiplier":5},"xPos":110+150,"yPos":200,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/superconductivewires.png","child":["unqID0100","unqID0004"],"parent":["unqID0002"],"sibling":[""],"description":"Increase multiplyier for both by 5","quote":"Superconductive wires"},
+	{"researchID":"unqID0004","researchName":"Energy production and storage boost IV","Ecost":1000000,"Rcost":4,"customData":{"addmultiplier":15},"xPos":110+225,"yPos":250,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/superconductivewires.png","child":["unqID0005"],"parent":["unqID0003"],"sibling":[""],"description":"Increase multiplyier for both by 15","quote":"Superconductive wires"},
+	{"researchID":"unqID0005","researchName":"Energy production and storage boost V","Ecost":2500000,"Rcost":6,"customData":{"addmultiplier":15},"xPos":110+300,"yPos":250,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/superconductivewires.png","child":[""],"parent":["unqID0004"],"sibling":[""],"description":"Increase multiplyier for both by 15","quote":"Superconductive wires"},
+	{"researchID":"unqID0010","researchName":"Unlock bot research","Ecost":100000,"Rcost":2,"xPos":110,"yPos":100,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/bot.png","child":["unqID0011"],"parent":["unqID0000"],"sibling":[""],"description":"Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","quote":"Need better bots?"},
+	{"researchID":"unqID0011","researchName":"Bot efficiency I","Ecost":1500000,"Rcost":3,"customData":{"addmultiplier":0.2},"xPos":110+75,"yPos":100,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/gears.png","child":["unqID0012"],"parent":["unqID0010"],"sibling":[""],"description":"Increase Bot efficiency multipler by 0.20 ","quote":"Better gears"},
+	{"researchID":"unqID0012","researchName":"Bot efficiency II","Ecost":4500000,"Rcost":5,"customData":{"addmultiplier":0.4},"xPos":110+150,"yPos":100,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/motor.png","child":["unqID0100","unqID0013"],"parent":["unqID0011"],"sibling":[""],"description":"Increase Bot efficiency multipler by 0.40 ","quote":"Better motors"},
+	{"researchID":"unqID0013","researchName":"Bot efficiency III","Ecost":10000000,"Rcost":5,"customData":{"addmultiplier":1},"xPos":110+225,"yPos":50,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/motor.png","child":["unqID0014"],"parent":["unqID0012"],"sibling":[""],"description":"Increase Bot efficiency multipler by 1.00 ","quote":"Better motors"},
+	{"researchID":"unqID0014","researchName":"Bot efficiency IV","Ecost":20000000,"Rcost":8,"customData":{"addmultiplier":1},"xPos":110+300,"yPos":50,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/motor.png","child":[""],"parent":["unqID0013"],"sibling":[""],"description":"Increase Bot efficiency multipler by 1.00 ","quote":"Better motors"},
+	{"researchID":"unqID0100","researchName":"Energy Parallel Boost","Ecost":4500000,"Rcost":5,"customData":{"addmultiplier":0.01},"xPos":110+225,"yPos":150,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/chipconnect.png","child":["unqID0101"],"parent":["unqID0012","unqID0003"],"sibling":[""],"description":"For each additional worker bot on a task there's a bonus. Increase that percentage by 1%","quote":"Energy data network"},
+	{"researchID":"unqID0101","researchName":"Energy Parallel Boost T2","Ecost":45000000,"Rcost":8,"customData":{"addmultiplier":0.04},"xPos":110+300,"yPos":150,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/pcbconnect.png","child":["unqID0102"],"parent":["unqID0100"],"sibling":[""],"description":"For each additional worker bot on a task there's a bonus. Increase that percentage by 4%","quote":"Clustered energy data network"},
+	{"researchID":"unqID0102","researchName":"Energy Parallel Boost T3","Ecost":100000000,"Rcost":12,"customData":{"addmultiplier":0.16},"xPos":110+375,"yPos":150,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/pcbconnect.png","child":[""],"parent":["unqID0101"],"sibling":[""],"description":"For each additional worker bot on a task there's a bonus. Increase that percentage by 16%","quote":"Integrated energy data network"},
+	//left branch
+	{"researchID":"unqID-0001","researchName":"More Tooltip Information","Ecost":12500,"Rcost":0.1,"xPos":110-150,"yPos":150,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/book_energybuildinginfo.png","child":["unqID-0002"],"parent":["unqID0000"],"sibling":[""],"description":"Additional information about energy buildings on tooltips.","quote":"Statistical goodness"},
+	{"researchID":"unqID-0002","researchName":"More Tooltip Information II","Ecost":30000,"Rcost":0.25,"xPos":110-225,"yPos":150,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/book_researchbuildinginfo.png","child":[""],"parent":["unqID-0001"],"sibling":[""],"description":"Additional information about research buildings on tooltips.","quote":"Statistical goodness"},
+	];
+	longtime=30000;
     InitVar1 = {
 		version:currentVersion,
 		gameState:0,
@@ -49,6 +70,7 @@ $(document).ready(function(){
 		 estoremultiply:[1,1,1,1],
 		 rStoremultiply:[1],
 		 rProdmultiply:[1],
+		 workerbotBonus:0,
 		 BuildingAutoOrginalValue0000:1,
 		 BuildingAutoOrginalValue0001:6,
 		 BuildingAutoOrginalValue0002:40,
@@ -72,38 +94,9 @@ $(document).ready(function(){
   InitVar4 = {
 	  
   }
+ createResearchLvlSave();
+ InitResearchLVL=ResearchLvlSave; 
   
- InitResearchLVL = {
- unqID9000lvl:0,
- unqID8000lvl:0,
- unqID8001lvl:0,
- unqID8081lvl:0,
- unqID8091lvl:0,
- unqID6000lvl:0,
- unqID6001lvl:0,
- unqID6002lvl:0,
- unqID9001lvl:0,
- unqID9002lvl:0,
- unqID9003lvl:0,
- unqID9004lvl:0
- }
- //fixed variables
- //research9000 [energy cost, research cost , energy cancel cost, max levels]
- staticVar1 = {
- research9000:[10000,0,0,1],
- research8000:[12500,0.5,0,5],
- research8081:[50000,1.5,0,5],
- research8001:[100000,1.5,0,5],
- research8002:[500000,4,0,5],
- research8091:[150000,2,0,5],
- research6000:[5666000000,16,0,1],
- research6001:[7500000,5,7500000000,1],
- research6002:[7500000,5,7500000000,1],
- research9001:[1000000,5,0,1],
- research9002:[1500000,3,0,5],
- research9003:[4500000,5,0,5],
- research9004:[10000000,7.5,0,5]
- }
  Cookieresult = getCookie("Var1");
  if(Cookieresult!=""){
 	 loadCookies("Var1","1");
@@ -221,6 +214,7 @@ $(document).ready(function(){
 	estoremultiply=loadedVar2.estoremultiply,
 	rProdmultiply=loadedVar2.rProdmultiply,
 	rStoremultiply=loadedVar2.rStoremultiply,
+	workerbotBonus=loadedVar2.workerbotBonus,
 	BuildingAutoOrginalValue0000=loadedVar2.BuildingAutoOrginalValue0000;
 	BuildingAutoOrginalValue0001=loadedVar2.BuildingAutoOrginalValue0001;
 	BuildingAutoOrginalValue0002=loadedVar2.BuildingAutoOrginalValue0002;
@@ -240,35 +234,8 @@ $(document).ready(function(){
 	RealResearchPoints=loadedVar3.RealResearchPoints;
 	RealResearchPointscap=loadedVar3.RealResearchPointscap;
 /////////////////////////////////////////////////////////////////////	
-/*
-	unqID9000lvl=loadedVar4.unqID9000lvl;
-	unqID8000lvl=loadedVar4.unqID8000lvl;
-	unqID8001lvl=loadedVar4.unqID8001lvl;
-	unqID8081lvl=loadedVar4.unqID8081lvl;
-	unqID8091lvl=loadedVar4.unqID8091lvl;
-	unqID6000lvl=loadedVar4.unqID6000lvl;
-	unqID6001lvl=loadedVar4.unqID6001lvl;
-	unqID6002lvl=loadedVar4.unqID6002lvl;
-	unqID9001lvl=loadedVar4.unqID9001lvl;
-	unqID9002lvl=loadedVar4.unqID9002lvl;
-	unqID9003lvl=loadedVar4.unqID9003lvl;
-	unqID9004lvl=loadedVar4.unqID9004lvl;
-	*/
-/////////////////////////////////////////////////////////////////////
-	research9000=staticVar1.research9000;
-	research8000=staticVar1.research8000;
-	research8081=staticVar1.research8081;
-	research8001=staticVar1.research8001;
-	research8002=staticVar1.research8002;
-	research8091=staticVar1.research8091;
-	research6000=staticVar1.research6000;
-	research6001=staticVar1.research6001;
-	research6002=staticVar1.research6002;
-	research9001=staticVar1.research9001;
-	research9002=staticVar1.research9002;
-	research9003=staticVar1.research9003;
-	research9004=staticVar1.research9004;
-	
+ 
+	convertResearchLvlSave(ResearchLVL);
  }
  //others
  
@@ -320,6 +287,7 @@ $(document).ready(function(){
 		 estoremultiply:estoremultiply,
 		 rProdmultiply:rProdmultiply,
 		 rStoremultiply:rStoremultiply,
+		 workerbotBonus:workerbotBonus,
 		 BuildingAutoOrginalValue0000:BuildingAutoOrginalValue0000,
 		 BuildingAutoOrginalValue0001:BuildingAutoOrginalValue0001,
 		 BuildingAutoOrginalValue0002:BuildingAutoOrginalValue0002,
@@ -342,48 +310,10 @@ $(document).ready(function(){
 	
  }
  saveVar4 = {
-/*
- cost9000E:cost9000E,
- cost9000R:cost9000R,
- cost8000E:cost8000E,
- cost8000R:cost8000R,
- cost8081E:cost8081E,
- cost8081R:cost8081R,
- cost8001E:cost8001E,
- cost8001R:cost8001R,
- cost8002E:cost8002E,
- cost8002R:cost8002R,
- cost8091E:cost8091E,
- cost8091R:cost8091R,
- cost6000E:cost6000E,
- cost6000R:cost6000R,
- cost6001E:cost6001E,
- cost6001R:cost6001R,
- cost6001Cancel:cost6001Cancel,
- cost6002E:cost6002E,
- cost6002R:cost6002R,
- cost6002Cancel:cost6002Cancel, 
- cost9001E:cost9001E,
- cost9001R:cost9001R,
- cost9002E:cost9002E,
- cost9002R:cost9002R,
- */
- /*
- unqID9000lvl:unqID9000lvl,
- unqID8000lvl:unqID8000lvl,
- unqID8001lvl:unqID8001lvl,
- unqID8081lvl:unqID8081lvl,
- unqID8091lvl:unqID8091lvl,
- unqID6000lvl:unqID6000lvl,
- unqID6001lvl:unqID6001lvl,
- unqID6002lvl:unqID6002lvl,
- unqID9001lvl:unqID9001lvl,
- unqID9002lvl:unqID9002lvl,
- unqID9003lvl:unqID9003lvl,
- unqID9004lvl:unqID9004lvl
- */
+ 
  }
- saveResearchLVL=ResearchLVL; 
+ createResearchLvlSave();
+ saveResearchLVL=ResearchLvlSave; 
  }
 probarcounterbasevalue = 2000;
 function savegamecookie(){
@@ -410,8 +340,8 @@ function notify(data,priority){
 	$("#bottomcontainer").append("<div id=\"notification"+ number +"\" class=\"notificationclass\" style=\"display:none;\">"+ data + "\<span id=\"notificationRemove"+number+"\"class=\"remove\" style=\"float:right; margin-right:5px;\"\">&times;</span></div>")
 	if(priority==0){
 	$("#notification" + number).show("fast").delay(2000).hide("fast").queue(function(next) {$(this).remove();next();});
-	}else{
-	$("#notification" + number).show("fast").delay(30000).hide("fast").queue(function(next) {$(this).remove();next();});	
+	}else{ 
+	$("#notification" + number).show("fast").delay(longtime).hide("fast").queue(function(next) {$(this).remove();next();});	
 	}
 	$("#notificationRemove" + number).on('click', removeNotification);
 	number = number + 1;
@@ -574,11 +504,14 @@ function calcworkerbots(){
 	workerbotsRESEARCHPRODUCTION=workerbots[3];
 	workerbotsRESEARCHSTORAGE=workerbots[4];
 	totalworkerbots=workerbotsINACTIVE+workerbotsENERGYPRODUCTION+workerbotsENERGYSTORAGE+workerbotsRESEARCHPRODUCTION+workerbotsRESEARCHSTORAGE;
-
-	workerbotsEFF=workerbotsENERGYPRODUCTION;
-	workerbotsStore=workerbotsENERGYSTORAGE;
-	workerbotsrProd=workerbotsRESEARCHPRODUCTION;
-	workerbotsrStore=workerbotsRESEARCHSTORAGE;
+  
+    workerbotBonus=getlvl("unqID0100")*getcustomDataaddmultiplier("unqID0100")+getlvl("unqID0101")*getcustomDataaddmultiplier("unqID0101")+getlvl("unqID0102")*getcustomDataaddmultiplier("unqID0102");
+	workerbotsmultiplier=1+getlvl("unqID0011")*getcustomDataaddmultiplier("unqID0011")+getlvl("unqID0012")*getcustomDataaddmultiplier("unqID0012")+getlvl("unqID0013")*getcustomDataaddmultiplier("unqID0013")+getlvl("unqID0014")*getcustomDataaddmultiplier("unqID0014");
+	
+	workerbotsEFF=workerbotsENERGYPRODUCTION*workerbotsmultiplier * (1+workerbotsENERGYPRODUCTION*workerbotBonus);
+	workerbotsStore=workerbotsENERGYSTORAGE*workerbotsmultiplier * (1+workerbotsENERGYSTORAGE*workerbotBonus);
+	workerbotsrProd=workerbotsRESEARCHPRODUCTION*workerbotsmultiplier * (1+workerbotsRESEARCHPRODUCTION*workerbotBonus);
+	workerbotsrStore=workerbotsRESEARCHSTORAGE*workerbotsmultiplier * (1+workerbotsRESEARCHSTORAGE*workerbotBonus);
 	 
 	$(".workerbotsINACTIVE").html(workerbotsINACTIVE);
 	$(".totalworkerbots").html(totalworkerbots);
@@ -651,11 +584,6 @@ function calcestorebuildings(){
 }
 function calceprodbuildings(){
 	var anotherMultipler=1;
-    if(ResearchLVL.unqID6001lvl==1){
-		anotherMultipler=0.9;
-	}else if(ResearchLVL.unqID6002lvl==1){
-		anotherMultipler=1.1;
-	}
 	calcB1 = (BuildingAutoOrginalValue0000*egmultiply[0])*emultiplytotal*anotherMultipler*workerbotsEFF;
 	calcB2 = (BuildingAutoOrginalValue0001*egmultiply[1])*emultiplytotal*anotherMultipler*workerbotsEFF;
 	calcB3 = (BuildingAutoOrginalValue0002*egmultiply[2])*emultiplytotal*anotherMultipler*workerbotsEFF;
@@ -773,26 +701,31 @@ function calcstats(){
 	totalresearch = totalresearch+ResearchLVL[i];
 	 
 }
- function calcmultiply(){
-	estoremultiplytotal=1+ResearchLVL.unqID8000lvl*0.2+ResearchLVL.unqID8001lvl*0.4;
-	estoremultiplytotal=1+ResearchLVL.unqID8000lvl*0.2+ResearchLVL.unqID8001lvl*0.4;
- }
- function calcemultiply(){
-	TotalEmultiply=0;
+ function calcTotalmultiply(){
+	TotalMultiply=0;
+	TotalMultiplyAchievement=0;
+	TotalMultiplyBonus=0;
 	for(var i=0; i<6; i++){
 	 if(totalachievements>=achievementBonusArray[i]){
-	  TotalEmultiply=TotalEmultiply+achievementTotalEmultiplyBonus[i];
+	  TotalMultiplyBonus=achievementTotalEmultiplyBonus[i];
 	}else{
 		break;
 	}
 	}   
-    $("#TotalEmultiply").html(TotalEmultiply);
-	emultiplytotal = 1;
+	TotalMultiplyAchievement = 1;
 	for(var i=0; i<achievementstatus.length; i++){
-	emultiplytotal = emultiplytotal+achievementstatus[i]*0.05;
+	TotalMultiplyAchievement = TotalMultiplyAchievement+achievementstatus[i]*0.05;
 	} 
-	emultiplytotal=emultiplytotal*((100+TotalEmultiply)/100);
-	emultiplytotal = Math.round(emultiplytotal * 1000) / 1000;
+	
+	TotalMultiply = TotalMultiplyAchievement*(100+TotalMultiplyBonus)/100;
+	TotalMultiply = Math.round(TotalMultiply * 1000) / 1000;
+	
+    $("#TotalMultiplyBonus").html(TotalMultiplyBonus);
+	
+	estoremultiplytotal=(1+getlvl("unqID0001")*getcustomDataaddmultiplier("unqID0001")+getlvl("unqID0002")*getcustomDataaddmultiplier("unqID0002")+getlvl("unqID0003")*getcustomDataaddmultiplier("unqID0003")+getlvl("unqID0004")*getcustomDataaddmultiplier("unqID0004")+getlvl("unqID0005")*getcustomDataaddmultiplier("unqID0005"))*TotalMultiply;
+	emultiplytotal=(1+getlvl("unqID0001")*getcustomDataaddmultiplier("unqID0001")+getlvl("unqID0002")*getcustomDataaddmultiplier("unqID0002")+getlvl("unqID0003")*getcustomDataaddmultiplier("unqID0003")+getlvl("unqID0004")*getcustomDataaddmultiplier("unqID0004")+getlvl("unqID0005")*getcustomDataaddmultiplier("unqID0005"))*TotalMultiply;
+	rStoremultiplytotal=(1)*TotalMultiply;
+	rProdmultiplytotal=(1)*TotalMultiply;
 }
 function costAutofunctions(ID){
 	eval("BuildingAutoCostMultiplier"+ID+" = Math.pow(1.15, BuildingAutoNumber"+ID+");\
@@ -1055,12 +988,21 @@ if(workerbotsEcost0000<= thetotal && workerbotsRcost0000<= RealResearchPoints) {
   
  $(".EnergyGoalLevel").html(EnergyGoalLevel);
   } 
-
+function calcspecialresearch(){
+	lvl1energybuildingtooltip = getlvl("unqID-0001"); 
+	if(lvl1energybuildingtooltip==1){
+		$(".lvl1energybuildingtooltip").removeClass("hide"); 
+	} 
+	lvl1researchtooltiplvl = getlvl("unqID-0002");
+	if(lvl1researchtooltiplvl==1){
+		$(".lvl1researchbuildingtooltip").removeClass("hide");	
+	}
+}
 function calculateEverything(){
+	calcspecialresearch();
 	calcworkerbots();
 	calcstats();
-	calcemultiply(); //global multiplyer
-	calcmultiply();  //individual multiplyer
+	calcTotalmultiply(); //global multiplyer
 	calcestorebuildings();
 	calceprodbuildings();
 	calcrStore();
@@ -1116,17 +1058,17 @@ location.reload();
  function displayAchievementInit(){
 	
 	 for(var i=totalAchievement;i>0;i--){
-	 $( "#achievementEnergyGoalGRP" ).after("<div id=\"achievementEnergyGoal"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Energy Goal Level "+achievementEnergyGoalArray[i-1]+"<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
+	 $( "#achievementEnergyGoalGRP" ).after("<div id=\"achievementEnergyGoal"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Energy Goal Level "+achievementEnergyGoalArray[i-1]+"<br><b style=\"color:#FF00FF;\">Reward: </b>Game multiplyier increased by 0.05</span></div>" );
      }
 	 for(var i=totalAchievement;i>0;i--){
-	 $( "#achievementTotalBuildingsGRP" ).after("<div id=\"achievementTotalBuildings"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Acquire "+achievementTotalBuildingsArray[i-1]+" buildings<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
+	 $( "#achievementTotalBuildingsGRP" ).after("<div id=\"achievementTotalBuildings"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Acquire "+achievementTotalBuildingsArray[i-1]+" buildings<br><b style=\"color:#FF00FF;\">Reward: </b>Game multiplyier increased by 0.05</span></div>" );
      }
 	 for(var i=totalAchievement;i>0;i--){
-	 $( "#achievementTotalResearchGRP" ).after("<div id=\"achievementTotalResearch"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Acquire "+achievementTotalResearchArray[i-1]+" research levels<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
+	 $( "#achievementTotalResearchGRP" ).after("<div id=\"achievementTotalResearch"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Acquire "+achievementTotalResearchArray[i-1]+" research levels<br><b style=\"color:#FF00FF;\">Reward: </b>Game multiplyier increased by 0.05</span></div>" );
      }
 		
 	 for(var i=totalAchievement;i>0;i--){
-	 $( "#achievementTotalworkerbotsGRP" ).after("<div id=\"achievementTotalworkerbots"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Acquire "+achievementTotalworkerbotsArray[i-1]+" worker bots<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
+	 $( "#achievementTotalworkerbotsGRP" ).after("<div id=\"achievementTotalworkerbots"+i+"\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Acquire "+achievementTotalworkerbotsArray[i-1]+" worker bots<br><b style=\"color:#FF00FF;\">Reward: </b>Game multiplyier increased by 0.05</span></div>" );
      }
 	 
 	 //$( "#achievementSpecialtyGRP" ).after("<div id=\"achievementSpecialty1\" class=\"achievementbox\"><span class=\"achievementtooltiptext\">Produce 0 energy per sec<br><b style=\"color:#FF00FF;\">Reward: </b>Energy multiplyier increased by 0.05</span></div>" );
@@ -1165,27 +1107,27 @@ location.reload();
 	achievementstatus[0]=achievementstatus[0]+1;
 	//calculateEverything();
 	updateAchievement();
-	notify("Achievement \"Energy Goal Level "+achievementEnergyGoalArray[achievementstatus[0]-1]+"\" acquried. Energy multiplyier increased to "+ emultiplytotal +"",1);
+	notify("Achievement \"Energy Goal Level "+achievementEnergyGoalArray[achievementstatus[0]-1]+"\" acquried. Game multiplyier increased to "+ emultiplytotal +"",1);
 	eval("$(\"#achievementEnergyGoal"+achievementstatus[0]+"\").addClass(\"achievementachieved\");");
  }
  if(totalbuildings>=achievementTotalBuildingsArray[achievementstatus[1]]){
 	achievementstatus[1]=achievementstatus[1]+1;
     //calculateEverything();
 	updateAchievement();
-	notify("Achievement \"Acquire "+achievementTotalBuildingsArray[achievementstatus[1]-1]+" buildings \" acquried. Energy multiplyier increased to "+ emultiplytotal +"",1);
+	notify("Achievement \"Acquire "+achievementTotalBuildingsArray[achievementstatus[1]-1]+" buildings \" acquried. Game multiplyier increased to "+ emultiplytotal +"",1);
 	eval("$(\"#achievementTotalBuildings"+achievementstatus[1]+"\").addClass(\"achievementachieved\");");
  } 
  if(totalresearch>=achievementTotalResearchArray[achievementstatus[2]]){
 	achievementstatus[2]=achievementstatus[2]+1;
     //calculateEverything();
 	updateAchievement();
-	notify("Achievement \"Acquire "+achievementTotalResearchArray[achievementstatus[2]-1]+" research levels \" acquried. Energy multiplyier increased to "+ emultiplytotal +"",1);
+	notify("Achievement \"Acquire "+achievementTotalResearchArray[achievementstatus[2]-1]+" research levels \" acquried. Game multiplyier increased to "+ emultiplytotal +"",1);
 	eval("$(\"#achievementTotalResearch"+achievementstatus[2]+"\").addClass(\"achievementachieved\");");
  }
  if(totalworkerbots>=achievementTotalworkerbotsArray[achievementstatus[3]]){
 	achievementstatus[3]=achievementstatus[3]+1;
 	//calculateEverything();
-	notify("Achievement \"Acquire "+formatNumber(achievementTotalworkerbotsArray[achievementstatus[3]-1])+" worker bots \" acquried. Energy multiplyier increased to "+ emultiplytotal +"",1);
+	notify("Achievement \"Acquire "+formatNumber(achievementTotalworkerbotsArray[achievementstatus[3]-1])+" worker bots \" acquried. Game multiplyier increased to "+ emultiplytotal +"",1);
 	eval("$(\"#achievementTotalworkerbots"+achievementstatus[3]+"\").addClass(\"achievementachieved\");");
  } 
   }
@@ -1344,490 +1286,211 @@ stats();
 	zoom1=100;
 	padding = 5;
 	yoffset = 35;
-	function checkCostER(costID){
-	    if(thetotal>=costID[0]&&RealResearchPoints>=costID[1]){
-			return 1;
-		}else{
-			return 0;
+	xoffset = 35+75;
+	createResearchIcons();
+	createResearchLinks();
+	linkIcon("unqID0000",2); 
+	autoResearchHighlights();
+	function createResearchIcons(){
+		for (i in researchData)
+		{	
+			drawIcon(researchData[i].xPos,researchData[i].yPos,50,50,40,40,researchData[i].imgURL,researchData[i].researchID,researchData[i].researchID+"cost",researchData[i].researchName,researchData[i].description,researchData[i].quote);
+			$("#"+researchData[i].researchID+"costE").text(formatNumber(researchData[i].Ecost));
+			$("#"+researchData[i].researchID+"costR").text(formatNumber(researchData[i].Rcost));
 		}
 	}
-	function useCancel(costID){
-		thetotal=thetotal-costID[2];
+	function createResearchLinks(){
+		for (i in researchData)
+		{	
+			for(i2 in researchData[i].child){
+				if(researchData[i].child[i2]!=""){
+					drawNewLink(researchData[i].researchID,researchData[i].child[i2]); 
+				}
+			}
+		}	
 	}
-	function useCost(costID){
-		thetotal=thetotal-costID[0];
-		RealResearchPoints=RealResearchPoints-costID[1];
+	function getlvl(getlvlid){
+	for (getlvlvar in researchData)
+		{	 
+			if(researchData[getlvlvar].researchID==getlvlid){ 
+				return researchData[getlvlvar].curLvl;
+			}
+		}
+		return 0;
+	}
+	function getcustomDataaddmultiplier(getcustomDataaddmultiplierid){
+	for (getcustomDataaddmultipliervar in researchData)
+		{	 
+			if(researchData[getcustomDataaddmultipliervar].researchID==getcustomDataaddmultiplierid){ 
+				return researchData[getcustomDataaddmultipliervar].customData.addmultiplier;
+			}
+		}
+		return 0;
+	}	
+	function lookIfIDMaxedChildParentsLvl(lookIfIDMaxedChildParentsLvlid){ 
+		lookIfIDMaxedChildParentsMaxed=1; //given the id of the child
+		for(parentsvar in researchData){
+			if(researchData[parentsvar].researchID==lookIfIDMaxedChildParentsLvlid){//found child
+				for(parentsvar2 in researchData[parentsvar].parent){
+					if( researchData[parentsvar].parent[parentsvar2]!=""){ //parents name
+					if(lookIfIDMaxedLvl(researchData[parentsvar].parent[parentsvar2])==0){
+					lookIfIDMaxedChildParentsMaxed=0;					
+					}
+					}									
+				}
+		}	
+		}
+		return lookIfIDMaxedChildParentsMaxed;
+	}
+	function lookIfIDMaxedLvl(lookIfIDMaxedLvlid){
+	for (lookIfIDMaxedLvlvar in researchData)
+		{	
+			if(researchData[lookIfIDMaxedLvlvar].researchID==lookIfIDMaxedLvlid){
+				if(researchData[lookIfIDMaxedLvlvar].curLvl==researchData[lookIfIDMaxedLvlvar].MaxLvl){
+					return 1;
+				}else{
+					return 0;
+				}
+			}
+		}
+	}	
+	function autoResearchHighlights(){
+		for (i in researchData)
+		{
+			if(researchData[i].curLvl<researchData[i].MaxLvl){
+				maxedparent=1;
+			for(researchparent in researchData[i].parent){
+				if(researchData[i].parent[researchparent]!=""){
+				if(lookIfIDMaxedLvl(researchData[i].parent[researchparent])==0){
+					maxedparent=0;
+				}
+				}	
+			}
+			if(maxedparent==1){//parents are maxed then unlock child
+				for(i2 in researchData[i].child){
+				if(researchData[i].child[i2]!=""){
+				linkIcon(researchData[i].child[i2],0); //reveal it, unlock 
+				linkClass(researchData[i].researchID+"-"+researchData[i].child[i2],0);
+				}
+				}
+			}
+			}else{
+				//this is maxed
+					boughtIt(researchData[i].researchID);
+					for(i2 in researchData[i].child){
+					if(researchData[i].child[i2]!=""){ //find the childs of id
+						if(lookIfIDMaxedChildParentsLvl(researchData[i].child[i2])){
+						linkIcon(researchData[i].child[i2],2); 
+						linkClass(researchData[i].researchID+"-"+researchData[i].child[i2],2);
+						}
+					}
+					}
+			}			
+				 
+						//set highlights for maxed
+			maxed="";
+			if(researchData[i].curLvl>=researchData[i].MaxLvl){
+				maxed="MAX";  
+			}  
+			$("#"+researchData[i].researchID+"lvl").text(researchData[i].curLvl+ maxed);
+		}	
+	}
+	function researchClick(id){
+		for (i in researchData)
+		{	
+			if(researchData[i].researchID==id){
+					maxedparent=1;
+			for(researchparent in researchData[i].parent){
+				if(researchData[i].parent[researchparent]!=""){
+				if(lookIfIDMaxedLvl(researchData[i].parent[researchparent])==0){
+					maxedparent=0;
+				}
+				}	
+			}
+			if(maxedparent==1){//parents are maxed then unlock child
+				if(researchData[i].curLvl>=researchData[i].MaxLvl){
+					//bought already
+				}else if(researchData[i].curLvl>=0){
+					if(thetotal>=researchData[i].Ecost&&RealResearchPoints>=researchData[i].Rcost){
+					thetotal=thetotal-researchData[i].Ecost;
+					RealResearchPoints=RealResearchPoints-researchData[i].Rcost;
+					//successfully purchased upgrade
+					researchData[i].curLvl=researchData[i].curLvl+1;
+						autoResearchHighlights();
+					}else{
+					//do not meet requirement
+					researchFail(researchData[i].researchID);	
+				}
+			}
+			}
+		}	
+		}
 	}
 	function researchFail(id){
 		$("#"+id).qaddclass("redborder").delay(1750).qremoveclass("redborder");
 	}
-	function researchMax(id){
-		boughtIt(id);
-	    maxed=" MAX";
-	}//$("#unqID9000lvl").text(unqID9000lvl+ maxed);
-	function researchClick(id){
-		if(id=="upgrade9000"){
-			if(ResearchLVL.unqID9000lvl >= research9000[3]) {
-			//if bought already
-			}else{
-			if(checkCostER(research9000)){
-			useCost(research9000);
-			//successfully purchased upgrade
-			ResearchLVL.unqID9000lvl=ResearchLVL.unqID9000lvl+1;
-			}else{
-			//do not meet requirement
-			researchFail("upgrade9000");
-			}
-			} 
-		}else if(id=="upgrade8000"){
-			if(ResearchLVL.unqID9000lvl >= research9000[3]){
-			if(ResearchLVL.unqID8000lvl >= research8000[3]) {
-			//if bought already
-			}else{
-			if(checkCostER(research8000)){
-			useCost(research8000);
-			//successfully purchased upgrade
-			ResearchLVL.unqID8000lvl=ResearchLVL.unqID8000lvl+1;
-			}else{
-			//do not meet requirement
-			researchFail("upgrade8000");
-			}
-			}
-			}
-		}else if(id=="upgrade6000"){
-			if(ResearchLVL.unqID9000lvl >= research9000[3]){
-			if(ResearchLVL.unqID6000lvl >= research6000[3]){
-			//if bought already
-			}else{
-			if(checkCostER(research6000)){
-			useCost(research6000);
-			//successfully purchased upgrade
-			ResearchLVL.unqID6000lvl=ResearchLVL.unqID6000lvl+1;
-			}else{
-			//do not meet requirement
-			researchFail("upgrade6000");
-			}
-			}
-			}
-		}else if(id=="upgrade9001"){
-			if(ResearchLVL.unqID9000lvl >= research9000[3]){
-			if(ResearchLVL.unqID9001lvl >= research9001[3]) {
-			//if bought already
-			}else{
-			if(checkCostER(research9001)){
-			useCost(research9001);
-			//successfully purchased upgrade
-			ResearchLVL.unqID9001lvl=ResearchLVL.unqID9001lvl+1;
-			}else{
-			//do not meet requirement
-			researchFail("upgrade9001");
-			}
-			}
-			}
-		}else if(id=="upgrade9002"){
-			if(ResearchLVL.unqID9001lvl >= research9001[3]){
-			if(ResearchLVL.unqID9002lvl >= research9002[3]) {
-			//if bought already
-			}else{
-			if(checkCostER(research9002)){
-			useCost(research9002);
-			//successfully purchased upgrade
-			ResearchLVL.unqID9002lvl=ResearchLVL.unqID9002lvl+1;
-			}else{
-			//do not meet requirement
-			researchFail("upgrade9002");
-			}
-			}	
-			}
-		}else if(id=="upgrade9003"){
-			if(ResearchLVL.unqID9002lvl >= research9002[3]){
-			if(ResearchLVL.unqID9003lvl >= research9003[3]) {
-			//if bought already
-			}else{
-			if(checkCostER(research9003)){
-			useCost(research9003);
-			//successfully purchased upgrade
-			ResearchLVL.unqID9003lvl=ResearchLVL.unqID9003lvl+1;
-			}else{
-			//do not meet requirement
-			researchFail("upgrade9003");
-			}
-			}
-			}
-		}else if(id=="upgrade8001"){
-			if(ResearchLVL.unqID8000lvl >= research8000[3]){
-			if(ResearchLVL.unqID8001lvl >= research8001[3]) {
-			//if bought already
-			}else{
-			if(checkCostER(research8001)){
-			useCost(research8001);
-			//successfully purchased upgrade
-			ResearchLVL.unqID8001lvl=ResearchLVL.unqID8001lvl+1;
-			}else{
-			//do not meet requirement
-			researchFail("upgrade8001");
-			}
-			}
-			} 
-		}else if(id=="upgrade8081"){
-			if(ResearchLVL.unqID8000lvl >= research8000[3]){
-			if(ResearchLVL.unqID8081lvl >= research8081[3]) {
-			//if bought already
-			}else{
-			if(checkCostER(research8081)){
-			useCost(research8081);
-			//successfully purchased upgrade
-			ResearchLVL.unqID8081lvl=ResearchLVL.unqID8081lvl+1;
-			}else{
-			//do not meet requirement
-			researchFail("upgrade8081");
-			}
-			}
-			}
-		}else if(id=="upgrade8091"){
-			if(ResearchLVL.unqID8000lvl>=1){
-			if(ResearchLVL.unqID8091lvl>=5) {
-			//if bought already
-			}else{
-			if(checkCostER(research8091)){
-			useCost(research8091);
-			//successfully purchased upgrade
-			ResearchLVL.unqID8091lvl=ResearchLVL.unqID8091lvl+1;
-			}else{
-			//do not meet requirement
-			researchFail("upgrade8091");
-			}
-			}
-			}
-		}else if(id=="upgrade6001"){
-			if(ResearchLVL.unqID6000lvl >= research6000[3]){
-			if(ResearchLVL.unqID6002lvl==0){
-			if(ResearchLVL.unqID6001lvl >= research6001[3]) {
-				//if bought already now cancel it
-				if(thetotal>=research6000[2]){
-				useCancel(research6000);
-				//successfully purchased upgrade
-				ResearchLVL.unqID6001lvl=0;
-				}else{
-				//do not meet requirement
-				researchFail("upgrade6001");
-				}
-			}else{
-			if(checkCostER(research6001)){
-				useCost(research6001);
-				//successfully purchased upgrade
-				ResearchLVL.unqID6001lvl=ResearchLVL.unqID6001lvl+1;
-				}else{
-				//do not meet requirement
-				researchFail("upgrade6001");
-				}
-			}
-			}
-			}
-		}else if(id=="upgrade6002"){
-			if(ResearchLVL.unqID6000lvl >= research6000[3]){
-			if(ResearchLVL.unqID6001lvl==0){
-			if(ResearchLVL.unqID6002lvl >= research6002[3]) {
-				//if bought already
-				if(thetotal>=research6000[2]){
-				useCancel(research6000);
-				//successfully purchased upgrade
-				ResearchLVL.unqID6002lvl=0;
-				}else{
-				//do not meet requirement
-				researchFail("upgrade6002");
-				}
-			}else{
-				if(checkCostER(research6002)){
-				useCost(research6002);
-				//successfully purchased upgrade
-				ResearchLVL.unqID6002lvl=ResearchLVL.unqID6002lvl+1;
-				}else{
-				//do not meet requirement
-                researchFail("upgrade6002");
-				}
-			}
-			}
-			}
-		}
-			updateResearchTree();
-	}
-	updateResearchTree();
-	function generateResearchTree(){
-	//INITIALIZATION PHASE
-	drawIcon(10,280,50,50,40,40,'./website/tools/research.png',"unqID9000","upgrade9000","cost9000","Unlock research","Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","The beginning");
-    drawLink(60,302,20,5,"unqID0000");
-	drawLink(80,200,5,200,"unqID0001");
-	//Bot branch
-	drawIcon(57.5,152.5,50,50,40,40,'./website/tools/bot.png',"unqID9001","upgrade9001","cost9001","Unlock bot research","","Need more and better bots?");
-	linkIcon("unqID9000");
-	//Bot Physical upgrade branch
-	drawLink(107.5,177.5,10,5,"unqID0901"); 
-	drawIcon(117.5,152.5,50,50,35,35,'./website/tools/gears.png',"unqID9002","upgrade9002","cost9002","Bot efficiency","Increase Bot efficiency multiplyier by 0.20","Better gears");
-	drawLink(167.5,177.5,10,5,"unqID0902"); 
-	drawIcon(177.5,152.5,50,50,35,35,'./website/tools/motor.png',"unqID9003","upgrade9003","cost9003","Bot efficiency","Increase Bot efficiency multiplyier by 0.40","Better motors");
-	//Bot maintenance branch
-	drawLink(80,130,5,22.5,"unqID0911"); 
-	drawIcon(57.5,82.5,50,50,30,40,'./website/tools/hammer.png',"unqID9012","upgrade9012","cost9012","Bot efficiency","Increase Bot efficiency multiplyier by 0.30","Bot maintenance");	
-	//
-	drawLink(85,302,20,5,"unqID0800");
-	drawIcon(105,280,50,50,30,40,'./website/tools/hammer.png',"unqID8000","upgrade8000","cost8000","Energy production and storage boost I","Increase multiplyier for both by 0.2","Better maintenance");
-	drawLink(225,302,20,5,"unqID0802");
-	drawIcon(245,280,50,50,30,40,'./website/tools/probarenergy3.png',"unqID8002","upgrade8002","cost8002","Progress bar - Instant","Progress bar will take next to no time to complete, max level 1.");
-		
-	drawLink(155,302,20,5,"unqID0801");
-	drawIcon(175,280,50,50,40,40,'./website/tools/wires.png',"unqID8001","upgrade8001","cost8001","Energy production and storage boost II","Increase multipler for both by 0.4","More conductive wires");
-	
-	drawLink(127,245,30,5,"unqID0891");
-	drawLink(127,250,5,30,"unqID0892");
-	drawIcon(140,220,50,50,40,40,'./website/tools/chipconnect.png',"unqID8091","upgrade8091","cost8091","Energy Parallel Boost","Energy parallel loss reduced by 1%","Energy data network");
-	drawLink(190,245,20,5,"unqID0893");
-	drawIcon(210,220,50,50,40,40,'./website/tools/pcbconnect.png',"unqID8092","upgrade8092","cost8092","Energy Parallel Boost T2","Energy parallel loss reduced by 2%","Integrated energy data network");
-	
-	drawIcon(140,375,50,50,40,40,'./website/tools/book_energy.png',"unqID8081","upgrade8081","cost8081","Energy production boost","Increase multipler by 0.3","Energy production studies");
-	drawIcon(140,515,50,50,40,40,'./website/tools/book_energystore.png',"unqID8082","upgrade8082","cost8082","Energy storage boost","Increase multiplyer by 0.3","Energy storage studies");
-	drawIcon(210,340,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID80810","upgrade80810","cost80810","Spatial energy generator boost","Increase multiplyer by 0.5","Better spatial studies");
-	drawIcon(210,410,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID80811","upgrade80811","cost80811","Plasma energy generator boost","Increase multiplyer by 0.5","Better plasmanomic studes");
-    drawIcon(210,480,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID80820","upgrade80820","cost80820","Dense field storage boost","Increase multiplyer by 0.5","Better dense field studies");
-	drawIcon(210,550,50,50,30,40,'./website/tools/probarenergyMultiple.png',"unqID80821","upgrade80821","cost80821","Batteries boost","Increase multiplyer by 0.5","Better chemistry");
-   
-	drawLink(127,330,5,210,"unqID0881");
-	drawLink(127,397.5,13,5,"unqID0882");
-	drawLink(127,537.5,13,5,"unqID0883");
-
-	linkIcon("unqID9012",2);
-	linkClass("unqID0911",2);		
-	linkIcon("unqID80810",2);
-	linkIcon("unqID80811",2);
-	linkIcon("unqID80820",2);
-	linkIcon("unqID80821",2);
-	   
-	drawIcon(58,400,50,50,30,40,'./website/tools/researchD.png',"unqID6000","upgrade6000","cost6000","Unlock new research tree","Unlock the ability to research more technologies","The new era");
-	drawRect(120,600,300,140,"unqIDRect0600");
-	drawLink(80,450,5,350,"unqID0601");
-	drawLink(85,670,40,5,"unqID0610");
-	drawLink(125,630,5,80,"unqID0611");
-	drawLink(130,630,20,5,"unqID0612");
-    drawLink(130,705,20,5,"unqID0613");
-	drawIconRevokable(150,608,50,50,30,40,'./website/tools/nil.png',"unqID6001","upgrade6001","cost6001","10% additional to EPC but 10% reduction to EPS","10% additional to EPC but 10% reduction to EPS, Max level 1 <br>Can be revoked for a larger amount of energy");
-	drawIconRevokable(150,682,50,50,30,40,'./website/tools/nil.png',"unqID6002","upgrade6002","cost6002","10% additional to EPS but 10% reduction to EPC","10% additional to EPS but 10% reduction to EPC, Max level 1 <br>Can be revoked for a larger amount of energy");
-	} 
-	 
-	function researchLevel(ID1,level,max){
-		if(level>=max[3]){
-		$("#"+ID1).text(level+" MAX");
-		}else{
-		$("#"+ID1).text(level);	
+	function createResearchLvlSave(){
+	ResearchLvlSave = new Array();
+		for (ResearchLvlSavevar in researchData)
+		{
+			ResearchLvlSave[ResearchLvlSavevar]=researchData[ResearchLvlSavevar].curLvl;
 		}
 	}
-	function updateResearchTree(){
-		linkIcon("unqID9000",2);
-		if(ResearchLVL.unqID9000lvl >= research9000[3]){
-		linkClass("unqID0000",2);
-		linkClass("unqID0001",2);
-		linkClass("unqID0002",2);
-		linkClass("unqID0800",2);
-	       //link icons
-		linkIcon("unqID9001",2); 
-		linkIcon("unqID8000",2); 
-		linkIcon("unqID6000",2);
-		boughtIt("upgrade9000");
-		}else{
-		linkClass("unqID0000",0);
-		linkClass("unqID0001",0);
-		linkClass("unqID0002",0);
-		linkClass("unqID0800",0);
-	       //link icons
-		linkIcon("unqID9001",0); 
-		linkIcon("unqID8000",0); 
-		linkIcon("unqID6000",0);			
+	function convertResearchLvlSave(source){
+		for (ResearchLvlSavevar in researchData)
+		{
+			researchData[ResearchLvlSavevar].curLvl=source[ResearchLvlSavevar];
 		}
-		
-	   	if(ResearchLVL.unqID8000lvl >= research8000[3]){
-		//if reach max unlock next make it active
-	    linkClass("unqID0881",2);
-		linkClass("unqID0882",2);
-		linkClass("unqID0883",2);
-		
-		linkIcon("unqID8081",2);
-		linkIcon("unqID8082",2);
-	    linkClass("unqID0891",2);
-		linkClass("unqID0892",2);
-		 
-		linkIcon("unqID8091",2);
-		 
-	    linkClass("unqID0801",2);
-		linkIcon("unqID8001",2);
-		boughtIt("upgrade8000");
-		}else if(ResearchLVL.unqID9000lvl >= research9000[3]){
-		linkClass("unqID0881",0);
-		linkClass("unqID0882",0);
-		linkClass("unqID0883",0);
-		
-		linkIcon("unqID8081",0);
-		linkIcon("unqID8082",0);
-
-	    linkClass("unqID0891",0);
-		linkClass("unqID0892",0);
-		 
-		linkIcon("unqID8091",0);
-		 
-	    linkClass("unqID0801",0);
-		linkIcon("unqID8001",0);
-		}
-		
-		if(ResearchLVL.unqID6000lvl >= research6000[3]){
-		//if reach max unlock next make it active
-	    linkClass("unqID0601",2);
-		linkClass("unqID0610",2);
-        linkClass("unqID0611",2);
-        linkClass("unqID0612",2);
-        linkClass("unqID0613",2);
-		 
-		linkIcon("unqID6001",2);
-        linkIcon("unqID6002",2);
-		boughtIt("upgrade6000");
-		}else if(ResearchLVL.unqID9000lvl >= research9000[3]){
-		linkClass("unqID0601",0);
-		linkClass("unqID0610",0);
-        linkClass("unqID0611",0);
-        linkClass("unqID0612",0);
-        linkClass("unqID0613",0);
-		 
-		linkIcon("unqID6001",0);
-        linkIcon("unqID6002",0);	
-		}
-		
-		if(ResearchLVL.unqID6001lvl >= research6001[3]){
-		unlinkIcon("unqID6002");
-		boughtItCancel("upgrade6001","buy");
-		}
-		if(ResearchLVL.unqID6001lvl==0){
-		//cancel
-		linkIcon("unqID6002",2); 
-		boughtItCancel("upgrade6001","cancel");
-	    }
-		
-		if(ResearchLVL.unqID6002lvl >= research6002[3]){
-		unlinkIcon("unqID6001");
-		boughtItCancel("upgrade6002","buy");
-		}
-	   	if(ResearchLVL.unqID6002lvl==0){
-		   //cancel
-		  linkIcon("unqID6001",2); 
-		  boughtItCancel("upgrade6002","cancel");
-		}
-		
-		if(ResearchLVL.unqID8081lvl >= research8081[3]){
-		//if reach max unlock next make it active
-	    boughtIt("upgrade8081");
-		}
- 
-		if(ResearchLVL.unqID8091lvl >= research8091[3]){
-		//if reach max unlock next make it active
-		linkClass("unqID0893",2);
-	    linkIcon("unqID8092",2);
-		boughtIt("upgrade8091");
-		}else if(ResearchLVL.unqID8000lvl >= research8000[3]){
-		linkClass("unqID0893",0);
-		linkIcon("unqID8092",0);
-		}
+	}
+	function adjustLine(from, to, line){
+  from=$("#"+from+"");
+  to=$("#"+to+"");
+  line=document.getElementById(line);
+  fromOffset=from.offset();
+  fromOuterWidth=from.outerWidth();
+  fromOuterHeight=from.outerHeight();
+  toOffset=to.offset();
+  toOuterWidth=to.outerWidth();
+  toOuterHeight=to.outerHeight(); 
+  var fT = parseFloat(from.css("top"))  + fromOuterHeight/2;
+  var tT = parseFloat(to.css("top"))    + toOuterHeight/2;
+  var fL = parseFloat(from.css("left")) + fromOuterWidth/2;
+  var tL = parseFloat(to.css("left"))   + toOuterWidth/2;
   
-		if(ResearchLVL.unqID8001lvl >= research8001[3]){
-		//if reach max unlock next make it active
-	    linkClass("unqID0802",2);
-		linkIcon("unqID8002",2);
-	
-		boughtIt("upgrade8001"); 
-		}else if(ResearchLVL.unqID8000lvl >= research8000[3]){
-		linkClass("unqID0802",0);
-		linkIcon("unqID8002",0);	
-		}
-		
-		if(ResearchLVL.unqID9001lvl >= research9001[3]){
-		//if reach max unlock next make it active
-	    linkClass("unqID0901",2);
-		linkIcon("unqID9002",2);
-		 
-		boughtIt("upgrade9001");
-		}else if(ResearchLVL.unqID9000lvl >= research9000[3]){
-		linkClass("unqID0901",0);
-		linkIcon("unqID9002",0);
-		}
-	       
-		if(ResearchLVL.unqID9002lvl >= research9002[3]){
-		//if reach max unlock next make it active
-	    linkClass("unqID0902",2);
-		linkIcon("unqID9003",2);
+  var CA   = Math.abs(tT - fT);
+  var CO   = Math.abs(tL - fL);
+  var H    = Math.sqrt(CA*CA + CO*CO);
+  var ANG  = 180 / Math.PI * Math.acos( CA/H );
 
-	    boughtIt("upgrade9002");
-	    }else if(ResearchLVL.unqID9000lvl >= research9000[3]){
-		linkClass("unqID0902",0);
-		linkIcon("unqID9003",0);
-		}
-		
-		if(ResearchLVL.unqID9003lvl >= research9003[3]){
-		//if reach max unlock next make it active
-	     //linkClass("unqID0903",2);
-		 //linkIcon("unqID9004",2);
-	    boughtIt("upgrade9003");
-	    }else if(ResearchLVL.unqID9000lvl >= research9000[3]){
-		//linkClass("unqID0903",0);
-	    //linkIcon("unqID9004",0);	
-		}
-		
-		researchLevel("unqID9000lvl",ResearchLVL.unqID9000lvl,research9000);
-		
-		researchLevel("unqID8000lvl",ResearchLVL.unqID8000lvl,research8000);
-		researchLevel("unqID8001lvl",ResearchLVL.unqID8001lvl,research8001);
-		researchLevel("unqID8002lvl",ResearchLVL.unqID8001lvl,research8001);
+  if(tT > fT){
+      var top  = (tT-fT)/2 + fT;
+  }else{
+      var top  = (fT-tT)/2 + tT;
+  }
+  if(tL > fL){
+      var left = (tL-fL)/2 + fL;
+  }else{
+      var left = (fL-tL)/2 + tL;
+  }
 
-		researchLevel("unqID8081lvl",ResearchLVL.unqID8081lvl,research8081);
-		researchLevel("unqID8091lvl",ResearchLVL.unqID8091lvl,research8091);
-		
-		researchLevel("unqID9001lvl",ResearchLVL.unqID9001lvl,research9001);
-		researchLevel("unqID9002lvl",ResearchLVL.unqID9002lvl,research9002);
-		researchLevel("unqID9003lvl",ResearchLVL.unqID9003lvl,research9003);
-				
-		researchLevel("unqID6000lvl",ResearchLVL.unqID6000lvl,research6000);
-		researchLevel("unqID6001lvl",ResearchLVL.unqID6001lvl,research6001);
-		researchLevel("unqID6002lvl",ResearchLVL.unqID6001lvl,research6002);
-	}
-	generateResearchTree();
-	updateResearchTree(); 
+  if(( fT < tT && fL < tL) || ( tT < fT && tL < fL) || (fT > tT && fL > tL) || (tT > fT && tL > fL)){
+    ANG *= -1;
+  }
+  top-= H/2;
 
-	     		
-
-	drawCosts();
-	//functions
-	 
-	function drawCosts(){
-		$("#cost9003E").text(formatNumber(research9003[0]));
-		$("#cost9003R").text(formatNumber(research9003[1]));
-		$("#cost9002E").text(formatNumber(research9002[0]));
-		$("#cost9002R").text(formatNumber(research9002[1]));
-		$("#cost9001E").text(formatNumber(research9001[0]));
-		$("#cost9001R").text(formatNumber(research9001[1]));
-		$("#cost9000E").text(formatNumber(research9000[0]));
-		$("#cost9000R").text(formatNumber(research9000[1]));
-		$("#cost8000E").text(formatNumber(research8000[0]));
-		$("#cost8000R").text(formatNumber(research8000[1]));
-		$("#cost8001E").text(formatNumber(research8001[0]));
-		$("#cost8001R").text(formatNumber(research8001[1]));
-	    $("#cost8002E").text(formatNumber(research8002[0]));
-		$("#cost8002R").text(formatNumber(research8002[1]));
-		$("#cost8081E").text(formatNumber(research8081[0]));
-		$("#cost8081R").text(formatNumber(research8081[1]));
-		$("#cost8091E").text(formatNumber(research8091[0]));
-		$("#cost8091R").text(formatNumber(research8091[1]));
-		$("#cost6000E").text(formatNumber(research6000[0]));
-		$("#cost6000R").text(formatNumber(research6000[1]));
-		$("#cost6001E").text(formatNumber(research6001[0]));
-		$("#cost6001R").text(formatNumber(research6001[1]));
-		$("#cost6001Cancel").text(formatNumber(research6001[3]));
-		$("#cost6002E").text(formatNumber(research6002[0]));
-		$("#cost6002R").text(formatNumber(research6002[1]));
-		$("#cost6002Cancel").text(formatNumber(research6002[2]));
+  line.style["-webkit-transform"] = 'rotate('+ ANG +'deg)';
+  line.style["-moz-transform"] = 'rotate('+ ANG +'deg)';
+  line.style["-ms-transform"] = 'rotate('+ ANG +'deg)';
+  line.style["-o-transform"] = 'rotate('+ ANG +'deg)';
+  line.style["-transform"] = 'rotate('+ ANG +'deg)';
+  line.style.top    = top+'px';
+  line.style.left   = left+'px';
+  line.style.height = H + 'px';
+}
+	function drawNewLink(from,to){
+		linkcontent = "<div class=\"researchLink notLinked hide\" id=\""+from+"-"+to+"\" style=\"z-index:-1; width:5px; position:absolute; \"></div>";
+		$( "#overlay2research" ).append(linkcontent); 
+		adjustLine(from, to, from+"-"+to);
 	}
 	function linkClass(unqID,state){
 		if(state==0){
@@ -1863,10 +1526,10 @@ stats();
 		$("#"+unqID+"ttb").addClass("notLinkedTooltip");
 		$("#"+unqID+"ttb").removeClass("isLinkedTooltip");
 	}
-	function boughtIt(upgradeID){
-		$("#"+upgradeID+"").removeClass("buyButton");
-		$("#"+upgradeID+"").addClass("boughtButton");
-		$("#"+upgradeID+"").text("Bought");
+	function boughtIt(unqID){
+		$("#"+unqID+"upgrade").removeClass("buyButton");
+		$("#"+unqID+"upgrade").addClass("boughtButton");
+		$("#"+unqID+"upgrade").text("Bought");
 	}
 	function boughtItCancel(upgradeID,mode){
 	     if(mode=="buy"){
@@ -1877,15 +1540,16 @@ stats();
 		 }
 	}
  
-	function drawIcon(x,y,boxw,boxh,imgw,imgh,url,unqID,upgradeID,costID,title,desc,caption){
-		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\" class=\"cur_energy\"></span></b><b><span id=\""+costID+"R\" class=\"cur_research\"></span></b><p style=\"padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18px;\">\""+caption+"\"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
+	function drawIcon(x,y,boxw,boxh,imgw,imgh,url,unqID,costID,title,desc,caption){
+		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\" class=\"cur_energy\"></span></b><b><span id=\""+costID+"R\" class=\"cur_research\"></span></b><p style=\"padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18px;\">\""+caption+"\"</p><div id=\""+unqID+"upgrade\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
+		//drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content);
 		drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content);
-		document.getElementById(unqID).addEventListener('click',function(){researchClick(upgradeID);},false);
+		document.getElementById(unqID).addEventListener('click',function(){researchClick(unqID);},false);
 	}
-	function drawIconRevokable(x,y,boxw,boxh,imgw,imgh,url,unqID,upgradeID,costID,title,desc,caption){
+	function drawIconRevokable(x,y,boxw,boxh,imgw,imgh,url,unqID,costID,title,desc,caption){
 		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\" class=\"cur_energy\"></span></b><b><span id=\""+costID+"R\" class=\"cur_research\"></span></b><p>Canceling Cost:&nbsp<b><span id=\""+costID+"Cancel\"></span></b>&nbsp<span>Energy</span></p><p style=\"padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18	px;\">\""+caption+"\"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
 		drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content);
-		document.getElementById(unqID).addEventListener('click',function(){researchClick(upgradeID);},false);
+		document.getElementById(unqID).addEventListener('click',function(){researchClick(unqID);},false);
 	}
  
 	function drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content){
@@ -1893,19 +1557,20 @@ stats();
 		calc1 = ((boxw-imgw-border)/2);
 		calc2 = ((boxh-imgh-border)/2);	
 		
-	$( "#overlay2research" ).append( "<div class=\"upgradeIcon IconnotLinked hide\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+boxw+"px;height:"+boxh+"px;\"></div>" );	
-    $( "#"+unqID+"" ).append("<b><span class=\"upgradeLevel\" style=\"z-index: 1;\" id=\""+unqID+"lvl\"></span></b>");
-	$( "#"+unqID+"" ).append("<img src=\""+url+"\" class=\"divsImg\" id=\""+unqID+"Img\" style=\"position:absolute;top:"+calc2 +"px;left:"+calc1+"px;width:"+imgw+"px;height:"+imgh+"px;\">");
-    $( "#"+unqID+"" ).append("<span class=\"upgradetooltiptext notLinkedTooltip \" id=\""+unqID+"tt\">"+content+"</span>");
-	$( "#"+unqID+"" ).append("<span class=\"upgradebridge notLinkedTooltip\" id=\""+unqID+"ttb\"></span>");
-   }
+		$( "#overlay2research" ).append( "<div class=\"upgradeIcon IconnotLinked hide\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding+xoffset)+"px;width:"+boxw+"px;height:"+boxh+"px;\"></div>" );	
+		$( "#"+unqID+"" ).append("<b><span class=\"upgradeLevel\" style=\"z-index: 1;\" id=\""+unqID+"lvl\"></span></b>");
+		$( "#"+unqID+"" ).append("<img src=\""+url+"\" class=\"divsImg\" id=\""+unqID+"Img\" style=\"position:absolute;top:"+calc2 +"px;left:"+calc1+"px;width:"+imgw+"px;height:"+imgh+"px;\">");
+		$( "#"+unqID+"" ).append("<span class=\"upgradetooltiptext notLinkedTooltip \" id=\""+unqID+"tt\">"+content+"</span>");
+		$( "#"+unqID+"" ).append("<span class=\"upgradebridge notLinkedTooltip\" id=\""+unqID+"ttb\"></span>");
+	}
    //next function
-   function drawLink(x,y,linkw,linkh,unqID){
-	   	$( "#overlay2research" ).append( "<div class=\"researchLink notLinked hide\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
-   }
-   function drawRect(x,y,linkw,linkh,unqIDRect){
+	function drawLink(x,y,linkw,linkh,unqID){
+		$( "#overlay2research" ).append( "<div class=\"researchLink notLinked hide\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding+xoffset)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
+	}
+	function drawRect(x,y,linkw,linkh,unqIDRect){
 	   	$( "#overlay2research" ).append( "<div class=\"rect hide\" id=\""+unqIDRect+"\" style=\"background-color:transparent; border-width:2px; border-color:#FFFFFF; border-style:solid; position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
-   }
+	}		
+
    function bound(val,min,max){
 	   if(val>max){
 		  val=max;
