@@ -1587,7 +1587,7 @@ stats();
     slidervalue1 = $('#range-slider__value1');
 	
 	overlay2research.on("mousedown touchstart",function(me){
-		
+		 if (me.target === this) {
     var move = $(this);
     
     var lastOffset = move.data('lastTransform');
@@ -1618,6 +1618,7 @@ stats();
         // we need to save last made offset
         move.data('lastTransform', {dx: newDx, dy: newDy });
     });
+		 }
 });
 $(document).on("mouseup touchend",function(){
     $(this).off("mousemove touchmove");
