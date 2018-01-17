@@ -1585,28 +1585,42 @@ stats();
 	overlay2contents = $('#overlay2contents');
 	overlay2zoom = $('#overlay2zoom');
     slidervalue1 = $('#range-slider__value1');
-	overlay2research.on("mousedown",function(me){
+	
+	overlay2research.on("mousedown touchstart",function(me){
+		
     var move = $(this);
     
     var lastOffset = move.data('lastTransform');
     var lastOffsetX = lastOffset ? lastOffset.dx : 0,
         lastOffsetY = lastOffset ? lastOffset.dy : 0;
-         
-    var startX = me.pageX - lastOffsetX, startY = me.pageY - lastOffsetY;
-    
-    $(document).on("mousemove",function(e){
-        var newDx = e.pageX - startX,
-            newDy = e.pageY - startY;
-			newDx = bound(newDx,0,400);
-			newDy = bound(newDy,-500,200);
+    var startX, startY =0;
+	if(me.originalEvent.targetTouches){
+	me.preventDefault();
+    startX = me.originalEvent.touches[0].pageX - lastOffsetX, startY = me.originalEvent.touches[0].pageY - lastOffsetY;
+	}else{
+	startX = me.pageX - lastOffsetX, startY = me.pageY - lastOffsetY;	
+	}
+    $(document).on("mousemove touchmove",function(e){
+		var newDx=0;
+		var newDy=0;
+		
+		if(me.originalEvent.targetTouches){
+			newDx = e.originalEvent.touches[0].pageX- startX,
+			newDy = e.originalEvent.touches[0].pageY- startY;
+		}else{
+			newDx = e.pageX- startX,
+			newDy = e.pageY- startY;
+		}
+		newDx = bound(newDx,0,400);
+		newDy = bound(newDy,-500,200);
         move.css('transform','translate(' + newDx + 'px, ' + newDy + 'px)');
         
         // we need to save last made offset
         move.data('lastTransform', {dx: newDx, dy: newDy });
     });
 });
-$(document).on("mouseup",function(){
-    $(this).off("mousemove");
+$(document).on("mouseup touchend",function(){
+    $(this).off("mousemove touchmove");
 });
 	  
       zoom1 = sliderrange1.val();
