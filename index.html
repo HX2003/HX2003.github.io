@@ -33,7 +33,6 @@ body {
 	color: #FAFAFA;
 	height:100%;
 	line-height:100%;
-	text-align:justify;
 	position:relative;
 }
 #gamearea {
@@ -102,11 +101,14 @@ body {
 }
 /*Buildings*/
 #buildingscontainer{
-width:calc(100% - 125px);
+width:calc(100% - 100px);
 }
 #researchbuildingscontainer{
-width:calc(100% - 125px);
+width:calc(100% - 100px);
 }
+  @media only screen  and (max-width: 475px) {
+  
+  }
 #energyproduction{
 width:50%;
 float:left;
@@ -487,7 +489,7 @@ border-color:#FFFFFF;
 	 margin-left:5px;color:#FF0000; display:none;	height:21.8px;
 }
 .estorebuildings{
-    height: 51px;
+    min-height: 51px;
 	border-width:1px;
 	border-style:solid;
 	border-color:#FFFFFF;
@@ -502,7 +504,7 @@ border-color:#FFFFFF;
 }
 .estorebuildingtitles{
 	margin-left:5px;
-	font-size:24px;
+	font-size:22px;
 }
 .estorebuildingbuy{
     height:100%;
@@ -521,7 +523,7 @@ border-color:#FFFFFF;
 }
 
 .rProdbuildings{
-    height: 51px;
+    min-height: 51px;
 	border-width:1px;
 	border-style:solid;
 	border-color:#FFFFFF;
@@ -536,7 +538,7 @@ border-color:#FFFFFF;
 }
 .rProdbuildingtitles{
 	margin-left:5px;
-	font-size:24px;
+	font-size:22px;
 }
 .rProdbuildingbuy{
     height:100%;
@@ -554,7 +556,8 @@ border-color:#FFFFFF;
 	line-height: 50px; 
 }
 .autobuildings{
-	height: 51px;
+	position:relative;
+	min-height: 51px;
 	border-width:1px;
 	border-style:solid;
 	border-color:#FFFFFF;
@@ -569,7 +572,7 @@ border-color:#FFFFFF;
 }
 .autobuildingtitles{
 	margin-left:5px;
-	font-size:24px;
+	font-size:22px;
 }
 .autobuildingbuy{
     height:100%;
@@ -588,7 +591,7 @@ border-color:#FFFFFF;
 }
 
 .rStorebuildings{
-    height: 51px;
+	min-height: 51px;
 	border-width:1px;
 	border-style:solid;
 	border-color:#FFFFFF;
@@ -603,7 +606,7 @@ border-color:#FFFFFF;
 }
 .rStorebuildingtitles{
 	margin-left:5px;
-	font-size:24px;
+	font-size:22px;
 }
 .rStorebuildingbuy{
     height:100%;
@@ -612,10 +615,43 @@ border-color:#FFFFFF;
 	background-color:#c6c6c6;
 	position: relative;
     display: inline-block;
-    cursor: pointer;
-	 
+    cursor: pointer; 
 }
 .rStorebuildingbuytext{
+	font-size:24px;
+	text-align: center;
+	line-height: 50px; 
+}
+.workerbots{
+	min-height: 51px;
+	border-width:1px;
+	border-style:solid;
+	border-color:#FFFFFF;
+	width: calc(100% - 100px);
+}
+.workerbotsicons{
+    width: 50px;
+	height: 50px;
+ 	border-width:1px;
+	border-style:solid;
+	border-color:#FFFFFF;
+	float:left;
+}
+.workerbotstitles{
+	margin-left:5px;
+	font-size:22px;
+	color:#00FF00;
+}
+.workerbotsbuy{
+    height:100%;
+	width:75px;
+	float:right;
+	background-color:#c6c6c6;
+	position: relative;
+    display: inline-block;
+    cursor: pointer;	 
+}
+.workerbotsbuytext{
 	font-size:24px;
 	text-align: center;
 	line-height: 50px; 
@@ -716,7 +752,7 @@ text-shadow: 0px 1px 0px #999,0px 0px 4px #000 !important;
 	display:none;
 	padding:5px;
 }
-#savebox, #exportImportSave{
+#savebox, #exportImportSave, #debugclick{
 	background-color:#535353;
 	width:auto;
 	height:30px;
@@ -730,10 +766,15 @@ text-shadow: 0px 1px 0px #999,0px 0px 4px #000 !important;
 	border-color:#535353;
 	cursor:pointer;
 }
-#savebox:hover,#exportImportSave:hover{
+#savebox:hover,#exportImportSave:hover,#debugclick:hover{
 	border-width:2px;
 	border-style:solid;
 	border-color:#FFFFFF;
+}
+#DebugCode{
+	height:30px;
+	float:left;
+	font-size:22px;
 }
 #ImportExportField{
  min-width:90%; 
@@ -756,13 +797,25 @@ width:44%;
 float:right;
 margin-right:15px;
 }
-#selectAll{
-
-}
 .notificationclass{
     background-color:#000000;
 	margin-bottom:5px;
 	border-radius: 5px;
+}
+#notificationremoveall{
+	position: fixed;
+	color:#FFFFFF;
+    bottom:5px;
+    left: 50%;
+    width: 20px;
+	font-size: 25px;
+    margin-left: 250px;
+    margin-top: -150px;
+    text-align: center;
+	display:block;
+	border-radius: 5px;
+    /* needed styles for the overlay */
+    z-index: 9; /* keep on top of other elements on the page */
 }
 #bottomcontainer{
 	position: fixed;
@@ -1127,16 +1180,6 @@ input[type=range]:active::-moz-range-thumb {
   padding: 0px 0px;
   margin-left: 8px;
 }
- 
-#workerbotsbuy0000{
-	width: 75px;
-    height: 75px;
-    border-radius: 37.5px;
-	background-color:#FFFFFF;
-	color:#000000;
-    line-height: 75px;
-    text-align: center;
-}
 </style>
 <script type="text/javascript"src="./js/cookies.js"></script>
 <script type="text/javascript"src="./js/formatting.js"></script>
@@ -1208,6 +1251,7 @@ Do you really want to delete this save?
 <div id="buildingscontainer">
 <div id="energyproduction">
 <b>Energy Production </b> <span>Assigned:<span id="workerbotsT1"></span></span><span class="workerbotsAction"><span id="workerbotsA1" class="workerbotsAssign">+</span><span id="workerbotsR1" class="workerbotsRemove">-</span></span>
+<div class="clear"></div>
 <div id="autobuilding1" class="autobuildings">
 <div class="clear"></div>
 <div id="autobuilding1icon" class="autobuildingicons"><img src="./website/tools/spatialGenT1.png" class="divsImg" id="" style="width:50px;height:50px;"></div><span class="autobuildingtitles">Spatial Energy Generator T1 </span>
@@ -1226,7 +1270,7 @@ Do you really want to delete this save?
 
 <div class="clear"></div>
 </div>
-<div id="autobuilding2" class="autobuildings">
+<div id="autobuilding2" class="autobuildings hide">
 <div class="clear"></div>
 <div id="autobuilding2icon" class="autobuildingicons"><img src="./website/tools/spatialGenT2.png" class="divsImg" id="" style="width:50px;height:50px;"></div><span class="autobuildingtitles">Spatial Energy Generator T2 </span>
 <div id="autobuy0001" class="autobuildingbuy"><p class="autobuildingbuytext">Buy</p>
@@ -1245,7 +1289,7 @@ Do you really want to delete this save?
 
 <div class="clear"></div>
 </div>
-<div id="autobuilding3" class="autobuildings">
+<div id="autobuilding3" class="autobuildings hide">
 <div class="clear"></div>
 <div id="autobuilding3icon" class="autobuildingicons"></div><span class="autobuildingtitles">Plasma Energy Generator T1 </span>
 <div id="autobuy0002" class="autobuildingbuy"><p class="autobuildingbuytext">Buy</p>
@@ -1264,7 +1308,7 @@ Do you really want to delete this save?
 
 <div class="clear"></div>
 </div>
-<div id="autobuilding4" class="autobuildings">
+<div id="autobuilding4" class="autobuildings hide">
 <div class="clear"></div>
 <div id="autobuilding4icon" class="autobuildingicons"></div><span class="autobuildingtitles">Plasma Energy Generator T2 </span>
 <div id="autobuy0003" class="autobuildingbuy"><p class="autobuildingbuytext">Buy</p>
@@ -1284,6 +1328,7 @@ Do you really want to delete this save?
 </div>
 <div id="energystorage">
 <b>Energy Storage </b><span>Assigned:<span id="workerbotsT2"></span></span><span class="workerbotsAction"><span id="workerbotsA2" class="workerbotsAssign">+</span><span id="workerbotsR2" class="workerbotsRemove">-</span></span>
+<div class="clear"></div>
 <div id="estorebuilding1" class="estorebuildings">
 <div class="clear"></div>
 <div id="estorebuilding1icon" class="estorebuildingicons"><img src="./website/tools/batteriesGen1.png" class="divsImg" id="" style="width:50px;height:50px;"></div><span class="estorebuildingtitles">Batteries Gen1</span>
@@ -1303,7 +1348,7 @@ Do you really want to delete this save?
 
 <div class="clear"></div>
 </div>
-<div id="estorebuilding2" class="estorebuildings">
+<div id="estorebuilding2" class="estorebuildings hide">
 <div class="clear"></div>
 <div id="estorebuilding2icon" class="estorebuildingicons"><img src="./website/tools/batteriesGen2.png" class="divsImg" id="" style="width:50px;height:50px;"></div><span class="estorebuildingtitles">Batteries Gen2</span>
 <div id="estorebuy0001" class="estorebuildingbuy"><p class="estorebuildingbuytext">Buy</p>
@@ -1322,7 +1367,7 @@ Do you really want to delete this save?
 
 <div class="clear"></div>
 </div>
-<div id="estorebuilding3" class="estorebuildings">
+<div id="estorebuilding3" class="estorebuildings hide">
 <div class="clear"></div>
 <div id="estorebuilding3icon" class="estorebuildingicons"></div><span class="estorebuildingtitles">Dense field storage Gen1</span>
 <div id="estorebuy0002" class="estorebuildingbuy"><p class="estorebuildingbuytext">Buy</p>
@@ -1341,7 +1386,7 @@ Do you really want to delete this save?
 
 <div class="clear"></div>
 </div>
-<div id="estorebuilding4" class="estorebuildings">
+<div id="estorebuilding4" class="estorebuildings hide">
 <div class="clear"></div>
 <div id="estorebuilding4icon" class="estorebuildingicons"></div><span class="estorebuildingtitles">Dense field storage Gen2</span>
 <div id="estorebuy0003" class="estorebuildingbuy"><p class="estorebuildingbuytext">Buy</p>
@@ -1363,17 +1408,17 @@ Do you really want to delete this save?
 <hr>
 <div class="clear"></div>
 <div id="researchbuildingscontainer">
-<div id="researchproduction">
-<b style="color:#FF00FF">Research Production </b> <span>Assigned:<span id="workerbotsT3"></span></span><span class="workerbotsAction"><span id="workerbotsA3" class="workerbotsAssign">+</span><span id="workerbotsR3" class="workerbotsRemove">-</span></span>
+<div id="researchproduction" class="hide">
+<b style="color:#FF00FF">Research Conversion </b> <span>Assigned:<span id="workerbotsT3"></span></span><span class="workerbotsAction"><span id="workerbotsA3" class="workerbotsAssign">+</span><span id="workerbotsR3" class="workerbotsRemove">-</span></span>
 <div id="rProdbuilding1" class="rProdbuildings">
 <div class="clear"></div>
-<div id="rProdbuilding1icon" class="rProdbuildingicons"></div><span class="rProdbuildingtitles">Research production facility</span>
+<div id="rProdbuilding1icon" class="rProdbuildingicons"></div><span class="rProdbuildingtitles">Research conversion facility</span>
 <div id="rProdbuy0000" class="rProdbuildingbuy"><p class="rProdbuildingbuytext">Buy</p>
  <span class="buytooltiptext">
-<span>Increases research production from pool by </span><b><span id="rProdplus1"></span></b><span> each.</span>
+<span>Increases research conversion from pool by </span><b><span id="rProdplus1"></span></b><span> each.</span>
 <span class="lvl1researchbuildingtooltip hide">
 <br>
-<span>Increases research production from pool by </span><b><span id="rProdtotal1"></span></b><span> in total.</span>
+<span>Increases research conversion from pool by </span><b><span id="rProdtotal1"></span></b><span> in total.</span>
 <br>
 <span>(</span><b><span id="rProdpercentage1"></span></b><span>% of total)</span>
 </span>
@@ -1385,7 +1430,7 @@ Do you really want to delete this save?
 <div class="clear"></div>
 </div>
 </div>
-<div id="researchstorage">
+<div id="researchstorage" class="hide">
 <b style="color:#FF00FF">Research Storage</b> <span>Assigned:<span id="workerbotsT4"></span></span><span class="workerbotsAction"><span id="workerbotsA4" class="workerbotsAssign">+</span><span id="workerbotsR4" class="workerbotsRemove">-</span></span>
 <div id="rStorebuilding1" class="rStorebuildings">
 <div class="clear"></div>
@@ -1408,17 +1453,18 @@ Do you really want to delete this save?
 </div>
 </div>
 </div>
-<hr>
 <div class="clear"></div>
-<div id="">
-<b>Build more worker bots<b>
-<div id="">
-<div id="workerbotsbuy0000">BUILD</div>
-Cost: <span id="workerbotsEcost0000" class="cur_energy"></span> <span id="workerbotsRcost0000" class="cur_research"></span><span id="workerbotserrorcost0000" class="errorcost">Insufficient items</span>
+<hr>
+<div id="workerbot" class="workerbots hide">
+<div id="workerbotsicon" class="workerbotsicons"><img src="./website/tools/bot.png" class="divsImg" id="" style="width:50px;height:50px;"></div><span class="workerbotstitles">Worker bots</span>
+<div id="workerbotsbuy0000" class="workerbotsbuy"><p class="workerbotsbuytext">Buy</p>
+</div>
+<p></p>
+<span class="details"><span>Cost: </span><span id="workerbotsEcost0000" class="cur_energy"></span> <span id="workerbotsRcost0000" class="cur_research"></span><span id="workerbotserrorcost0000" class="errorcost">Insufficient items</span><span> Acquired:</span><span class="totalworkerbots"></span></span>
+
+<div class="clear"></div>
 </div>
 </div>
-</div>
-<br>
 <div id="won" style="font-size:40px; display:none;"><b>Congrats, you won the game! There's not much to do now</b></div>
 <div id="tabB" class="tabClass">
 
@@ -1524,7 +1570,7 @@ Cost: <span id="workerbotsEcost0000" class="cur_energy"></span> <span id="worker
 <tr><td>Total buildings:</td><td><div id="totalbuildings"></div></td></tr>
 <tr><td>Total research levels:</td><td><div id="totalresearch"></div></td></tr>
 <tr><td>Energy goal level:</td><td><div class="EnergyGoalLevel"></div></td></tr>
-<tr><td>Energy multiplyier:</td><td><div id="emultiply"></div></td></tr>
+<tr><td>Total multiplyier:</td><td><div id="TotalMultiply"></div></td></tr>
 <tr><td>Version:</td><td><div id="version"></div></td></tr>
 </table>
 </div>
@@ -1536,7 +1582,12 @@ Cost: <span id="workerbotsEcost0000" class="cur_energy"></span> <span id="worker
 <br><hr><br>
 <div id="deleteallcookies" >Delete Save</div><label style="margin-left:5px;	vertical-align: middle;">Delete <b style="color:#FF0000;">ALL</b> of you progress.</label>
 <br><hr><br>
+<textarea id="DebugCode"></textarea><div id="debugclick" >Debug</div>
+<br><hr><br>
 <b style="font-size:30px;">Update Logs</b><span id="currentVersionSettings" style="font-size:26px;"></span>
+<h3>Version:2.1.0</h3>
+<p>Major update. More UI features. Brand new research and mechanics </p>
+<br><hr><br>
 <h3>Version:2.0.3</h3>
 <p>UI fixes, refactored research and added new research.</p>
 <br><hr><br>
