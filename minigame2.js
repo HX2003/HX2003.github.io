@@ -1,5 +1,5 @@
 $(document).ready(function(){ 
-  currentVersion="2.1.0";
+  currentVersion="2.1.1";
   //Init VARAIABLES starting game 
   //BuildingEstore [ID][NUM,COST,VALUE, CALC COST]
   	researchData = [
@@ -111,15 +111,53 @@ $(document).ready(function(){
 	ResearchPoints:0,
 	RealResearchPoints:0,
 	RealResearchPointscap:0
- } 
-  InitVar4 = {
+	} 
+	InitVar4 = {
 	  
-  }
- createResearchLvlSave();
- InitResearchLVL=ResearchLvlSave; 
-  
- Cookieresult = getCookie("Var1");
- if(Cookieresult!=""){
+	}
+	IsLocalStorageAvailable = storageAvailable('localStorage');
+	
+	createResearchLvlSave();
+	InitResearchLVL=ResearchLvlSave; 
+ 
+	if(IsLocalStorageAvailable){
+		if(localStorage.hasOwnProperty("Var1")){
+
+		}else{
+			console.log("localStorage Var1 not found, creating Var1");	
+			setLocalStorage("Var1",InitVar1);
+		}
+		if(localStorage.hasOwnProperty("Var2")){
+
+		}else{
+			console.log("localStorage Var2 not found, creating Var2");	
+			setLocalStorage("Var2",InitVar2);
+		}
+		if(localStorage.hasOwnProperty("Var3")){
+
+		}else{
+			console.log("localStorage Var3 not found, creating Var3");	
+			setLocalStorage("Var3",InitVar3);
+		}
+		if(localStorage.hasOwnProperty("Var4")){
+
+		}else{
+			console.log("localStorage Var4 not found, creating Var4");	
+			setLocalStorage("Var4",InitVar4);
+		}
+		if(localStorage.hasOwnProperty("ResearchLVL")){
+
+		}else{
+			console.log("localStorage ResearchLVL not found, creating ResearchLVL");	
+			setLocalStorage("ResearchLVL",InitResearchLVL);
+		}
+		loadLocalStorage("Var1","1");
+		loadLocalStorage("Var2","2");
+		loadLocalStorage("Var3","3");
+		loadLocalStorage("Var4","4");
+		loadLocalStorage("ResearchLVL","5");
+	}else{
+ if(getCookie("Var1")!=""){
 	 loadCookies("Var1","1");
  }else{
 	 //not found 
@@ -128,8 +166,7 @@ $(document).ready(function(){
 	 loadCookies("Var1","1");
  }
  
- Cookieresult = getCookie("Var2");
- if(Cookieresult!=""){
+ if(getCookie("Var2")!=""){
 	 loadCookies("Var2","2");
  }else{
 	 console.log("Cookie Var2 not found, creating Var2");
@@ -137,8 +174,7 @@ $(document).ready(function(){
 	 loadCookies("Var2","2");
  }
  
- Cookieresult = getCookie("Var3");
- if(Cookieresult!=""){
+ if(getCookie("Var3")!=""){
 	 loadCookies("Var3","3");
  }else{
 	 console.log("Cookie Var3 not found, creating Var3");
@@ -146,8 +182,7 @@ $(document).ready(function(){
 	 loadCookies("Var3","3");
  }
  
- Cookieresult = getCookie("Var4");
- if(Cookieresult!=""){
+ if(getCookie("Var4")!=""){
 	 loadCookies("Var4","4");
  }else{
 	 console.log("Cookie Var4 not found, creating Var4");
@@ -155,14 +190,14 @@ $(document).ready(function(){
 	 loadCookies("Var4","4");
  }
   
- Cookieresult = getCookie("ResearchLVL");
- if(Cookieresult!=""){
+ if(getCookie("ResearchLVL")!=""){
 	 loadCookies("ResearchLVL","5");
  }else{
 	 console.log("Cookie ResearchLVL not found, creating ResearchLVL");
 	 setCookieJson("ResearchLVL",InitResearchLVL);
 	 loadCookies("ResearchLVL","5");
  }
+	}//end of inital loadingv
  function loadCookies(cookieName,variableName){
 	cookieResult = getCookie(cookieName);
 	if(cookieResult!=""){
@@ -186,8 +221,31 @@ $(document).ready(function(){
 	  throw new Error("Something went badly wrong!");
 	}
  }
+ function loadLocalStorage(LocalStorageName,variableName){
+	LocalStorageResult = localStorage.getItem(LocalStorageName);
+	if(LocalStorageResult!=""){
+	 if(variableName=="1"){
+	  loadedVar1=JSON.parse(LZString.decompressFromBase64(LocalStorageResult));
+	 }
+	 if(variableName=="2"){
+	  loadedVar2=JSON.parse(LZString.decompressFromBase64(LocalStorageResult));
+	 }
+	 if(variableName=="3"){
+	  loadedVar3=JSON.parse(LZString.decompressFromBase64(LocalStorageResult));
+	 }
+	 if(variableName=="4"){
+	  loadedVar4=JSON.parse(LZString.decompressFromBase64(LocalStorageResult));
+	 }
+	 if(variableName=="5"){
+	  ResearchLVL=JSON.parse(LZString.decompressFromBase64(LocalStorageResult));
+	 }
+	}else{ 
+	  alert("localStorage not valid");
+	  throw new Error("Something went badly wrong!");
+	}
+ }
   if(loadedVar1.version!=currentVersion){
-	 var r = confirm("Your version "+loadedVar1.version+" is not supported, current supported is version "+currentVersion+". Reset game? ");
+	 var r = confirm("Your version "+loadedVar1.version+" is not supported, current supported is version "+currentVersion+". Sorry about that. Reset game? ");
 	 if(r==1){deleteallcookies();location.reload();}
  }
  varTovar();
@@ -342,22 +400,30 @@ $(document).ready(function(){
  createResearchLvlSave();
  saveResearchLVL=ResearchLvlSave; 
  }
-probarcounterbasevalue = 2000;
-function savegamecookie(){
+ 
+function savegame(){
  setSaveVar();
- setCookieJson("Var1",saveVar1);
- setCookieJson("Var2",saveVar2);
- setCookieJson("Var3",saveVar3);
- setCookieJson("Var4",saveVar4);
- setCookieJson("ResearchLVL",saveResearchLVL);
+ if(IsLocalStorageAvailable){
+	setLocalStorage("Var1",saveVar1);
+	setLocalStorage("Var2",saveVar2);
+	setLocalStorage("Var3",saveVar3);
+	setLocalStorage("Var4",saveVar4);
+	setLocalStorage("ResearchLVL",saveResearchLVL);
+ }else{
+	setCookieJson("Var1",saveVar1);
+	setCookieJson("Var2",saveVar2);
+	setCookieJson("Var3",saveVar3);
+	setCookieJson("Var4",saveVar4);
+	setCookieJson("ResearchLVL",saveResearchLVL);
+ }
  notify("Game saved",0);
 }
 setTimeout(function() {
-  setInterval(savegamecookie, 30000);
+  setInterval(savegame, 30000);
 }, 5000);
 
  $( "#savebox").click(function() {
-savegamecookie();
+savegame();
  });
 number = 0;
 active_notifications =0;
@@ -402,7 +468,7 @@ function AddEvent(html_element, event_name, event_function)
 }
 
 AddEvent(window,'keydown',function(e){
-if (e.ctrlKey && e.keyCode==83) {savegamecookie();e.preventDefault();}
+if (e.ctrlKey && e.keyCode==83) {savegame();e.preventDefault();}
 });
 
 //Export SAVE
