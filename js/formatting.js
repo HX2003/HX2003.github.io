@@ -1,4 +1,7 @@
- //format number
+	formatting_numberformat=0;
+ function setNumberFormat(value){
+	formatting_numberformat=value;
+ }
  function prettifySub(number) {
     number = parseFloat(number.toFixed(3));
     if (number >= 1000) number = 999;
@@ -7,8 +10,12 @@
     if (typeof hasDecimal[1] === 'undefined' || hasDecimal[0].length >= 3) return number.substring(0, 6);
     return number.substring(0, 6);
 	//123.456
-}
+} 
  function formatNumber(number) {
+	if(formatting_numberformat==0){
+	//number format 
+	//0-default
+	//1-exponential
     var numberTmp = number;
     number = Math.round(number * 1000000) / 1000000;
     if (!isFinite(number)) return "Infinite";
@@ -34,7 +41,10 @@
             exponent = exponent.replace('+', '');
             return exponent;
         }
-
+	
         return prettifySub(number) + suffix;
+	}else{
+		return number.toExponential(3);
+	}
 }    
     

@@ -2,8 +2,8 @@ $(document).ready(function(){
   currentVersion="2.1.1";
   //Init VARAIABLES starting game 
   //BuildingEstore [ID][NUM,COST,VALUE, CALC COST]
-  	researchData = [
-	{"researchID":"unqID0000","researchName":"Unlock research","Ecost":10000,"Rcost":0,"xPos":110-75,"yPos":150,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/research.png","child":["unqID0001","unqID0010","unqID0020","unqID-0001","unqIDdeep0000","unqIDresearchpts0000"],"parent":[""],"sibling":[""],"description":"Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","quote":"The beginning"}, 
+  	researchData = [//110-75, 150
+	{"researchID":"unqID0000","researchName":"Unlock research","Ecost":10000,"Rcost":0,"xPos":0,"yPos":0,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/research.png","child":["unqID0001","unqID0010","unqID0020","unqID-0001","unqIDdeep0000","unqIDresearchpts0000"],"parent":[""],"sibling":[""],"description":"Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","quote":"The beginning"}, 
 	//right branch
 	{"researchID":"unqID0001","researchName":"Energy production and storage boost I","Ecost":12500,"Rcost":0.5,"customData":{"addmultiplier":0.2},"xPos":110,"yPos":200,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/hammer.png","child":["unqID0002"],"parent":["unqID0000"],"sibling":[""],"description":"Increase multiplyier for both by 0.2","quote":"Better maintenance"},
 	{"researchID":"unqID0002","researchName":"Energy production and storage boost II","Ecost":100000,"Rcost":1.5,"customData":{"addmultiplier":0.8},"xPos":110+75,"yPos":200,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/wires.png","child":["unqID0003"],"parent":["unqID0001"],"sibling":[""],"description":"Increase multiplyier for both by 0.8","quote":"More conductive wires"},
@@ -43,6 +43,7 @@ $(document).ready(function(){
 	longtime=30000;
     InitVar1 = {
 		version:currentVersion,
+		numberformat:0,
 		gameState:[0,0,0,0],//base state, energy building state, research building state, worker bots state,
 		workerbots:[0,0,0,0,0],
 		workerbotscost:[[1,0],[2,200000]],
@@ -115,7 +116,7 @@ $(document).ready(function(){
 	InitVar4 = {
 	  
 	}
-	IsLocalStorageAvailable = storageAvailable('localStorage');
+	IsLocalStorageAvailable = storageAvailable("localStorage");
 	
 	createResearchLvlSave();
 	InitResearchLVL=ResearchLvlSave; 
@@ -246,11 +247,12 @@ $(document).ready(function(){
  }
   if(loadedVar1.version!=currentVersion){
 	 var r = confirm("Your version "+loadedVar1.version+" is not supported, current supported is version "+currentVersion+". Sorry about that. Reset game? ");
-	 if(r==1){deleteallcookies();location.reload();}
+	 if(r==1){hardreset();}
  }
  varTovar();
  function varTovar(){
 	version=loadedVar1.version;
+	numberformat=loadedVar1.numberformat;
 	gameState=loadedVar1.gameState;
 	workerbots=loadedVar1.workerbots;
 	workerbotscost=loadedVar1.workerbotscost;
@@ -325,6 +327,7 @@ $(document).ready(function(){
  function setSaveVar(){
 	saveVar1 = {
 		version:version,
+		numberformat:numberformat,
 		workerbots:workerbots,
 		workerbotscost:workerbotscost,
 		tabsunlocked:tabsunlocked,
@@ -425,7 +428,7 @@ setTimeout(function() {
  $( "#savebox").click(function() {
 savegame();
  });
-number = 0;
+notificationID = 0;
 active_notifications =0;
 function removeNotification(evt){
 	active_notifications = active_notifications - 1;
@@ -438,14 +441,14 @@ function removeNotificationAll(evt){
 	removeallNotificationUpdater();
 }
 function notify(data,priority){
-	$("#bottomcontainer").append("<div id=\"notification"+ number +"\" class=\"notificationclass\" style=\"display:none;\">"+ data + "\<span id=\"notificationRemove"+number+"\"class=\"remove\" style=\"float:right; margin-right:5px;\"\">&times;</span></div>")
+	$("#bottomcontainer").append("<div id=\"notification"+ notificationID +"\" class=\"notificationclass\" style=\"display:none;\">"+ data + "\<span id=\"notificationRemove"+notificationID+"\"class=\"remove\" style=\"float:right; margin-right:5px;\"\">&times;</span></div>")
 	if(priority==0){
-	$("#notification" + number).show("fast").delay(2000).hide("fast").queue(function(next) {active_notifications=active_notifications-1;removeallNotificationUpdater();$(this).remove();next();});
+	$("#notification" + notificationID).show("fast").delay(2000).hide("fast").queue(function(next) {active_notifications=active_notifications-1;removeallNotificationUpdater();$(this).remove();next();});
 	}else{ 
-	$("#notification" + number).show("fast").delay(longtime).hide("fast").queue(function(next) {active_notifications=active_notifications-1;removeallNotificationUpdater();$(this).remove();next();});	
+	$("#notification" + notificationID).show("fast").delay(longtime).hide("fast").queue(function(next) {active_notifications=active_notifications-1;removeallNotificationUpdater();$(this).remove();next();});	
 	}
-	$("#notificationRemove" + number).on('click', removeNotification);
-	number = number + 1;
+	$("#notificationRemove" + notificationID).on('click', removeNotification);
+	notificationID = notificationID + 1;
 	active_notifications = active_notifications + 1; 
 	removeallNotificationUpdater();
 } 
@@ -470,7 +473,24 @@ function AddEvent(html_element, event_name, event_function)
 AddEvent(window,'keydown',function(e){
 if (e.ctrlKey && e.keyCode==83) {savegame();e.preventDefault();}
 });
-
+//setNumberFormat
+	setNumberFormat(numberformat);
+	if(numberformat==1){
+		$("#numberformat").html("Scientific Notation");
+	}else if(numberformat==0){
+		$("#numberformat").html("Default");
+	}
+	$( "#numberformat" ).click(function() {
+	if(numberformat==0){
+		$("#numberformat").html("Scientific Notation");
+		numberformat=1;
+	}else if(numberformat==1){
+		$("#numberformat").html("Default");
+		numberformat=0;
+	}
+	setNumberFormat(numberformat);
+	});
+	
 //Export SAVE
 	$( "#exportImportSave" ).click(function() {
 		document.getElementById("SaveDialog").style.display = "block";
@@ -1123,11 +1143,11 @@ function calculateEverything(){
 	calcresearchplustotal();
     acquried();
 	cost();
-	if(energycap>0){
-    widthpercentage=(thetotal/energycap)*100;
-	}else{widthpercentage=0;}
-    if(widthpercentage>100){widthpercentage=100;}
-      $("#bar1").width(widthpercentage + '%'); 
+ 
+    if(energycap>0){bar1width=bound((thetotal/energycap)*100,0,100);}else{bar1width=0;}
+	if(RealResearchPointscap>0){bar2width=bound((RealResearchPoints/RealResearchPointscap)*100,0,100);}else{bar2width=0;}
+      $("#bar1").width( bar1width + '%'); 
+	  $("#bar2").width( bar2width + '%'); 
 	  $(".thetotal").html(formatNumber(thetotal)+"/"+formatNumber(energycap));
 	  $("#epsgain").html(formatNumber(epsgain));
 	  $("#rProdgain").html(formatNumber(rProdgain));
@@ -1139,20 +1159,19 @@ function calculateEverything(){
 	//if(thetotal >= 100000000000000){$( "#won" ).show();}
 }
 //DELETE SAVE
-  $( "#deleteallcookies" ).click(function() {
-document.getElementById("deleteallcookiesdialog").style.display = "block";
-  });
-  $( "#canceldialog" ).click(function() {
-document.getElementById("deleteallcookiesdialog").style.display = "none";
-  });
-   $( "#no" ).click(function() {
-document.getElementById("deleteallcookiesdialog").style.display = "none";	   
-  });
-  $( "#yes" ).click(function() {
-document.getElementById("deleteallcookiesdialog").style.display = "none";	
-deleteallcookies();
-location.reload();
-  });
+	$( "#hardreset" ).click(function() {
+		document.getElementById("hardresetdialog").style.display = "block";
+	});
+	$( "#canceldialog" ).click(function() {
+		document.getElementById("hardresetdialog").style.display = "none";
+	});
+	$( "#no" ).click(function() {
+		document.getElementById("hardresetdialog").style.display = "none";	   
+	});
+	$( "#yes" ).click(function() {
+		document.getElementById("hardresetdialog").style.display = "none";	
+		hardreset();
+	});
 //
 //
 //
@@ -1278,7 +1297,7 @@ function openTab(tabID,ID) {
 	 
 }
 //addTabClass CODE
-tabsName=["Buildings","Research","Energy Goals","Achievements","Unknown","Settings N' Stuff"];
+tabsName=["Home","Research","Energy Goals","Achievements","Unknown","Settings N' Stuff"];
 function fillTabsName(){
 	if(tabsunlocked[0]==1){$("#menuA").html(tabsName[0]);}else{$("#menuA").html("&#128274");}
 	if(tabsunlocked[1]==1){$("#menuB").html(tabsName[1]);}else{$("#menuB").html("&#128274");}
@@ -1303,6 +1322,10 @@ tabs = document.getElementsByClassName("tabs");
  document.getElementById('menuF').addEventListener("click", function() {if(tabsunlocked[5]==1){openTab('menuF','tabF')}else{$("#menuF").qaddclass("red").delay(750).qremoveclass("red");}});
  //
  /* PROGRESSION COMPONENT */
+if(gameState==0){
+	//generate startgame screen only when need to
+	
+}
 function gamestate0(){
 	$('.blackScreen').fadeOut(0);
 	$('#startgameText1').fadeOut(0);
@@ -1321,7 +1344,7 @@ function gamestate1(){
 if(gameState[0]>=1){
    gamestate0();
 }
-$( "#progress1" ).click(function() {
+$( "#startgameButton" ).click(function() {
 	if(gameState[0]==0){
 	gamestate1();
 	gameState[0]=1;
@@ -1425,13 +1448,13 @@ stats();
 	if(skip==2){ //unbalanced start
 	BuildingEstoreNumber0003=1000;
 	BuildingAutoNumber0003=1000;
-	BuildingrProd[0][0]=1000;
-	BuildingrStore[0][0]=1000;
+	BuildingrProd[0][0]=10;
+	BuildingrStore[0][0]=10;
 	workerbots[0]=0;
-	workerbots[1]=100;
-	workerbots[2]=100;
-	workerbots[3]=100;
-	workerbots[4]=100;
+	workerbots[1]=50;
+	workerbots[2]=50;
+	workerbots[3]=50;
+	workerbots[4]=50;
 	skip=0;
 	}
  }
@@ -1441,8 +1464,8 @@ stats();
  //RESEARCH SECTION
 	zoom1=100;
 	padding = 5;
-	yoffset = 35;
-	xoffset = 35+75;
+	yoffset = 0;
+	xoffset = 0;
 	createResearchIcons();
 	createResearchLinks();
 	linkIcon("unqID0000",2); 
@@ -1743,14 +1766,37 @@ stats();
 	overlay2zoom = $('#overlay2zoom');
     slidervalue1 = $('#range-slider__value1');
 	
-	overlay2research.on("mousedown touchstart",function(me){
+	function realWidth(obj){
+    var clone = obj.clone();
+    clone.css("visibility","hidden");
+    $('body').append(clone);
+    var width = clone.outerWidth();
+    clone.remove();
+    return width;
+	}
+	function realHeight(obj){
+    var clone = obj.clone();
+    clone.css("visibility","hidden");
+    $('body').append(clone);
+    var height = clone.outerHeight();
+    clone.remove();
+    return height;
+	}
+    initialx = realWidth($('#upgradeboxcontainer'))/2;
+	initialy = (realHeight($('#upgradeboxcontainer'))-200-realHeight($('#overlay')))/2;
+	$('#overlay2research').css('transform','translate(' + initialx + 'px, ' + initialy + 'px)');
+	$('#overlay2research').data('lastTransform', {dx: initialx, dy: initialy }); 
+	 
+	 
+	overlay2contents.on("mousedown touchstart",function(me){
 		 if (me.target === this) {
-    var move = $(this);
+    var move = $('#overlay2research');
     
     var lastOffset = move.data('lastTransform');
     var lastOffsetX = lastOffset ? lastOffset.dx : 0,
         lastOffsetY = lastOffset ? lastOffset.dy : 0;
-    var startX, startY =0;
+    var startX=0;
+	var startY=0;
 	if(me.originalEvent.targetTouches){
 	me.preventDefault();
     startX = me.originalEvent.touches[0].pageX - lastOffsetX, startY = me.originalEvent.touches[0].pageY - lastOffsetY;
@@ -1768,8 +1814,8 @@ stats();
 			newDx = e.pageX- startX,
 			newDy = e.pageY- startY;
 		}
-		newDx = bound(newDx,-200,400);
-		newDy = bound(newDy,-200,400);
+		newDx = bound(newDx,0,1000);
+		newDy = bound(newDy,0,500);
         move.css('transform','translate(' + newDx + 'px, ' + newDy + 'px)');
         
         // we need to save last made offset
