@@ -411,6 +411,7 @@ border-color:#FFFFFF;
     border-right: 10px solid #FFFFFF;
     border-top: 10px solid #FFFFFF;
     transform: rotate(45deg);
+	z-index:1;
 }
 #overlay2leftarrow {
 	position:absolute;
@@ -421,6 +422,26 @@ border-color:#FFFFFF;
     border-left: 10px solid #FFFFFF;
     border-bottom: 10px solid #FFFFFF;
     transform: rotate(45deg);
+	z-index:1;
+}
+#researchprogresscontainer{
+    height:20px;
+	bottom:20px;
+	position:relative;
+	z-index:1;
+}
+.researchprogress{
+	background-color:#FFFFFF;
+	height:5px;
+	width:10%;
+	margin-bottom:5px;
+	display:inline-block; 	
+	position:relative;
+	z-index:1;
+}
+.researchprogress div{
+	background-color:#cc33ff;
+	height: 100%;
 }
 #overlay2overflow{
 	height:calc(100% - 120px);
@@ -454,6 +475,10 @@ border-color:#FFFFFF;
 	top:0;
 	left:0;
 	position:absolute;
+}
+#DisplayResearchChpt{
+	font-size:35px;
+	color: #cc33ff;
 }
 .upgradeIcon:hover{
     transition: border-color 0.3s ease;
@@ -572,7 +597,7 @@ border-color:#FFFFFF;
 }
 .estorebuildingtitles{
 	margin-left:5px;
-	font-size:22px;
+	font-size:18px;
 }
 .estorebuildingbuy{
     height:100%;
@@ -606,7 +631,7 @@ border-color:#FFFFFF;
 }
 .rProdbuildingtitles{
 	margin-left:5px;
-	font-size:22px;
+	font-size:18px;
 }
 .rProdbuildingbuy{
     height:100%;
@@ -640,7 +665,7 @@ border-color:#FFFFFF;
 }
 .autobuildingtitles{
 	margin-left:5px;
-	font-size:22px;
+	font-size:18px;
 }
 .autobuildingbuy{
     height:100%;
@@ -674,7 +699,7 @@ border-color:#FFFFFF;
 }
 .rStorebuildingtitles{
 	margin-left:5px;
-	font-size:22px;
+	font-size:18px;
 }
 .rStorebuildingbuy{
     height:100%;
@@ -707,7 +732,7 @@ border-color:#FFFFFF;
 }
 .workerbotstitles{
 	margin-left:5px;
-	font-size:22px;
+	font-size:18px;
 	color:#00FF00;
 }
 .workerbotsbuy{
@@ -1249,6 +1274,9 @@ input[type=range]:active::-moz-range-thumb {
   padding: 0px 0px;
   margin-left: 8px;
 }
+.transitionease {
+	transition: 0.5s ease;
+}
 </style>
 <script type="text/javascript"src="./js/save.js"></script>
 <script type="text/javascript"src="./js/formatting.js"></script>
@@ -1328,7 +1356,7 @@ Do you really want to delete this save?
 <div class="clear"></div>
 <div id="autobuilding1" class="autobuildings">
 <div class="clear"></div>
-<div id="autobuilding1icon" class="autobuildingicons"><img src="./website/tools/spatialGenT1.png" class="divsImg" id="" style="width:50px;height:50px;"></div><span class="autobuildingtitles">Spatial Energy Generator T1 </span>
+<div id="autobuilding1icon" class="autobuildingicons"><img src="./website/tools/spatialGenT1.png" class="divsImg" id="" style="width:50px;height:50px;"></div><span class="autobuildingtitles">Spatial Energy Gen1 </span>
 <div id="autobuy0000" class="autobuildingbuy"><p class="autobuildingbuytext">Buy</p>
  <span class="buytooltiptext">
 <span>Increases <span class="cur_energy">/s</span> by </span><b><span id="epsplus1"></span></b><span> each.</span>
@@ -1346,7 +1374,7 @@ Do you really want to delete this save?
 </div>
 <div id="autobuilding2" class="autobuildings hide">
 <div class="clear"></div>
-<div id="autobuilding2icon" class="autobuildingicons"><img src="./website/tools/spatialGenT2.png" class="divsImg" id="" style="width:50px;height:50px;"></div><span class="autobuildingtitles">Spatial Energy Generator T2 </span>
+<div id="autobuilding2icon" class="autobuildingicons"><img src="./website/tools/spatialGenT2.png" class="divsImg" id="" style="width:50px;height:50px;"></div><span class="autobuildingtitles">Spatial Energy Gen2 </span>
 <div id="autobuy0001" class="autobuildingbuy"><p class="autobuildingbuytext">Buy</p>
  <span class="buytooltiptext">
 <span>Increases <span class="cur_energy">/s</span> by </span><b><span id="epsplus2"></span></b><span> each.</span>
@@ -1365,7 +1393,7 @@ Do you really want to delete this save?
 </div>
 <div id="autobuilding3" class="autobuildings hide">
 <div class="clear"></div>
-<div id="autobuilding3icon" class="autobuildingicons"></div><span class="autobuildingtitles">Plasma Energy Generator T1 </span>
+<div id="autobuilding3icon" class="autobuildingicons"></div><span class="autobuildingtitles">Plasma Energy Gen1 </span>
 <div id="autobuy0002" class="autobuildingbuy"><p class="autobuildingbuytext">Buy</p>
  <span class="buytooltiptext">
 <span>Increases <span class="cur_energy">/s</span> by </span><b><span id="epsplus3"></span></b><span> each.</span>
@@ -1384,7 +1412,7 @@ Do you really want to delete this save?
 </div>
 <div id="autobuilding4" class="autobuildings hide">
 <div class="clear"></div>
-<div id="autobuilding4icon" class="autobuildingicons"></div><span class="autobuildingtitles">Plasma Energy Generator T2 </span>
+<div id="autobuilding4icon" class="autobuildingicons"></div><span class="autobuildingtitles">Plasma Energy Gen2 </span>
 <div id="autobuy0003" class="autobuildingbuy"><p class="autobuildingbuytext">Buy</p>
  <span class="buytooltiptext">
 <span>Increases <span class="cur_energy">/s</span> by </span><b><span id="epsplus4"></span></b><span> each.</span>
@@ -1544,16 +1572,16 @@ Do you really want to delete this save?
 <div id="upgradeboxcontainer">
 <div id="overlay">
 <br>
-  <h2>Research</h2>
-  <p>Research new technology to unlock and improve your buildings and others</p>
-  <div class="clear"></div>
-  <span id="researchpoint" style="">Research pool:<span class="researchpoint" style=""></span></span><-><span id="realresearchpoint" style="">Research points:<span class="RealResearchPoints"></span>/<span class="RealResearchPointscap"></span></span>
-  <div class="clear"></div>
-  <br>
+	<h2>Research</h2>
+	<p>Technological advancement </p>
+	<div class="clear"></div>
+	<span id="researchpoint" style="">Research pool:<span class="researchpoint" style=""></span></span><-><span id="realresearchpoint" style="">Research points:<span class="RealResearchPoints"></span>/<span class="RealResearchPointscap"></span></span>
+	<div class="clear"></div>
   	 <div class="range-slider">
-     <input class="range-slider__range" id="range-slider__range1" type="range" value="100" min="25" max="200">
+     <input class="range-slider__range" id="range-slider__range1" type="range" value="100" min="70" max="200">
      <span class="range-slider__value" id="range-slider__value1">err</span>
      </div>
+	<div style="font-size:30px;">Chapter <span id="DisplayResearchChpt"></span></div>
 </div> 		
 <div class="clear"></div>
     <div id="overlay2leftarrow"></div><div id="overlay2rightarrow"></div>
@@ -1567,12 +1595,21 @@ Do you really want to delete this save?
 	</div>
 	</div>
 	</div>
+	<div id="researchprogresscontainer"><div style="float:left; display:block; margin-right:10px;">PROGRESS</div>
+	<div class="researchprogress"><div id="researchprogressbar1"></div></div>
+	<div class="researchprogress"><div id="researchprogressbar2"></div></div>
+	<div class="researchprogress"><div id="researchprogressbar3"></div></div>
+	<div class="researchprogress"><div id="researchprogressbar4"></div></div>
+	<div class="researchprogress"><div id="researchprogressbar5"></div></div>
 
+	</div> 
 <div class="clear"></div>
 </div>
 </div>
-
 <div id="tabC" class="tabClass">
+ 
+</div>
+<div id="tabD" class="tabClass">
   <br>
   <div style="float:left">
   <h2>Energy Goals</h2>
@@ -1594,7 +1631,7 @@ Do you really want to delete this save?
   <div id="energyGoal9" class="energyGoals"></div>
 </div>
 
-<div id="tabD" class="tabClass">
+<div id="tabE" class="tabClass">
   <br>  
   <h2>Achievements</h2>
   <p>See your your achievements here, achievements can give bonuses.</p>
@@ -1629,10 +1666,6 @@ Do you really want to delete this save?
  </div>
  </div>
 </div>
-
-<div id="tabE" class="tabClass">
- 
-</div>
 <div id="tabF" class="tabClass">
   <br>
   <h2>Settings N' Stuff</h2>
@@ -1663,6 +1696,9 @@ Do you really want to delete this save?
 <textarea id="DebugCode"></textarea><div id="debugclick" >Debug</div>
 <br><hr><br>
 <b style="font-size:30px;">Update Logs</b><span id="currentVersionSettings" style="font-size:26px;"></span>
+<h3>Version:2.1.2</h3>
+<p>New research chapters!</p>
+<br><hr><br>
 <h3>Version:2.1.1</h3>
 <p>Save can be in localstorage, scientific notation, UI tweaks</p>
 <br><hr><br>

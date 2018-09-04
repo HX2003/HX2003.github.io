@@ -1,44 +1,56 @@
 $(document).ready(function(){ 
-  currentVersion="2.1.1";
+  currentVersion="2.1.2";
   //Init VARAIABLES starting game 
   //BuildingEstore [ID][NUM,COST,VALUE, CALC COST]
   	researchData = [//110-75, 150
-	{"researchID":"unqID0000","researchName":"Unlock research","Ecost":10000,"Rcost":0,"xPos":0,"yPos":0,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/research.png","child":["unqID0001","unqID0010","unqID0020","unqID-0001","unqIDdeep0000","unqIDresearchpts0000"],"parent":[""],"sibling":[""],"description":"Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","quote":"The beginning"}, 
+	{"chpt":1,"type":0,"researchID":"unqID0000","researchName":"Unlock research","Ecost":10000,"Rcost":0,"xPos":0,"yPos":0,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/research.png","child":["unqID0001","unqID0010","unqID-0001"],"parent":[""],"sibling":[""],"description":"Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","quote":"The beginning"}, 
 	//right branch
-	{"researchID":"unqID0001","researchName":"Energy production and storage boost I","Ecost":12500,"Rcost":0.5,"customData":{"addmultiplier":0.2},"xPos":110,"yPos":200,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/hammer.png","child":["unqID0002"],"parent":["unqID0000"],"sibling":[""],"description":"Increase multiplyier for both by 0.2","quote":"Better maintenance"},
-	{"researchID":"unqID0002","researchName":"Energy production and storage boost II","Ecost":100000,"Rcost":1.5,"customData":{"addmultiplier":0.8},"xPos":110+75,"yPos":200,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/wires.png","child":["unqID0003"],"parent":["unqID0001"],"sibling":[""],"description":"Increase multiplyier for both by 0.8","quote":"More conductive wires"},
-	{"researchID":"unqID0003","researchName":"Energy production and storage boost III","Ecost":250000,"Rcost":2,"customData":{"addmultiplier":3},"xPos":110+150,"yPos":200,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/superconductivewires.png","child":["unqID0100","unqID0004"],"parent":["unqID0002"],"sibling":[""],"description":"Increase multiplyier for both by 3","quote":"Superconductive wires"},
-	{"researchID":"unqID0004","researchName":"Energy production and storage boost IV","Ecost":1000000,"Rcost":4,"customData":{"addmultiplier":9},"xPos":110+225,"yPos":250,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/superconductivewires.png","child":["unqID0005"],"parent":["unqID0003"],"sibling":[""],"description":"Increase multiplyier for both by 9","quote":"Superconductive wires"},
-	{"researchID":"unqID0005","researchName":"Energy production and storage boost V","Ecost":2500000,"Rcost":6,"customData":{"addmultiplier":15},"xPos":110+300,"yPos":250,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/superconductivewires.png","child":[""],"parent":["unqID0004"],"sibling":[""],"description":"Increase multiplyier for both by 15","quote":"Superconductive wires"},
+	{"chpt":1,"type":0,"researchID":"unqID0001","researchName":"Energy production and storage boost I","Ecost":12500,"Rcost":0.5,"customData":{"addmultiplier":0.2},"xPos":1,"yPos":-0.5,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/hammer.png","child":["unqID0002"],"parent":["unqID0000"],"sibling":[""],"description":"Increase multiplyier for both by 0.2","quote":"Better maintenance"},
+	{"chpt":1,"type":0,"researchID":"unqID0002","researchName":"Energy production and storage boost II","Ecost":100000,"Rcost":1.5,"customData":{"addmultiplier":0.8},"xPos":2,"yPos":-0.5,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/wires.png","child":["unqID0003"],"parent":["unqID0001"],"sibling":[""],"description":"Increase multiplyier for both by 0.8","quote":"More conductive wires"},
+	{"chpt":1,"type":0,"researchID":"unqID0003","researchName":"Energy production and storage boost III","Ecost":250000,"Rcost":2,"customData":{"addmultiplier":3},"xPos":3,"yPos":-0.5,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/superconductivewires.png","child":["unqID0100","unqID0004"],"parent":["unqID0002"],"sibling":[""],"description":"Increase multiplyier for both by 3","quote":"Superconductive wires"},
+	{"chpt":1,"type":0,"researchID":"unqID0004","researchName":"Energy production and storage boost IV","Ecost":1000000,"Rcost":4,"customData":{"addmultiplier":9},"xPos":4,"yPos":-1,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/superconductivewires.png","child":["unqID0005"],"parent":["unqID0003"],"sibling":[""],"description":"Increase multiplyier for both by 9","quote":"Superconductive wires"},
+	{"chpt":1,"type":0,"researchID":"unqID0005","researchName":"Energy production and storage boost V","Ecost":2500000,"Rcost":6,"customData":{"addmultiplier":15},"xPos":5,"yPos":-1,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/superconductivewires.png","child":[""],"parent":["unqID0004"],"sibling":[""],"description":"Increase multiplyier for both by 15","quote":"Superconductive wires"},
 	
-	{"researchID":"unqID0010","researchName":"Unlock bot research","Ecost":100000,"Rcost":2,"xPos":110,"yPos":100,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/bot.png","child":["unqID0011","unqIDresearchpts0001"],"parent":["unqID0000"],"sibling":[""],"description":"Unlock the ability to research new technologies. Unlock more efficient bots.","quote":"Need better bots?"},
-	{"researchID":"unqID0011","researchName":"Bot efficiency I","Ecost":1500000,"Rcost":3,"customData":{"addmultiplier":0.2},"xPos":110+75,"yPos":100,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/gears.png","child":["unqID0012"],"parent":["unqID0010"],"sibling":[""],"description":"Increase Bot efficiency multipler by 0.20 ","quote":"Better gears"},
-	{"researchID":"unqID0012","researchName":"Bot efficiency II","Ecost":4500000,"Rcost":5,"customData":{"addmultiplier":0.4},"xPos":110+150,"yPos":100,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/motor.png","child":["unqID0100","unqID0013"],"parent":["unqID0011"],"sibling":[""],"description":"Increase Bot efficiency multipler by 0.40 ","quote":"Better motors"},
-	{"researchID":"unqID0013","researchName":"Bot efficiency III","Ecost":10000000,"Rcost":5,"customData":{"addmultiplier":1},"xPos":110+225,"yPos":50,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/motor.png","child":["unqID0014"],"parent":["unqID0012"],"sibling":[""],"description":"Increase Bot efficiency multipler by 1.00 ","quote":"Better motors"},
-	{"researchID":"unqID0014","researchName":"Bot efficiency IV","Ecost":20000000,"Rcost":8,"customData":{"addmultiplier":1},"xPos":110+300,"yPos":50,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/motor.png","child":["unqID0200"],"parent":["unqID0013"],"sibling":[""],"description":"Increase Bot efficiency multipler by 1.00 ","quote":"Better motors"},
-	{"researchID":"unqID0200","researchName":"Unlock offline production research","Ecost":50000000,"Rcost":10,"xPos":110+300,"yPos":50-75,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/motor.png","child":["unqID0201","unqID0210"],"parent":["unqID0014"],"sibling":[""],"description":"Unlock the ability to research new technologies. Unlock offline production research. You get 10% production for 1 hour as the base.","quote":"Unmanned bots"},
-	{"researchID":"unqID0201","researchName":"Offline production efficiency","Ecost":50000000,"Rcost":10,"customData":{"addmultiplier":5},"xPos":110+350,"yPos":50-150,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/motor.png","child":[""],"parent":["unqID0200"],"sibling":[""],"description":"Increase offline production efficiency by 5%.","quote":"Cranking it up"},
-	{"researchID":"unqID0210","researchName":"Offline production maximum duration","Ecost":50000000,"customData":{"addmultiplier":0.5},"Rcost":10,"xPos":110+250,"yPos":50-150,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/motor.png","child":[""],"parent":["unqID0200"],"sibling":[""],"description":"Increase offline production maximum duration by 1/2 h","quote":"Longer trust"},
-		
-	{"researchID":"unqID0020","researchName":"Cheaper Energy Buildings","Ecost":20000000,"Rcost":8,"customData":{"addmultiplier":0.01},"xPos":110-75,"yPos":150+75,"MaxLvl":3,"curLvl":0,"imgURL":"./website/tools/motor.png","child":["unqID0021"],"parent":["unqID0000"],"sibling":[""],"description":"1% Reduction of energy buildings costs","quote":"Cheaper components"},
-	{"researchID":"unqID0021","researchName":"Cheaper Energy Buildings II","Ecost":500000000,"Rcost":15,"customData":{"addmultiplier":0.02},"xPos":110-75,"yPos":150+150,"MaxLvl":3,"curLvl":0,"imgURL":"./website/tools/motor.png","child":["unqID0022","unqID0021-0"],"parent":["unqID0020"],"sibling":[""],"description":"2% Reduction of energy buildings costs","quote":"Cheaper components"},
-	
-	{"researchID":"unqID0022","researchName":"Cheaper Energy Buildings III","Ecost":25000000000,"Rcost":30,"customData":{"addmultiplier":0.04},"xPos":110-25,"yPos":150+225,"MaxLvl":3,"curLvl":0,"imgURL":"./website/tools/motor.png","child":[""],"parent":["unqID0021"],"sibling":[""],"description":"4% Reduction of energy buildings costs","quote":"Cheaper components"},
-		
-	{"researchID":"unqID0021-0","researchName":"Cheaper Research Buildings","Ecost":5000000000,"Rcost":50,"customData":{"addmultiplier":0.01},"xPos":110-125,"yPos":150+225,"MaxLvl":3,"curLvl":0,"imgURL":"./website/tools/motor.png","child":[""],"parent":["unqID0021"],"sibling":[""],"description":"4% Reduction of research buildings costs","quote":"Cheaper components"},
-	
-	{"researchID":"unqID0100","researchName":"Energy Parallel Boost","Ecost":4500000,"Rcost":5,"customData":{"addmultiplier":0.01},"xPos":110+225,"yPos":150,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/chipconnect.png","child":["unqID0101"],"parent":["unqID0012","unqID0003"],"sibling":[""],"description":"For each additional worker bot on a task there's a bonus. Increase that percentage by 1%","quote":"Energy data network"},
-	{"researchID":"unqID0101","researchName":"Energy Parallel Boost T2","Ecost":45000000,"Rcost":8,"customData":{"addmultiplier":0.04},"xPos":110+300,"yPos":150,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/pcbconnect.png","child":["unqID0102"],"parent":["unqID0100"],"sibling":[""],"description":"For each additional worker bot on a task there's a bonus. Increase that percentage by 4%","quote":"Clustered energy data network"},
-	{"researchID":"unqID0102","researchName":"Energy Parallel Boost T3","Ecost":100000000,"Rcost":12,"customData":{"addmultiplier":0.16},"xPos":110+375,"yPos":150,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/pcbconnect.png","child":[""],"parent":["unqID0101"],"sibling":[""],"description":"For each additional worker bot on a task there's a bonus. Increase that percentage by 16%","quote":"Integrated energy data network"},
+	{"chpt":1,"type":0,"researchID":"unqID0010","researchName":"Unlock bot research","Ecost":100000,"Rcost":2,"xPos":1,"yPos":0.5,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/bot.png","child":["unqID0011"],"parent":["unqID0000"],"sibling":[""],"description":"Unlock the ability to research new technologies. Unlock more efficient bots.","quote":"Need better bots?"},
+	{"chpt":1,"type":0,"researchID":"unqID0011","researchName":"Bot efficiency I","Ecost":1500000,"Rcost":3,"customData":{"addmultiplier":0.2},"xPos":2,"yPos":0.5,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/gears.png","child":["unqID0012"],"parent":["unqID0010"],"sibling":[""],"description":"Increase Bot efficiency multipler by 0.20 ","quote":"Better gears"},
+	{"chpt":1,"type":0,"researchID":"unqID0012","researchName":"Bot efficiency II","Ecost":4500000,"Rcost":5,"customData":{"addmultiplier":0.4},"xPos":3,"yPos":0.5,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/motor.png","child":["unqID0100","unqID0013"],"parent":["unqID0011"],"sibling":[""],"description":"Increase Bot efficiency multipler by 0.40 ","quote":"Better motors"},
+	{"chpt":1,"type":0,"researchID":"unqID0013","researchName":"Bot efficiency III","Ecost":10000000,"Rcost":5,"customData":{"addmultiplier":1},"xPos":4,"yPos":1,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/motor.png","child":["unqID0014"],"parent":["unqID0012"],"sibling":[""],"description":"Increase Bot efficiency multipler by 1.00 ","quote":"Better motors"},
+	{"chpt":1,"type":0,"researchID":"unqID0014","researchName":"Bot efficiency IV","Ecost":20000000,"Rcost":8,"customData":{"addmultiplier":1},"xPos":5,"yPos":1,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/motor.png","child":[""],"parent":["unqID0013"],"sibling":[""],"description":"Increase Bot efficiency multipler by 1.00 ","quote":"Better motors"},
+	//* ENERGY PARALLEL BOOST NOT IMPLEMENTED
+	{"chpt":1,"type":0,"researchID":"unqID0100","researchName":"Energy Parallel Boost","Ecost":4500000,"Rcost":5,"customData":{"addmultiplier":0.01},"xPos":4,"yPos":0,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/chipconnect.png","child":["unqID0101"],"parent":["unqID0012","unqID0003"],"sibling":[""],"description":"For each additional worker bot on a task there's a bonus. Increase that percentage by 1%","quote":"Energy data network"},
+	{"chpt":1,"type":0,"researchID":"unqID0101","researchName":"Energy Parallel Boost T2","Ecost":45000000,"Rcost":8,"customData":{"addmultiplier":0.04},"xPos":5,"yPos":0,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/pcbconnect.png","child":["unqID0102"],"parent":["unqID0100"],"sibling":[""],"description":"For each additional worker bot on a task there's a bonus. Increase that percentage by 4%","quote":"Clustered energy data network"},
+	{"chpt":1,"type":0,"researchID":"unqID0102","researchName":"Energy Parallel Boost T3","Ecost":100000000,"Rcost":12,"customData":{"addmultiplier":0.16},"xPos":6,"yPos":0,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/pcbconnect.png","child":[""],"parent":["unqID0101"],"sibling":[""],"description":"For each additional worker bot on a task there's a bonus. Increase that percentage by 16%","quote":"Integrated energy data network"},
 	//left branch
-	{"researchID":"unqID-0001","researchName":"More Tooltip Information","Ecost":12500,"Rcost":0.1,"xPos":110-150,"yPos":150,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/book_energybuildinginfo.png","child":["unqID-0002"],"parent":["unqID0000"],"sibling":[""],"description":"Additional information about energy buildings on tooltips.","quote":"Statistical goodness"},
-	{"researchID":"unqID-0002","researchName":"More Tooltip Information II","Ecost":30000,"Rcost":0.25,"xPos":110-225,"yPos":150,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/book_researchbuildinginfo.png","child":[""],"parent":["unqID-0001"],"sibling":[""],"description":"Additional information about research buildings on tooltips.","quote":"Statistical goodness"},
-	//more research points branch
-	{"researchID":"unqIDresearchpts0000","researchName":"Lower energy goals","Ecost":150000,"Rcost":1,"xPos":110-62.5,"yPos":75,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/currency_research.png","child":["unqIDresearchpts0001"],"parent":["unqID0000"],"sibling":[""],"description":"Reduce energy goal requirement by 5%","quote":"Making it easier"},		
-	{"researchID":"unqIDresearchpts0001","researchName":"Lower energy goals","Ecost":500000,"Rcost":2,"xPos":110,"yPos":75-75,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/currency_research.png","child":[""],"parent":["unqIDresearchpts0000","unqID0010"],"sibling":[""],"description":"Reduce energy goal requirement by 5%","quote":"Getting help from bots"},		
+	{"chpt":1,"type":0,"researchID":"unqID-0001","researchName":"More Tooltip Information","Ecost":12500,"Rcost":0.1,"xPos":-1,"yPos":0,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/book_energybuildinginfo.png","child":["unqID-0002"],"parent":[""],"sibling":[""],"description":"Additional information about energy buildings on tooltips.","quote":"Statistical goodness"},
+	{"chpt":1,"type":0,"researchID":"unqID-0002","researchName":"More Tooltip Information II","Ecost":30000,"Rcost":0.25,"xPos":-2,"yPos":0,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/book_researchbuildinginfo.png","child":[""],"parent":["unqID-0001"],"sibling":[""],"description":"Additional information about research buildings on tooltips.","quote":"Statistical goodness"},	
+	
 	//deep research branch
-	{"researchID":"unqIDdeep0000","researchName":"Unbounded research","Ecost":10E14,"Rcost":1000,"xPos":110-125,"yPos":75,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/researchD.png","child":["unqIDdeep0001"],"parent":["unqID0000"],"sibling":[""],"description":"Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","quote":"A mysterious world lies ahead."},	
-	{"researchID":"unqIDdeep0001","researchName":"Unlimited research","Ecost":10E15,"Rcost":1500,"xPos":110-125-50,"yPos":0,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/researchD.png","child":[""],"parent":["unqIDdeep0000"],"sibling":[""],"description":"Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","quote":"A mysterious world lies ahead."},	
+	//{"chpt":1,"type":0,"researchID":"unqIDdeep0000","researchName":"Unbounded research","Ecost":10E14,"Rcost":1000,"xPos":-1,"yPos":-1,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/researchD.png","child":["unqIDdeep0001"],"parent":["unqID0000"],"sibling":[""],"description":"Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","quote":"A mysterious world lies ahead."},	
+	//{"chpt":1,"type":0,"researchID":"unqIDdeep0001","researchName":"Unlimited research","Ecost":10E15,"Rcost":1500,"xPos":-2,"yPos":-2,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/researchD.png","child":[""],"parent":["unqIDdeep0000"],"sibling":[""],"description":"Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","quote":"A mysterious world lies ahead."},	
+	
+	//CHAPTER 2
+	{"chpt":2,"type":1,"researchID":"unqID2_0000","researchName":"Unlock research","customData":{"completion":50,"chapter":1},"xPos":0,"yPos":0,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/researchD.png","child":["unqID2_0020","unqID2_0200","unqIDresearchpts0000"],"parent":[""],"sibling":[""],"description":"Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","quote":"Chapter 2! Lets go."}, 
+	
+	//more research points branch
+	{"chpt":2,"type":0,"researchID":"unqIDresearchpts0000","researchName":"Lower energy goals","Ecost":150000,"Rcost":1,"xPos":0,"yPos":1,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/currency_research.png","child":["unqIDresearchpts0001"],"parent":["unqID2_0000"],"sibling":[""],"description":"Reduce energy goal requirement by 5%","quote":"Making it easier"},		
+	{"chpt":2,"type":0,"researchID":"unqIDresearchpts0001","researchName":"Lower energy goals","Ecost":500000,"Rcost":2,"xPos":0,"yPos":2,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/currency_research.png","child":[""],"parent":["unqIDresearchpts0000"],"sibling":[""],"description":"Reduce energy goal requirement by 5%","quote":"Getting help from bots"},	
+	
+	{"chpt":2,"type":0,"researchID":"unqID2_0020","researchName":"Cheaper Energy Buildings","Ecost":20000000,"Rcost":8,"customData":{"addmultiplier":0.01},"xPos":1,"yPos":2,"MaxLvl":3,"curLvl":0,"imgURL":"./website/tools/motor.png","child":["unqID2_0021"],"parent":["unqID2_0000"],"sibling":[""],"description":"1% Reduction of energy buildings costs","quote":"Cheaper components"},
+	{"chpt":2,"type":0,"researchID":"unqID2_0021","researchName":"Cheaper Energy Buildings II","Ecost":500000000,"Rcost":15,"customData":{"addmultiplier":0.02},"xPos":1,"yPos":3,"MaxLvl":3,"curLvl":0,"imgURL":"./website/tools/motor.png","child":["unqID2_0022","unqID2_0021-0"],"parent":["unqID2_0020"],"sibling":[""],"description":"2% Reduction of energy buildings costs","quote":"Cheaper components"},
+	
+	{"chpt":2,"type":0,"researchID":"unqID2_0022","researchName":"Cheaper Energy Buildings III","Ecost":25000000000,"Rcost":30,"customData":{"addmultiplier":0.04},"xPos":2,"yPos":4,"MaxLvl":3,"curLvl":0,"imgURL":"./website/tools/motor.png","child":[""],"parent":["unqID2_0021"],"sibling":[""],"description":"4% Reduction of energy buildings costs","quote":"Cheaper components"},	
+	{"chpt":2,"type":0,"researchID":"unqID2_0021-0","researchName":"Cheaper Research Buildings","Ecost":5000000000,"Rcost":50,"customData":{"addmultiplier":0.01},"xPos":2,"yPos":5,"MaxLvl":3,"curLvl":0,"imgURL":"./website/tools/motor.png","child":[""],"parent":["unqID2_0021"],"sibling":[""],"description":"4% Reduction of research buildings costs","quote":"Cheaper components"},
+	
+	//offline production
+	{"chpt":2,"type":0,"researchID":"unqID2_0200","researchName":"Unlock offline production research","Ecost":50000000,"Rcost":10,"xPos":6,"yPos":1,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/motor.png","child":["unqID0201","unqID0210"],"parent":["unqID2_0000"],"sibling":[""],"description":"Unlock the ability to research new technologies. Unlock offline production research. You get 10% production for 1 hour as the base.","quote":"Unmanned bots"},
+	{"chpt":2,"type":0,"researchID":"unqID2_0201","researchName":"Offline production efficiency","Ecost":50000000,"Rcost":10,"customData":{"addmultiplier":5},"xPos":6,"yPos":1,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/motor.png","child":[""],"parent":["unqID2_0200"],"sibling":[""],"description":"Increase offline production efficiency by 5%.","quote":"Cranking it up"},
+	{"chpt":2,"type":0,"researchID":"unqID2_0210","researchName":"Offline production maximum duration","Ecost":50000000,"customData":{"addmultiplier":0.5},"Rcost":10,"xPos":7,"yPos":1,"MaxLvl":5,"curLvl":0,"imgURL":"./website/tools/motor.png","child":[""],"parent":["unqID2_0200"],"sibling":[""],"description":"Increase offline production maximum duration by 1/2 h","quote":"Longer trust"},
+	//CHAPTER 3
+	{"chpt":3,"type":1,"researchID":"unqID3_0000","researchName":"Unlock research","customData":{"completion":100,"chapter":2},"xPos":0,"yPos":0,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/researchD.png","child":[""],"parent":[""],"sibling":[""],"description":"Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","quote":""}, 
+	//CHAPTER 4
+	{"chpt":4,"type":1,"researchID":"unqID4_0000","researchName":"Unlock research","customData":{"completion":100,"chapter":2},"xPos":0,"yPos":0,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/researchD.png","child":[""],"parent":[""],"sibling":[""],"description":"Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","quote":""}, 
+	//CHAPTER 5
+	{"chpt":5,"type":1,"researchID":"unqID5_0000","researchName":"Unlock research","customData":{"completion":100,"chapter":2},"xPos":0,"yPos":0,"MaxLvl":1,"curLvl":0,"imgURL":"./website/tools/researchD.png","child":[""],"parent":[""],"sibling":[""],"description":"Unlock the ability to research new technologies. Use the research tree to view new technologies available for research.","quote":""}, 
 	];
 	longtime=30000;
     InitVar1 = {
@@ -111,7 +123,8 @@ $(document).ready(function(){
 	EnergyGoalStart:1000,
 	ResearchPoints:0,
 	RealResearchPoints:0,
-	RealResearchPointscap:0
+	RealResearchPointscap:0,
+	DisplayedResearchChpt:1
 	} 
 	InitVar4 = {
 	  
@@ -317,6 +330,7 @@ $(document).ready(function(){
 	ResearchPoints=loadedVar3.ResearchPoints;
 	RealResearchPoints=loadedVar3.RealResearchPoints;
 	RealResearchPointscap=loadedVar3.RealResearchPointscap;
+	DisplayedResearchChpt=loadedVar3.DisplayedResearchChpt;
 /////////////////////////////////////////////////////////////////////	
  
 	convertResearchLvlSave(ResearchLVL);
@@ -394,7 +408,8 @@ $(document).ready(function(){
 	EnergyGoalStart:EnergyGoalStart,
 	ResearchPoints:ResearchPoints,
 	RealResearchPoints:RealResearchPoints,
-	RealResearchPointscap:RealResearchPointscap
+	RealResearchPointscap:RealResearchPointscap,
+	DisplayedResearchChpt:DisplayedResearchChpt
 	
  }
  saveVar4 = {
@@ -1070,15 +1085,6 @@ if(workerbotsEcost0000<= thetotal && workerbotsRcost0000<= RealResearchPoints) {
 	  var factor = 2.75;
 	  return a*Math.pow(factor,b);  
   }
-  energyGoal1=$("#energyGoal1");
-  energyGoal2=$("#energyGoal2");
-  energyGoal3=$("#energyGoal3");
-  energyGoal4=$("#energyGoal4");
-  energyGoal5=$("#energyGoal5");
-  energyGoal6=$("#energyGoal6");
-  energyGoal7=$("#energyGoal7");
-  energyGoal8=$("#energyGoal8");
-  energyGoal9=$("#energyGoal9");
   function doEnergyGoals(){
   rewardfactor1 = 0.5;
   rewardcalculatedvalue1 = Math.ceil(Math.pow(rewardfactor1*((EnergyGoalLevel+1)/2),2));
@@ -1108,15 +1114,15 @@ if(workerbotsEcost0000<= thetotal && workerbotsRcost0000<= RealResearchPoints) {
   rewardcalculatedvalue8 = Math.ceil(Math.pow(rewardfactor1*((EnergyGoalLevel+8)/2),2));
   rewardcalculatedvalue9 = Math.ceil(Math.pow(rewardfactor1*((EnergyGoalLevel+9)/2),2));
   
-  energyGoal1.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue1)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue1+"</span>");
-  energyGoal2.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue2)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue2+"</span>");
-  energyGoal3.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue3)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue3+"</span>");
-  energyGoal4.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue4)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue4+"</span>");
-  energyGoal5.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue5)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue5+"</span>");
-  energyGoal6.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue6)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue6+"</span>");
-  energyGoal7.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue7)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue7+"</span>");
-  energyGoal8.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue8)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue8+"</span>");
-  energyGoal9.html("Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue9)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue9+"</span>");
+  document.getElementById("energyGoal1").innerHTML = "Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue1)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue1+"</span>";
+  document.getElementById("energyGoal2").innerHTML = "Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue2)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue2+"</span>";
+  document.getElementById("energyGoal3").innerHTML = "Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue3)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue3+"</span>";
+  document.getElementById("energyGoal4").innerHTML = "Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue4)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue4+"</span>";
+  document.getElementById("energyGoal5").innerHTML = "Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue5)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue5+"</span>";
+  document.getElementById("energyGoal6").innerHTML = "Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue6)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue6+"</span>";
+  document.getElementById("energyGoal7").innerHTML = "Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue7)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue7+"</span>";
+  document.getElementById("energyGoal8").innerHTML = "Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue8)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue8+"</span>";
+  document.getElementById("energyGoal9").innerHTML = "Requirement: <span class=\"cur_energy\">"+formatNumber(calculatedvalue9)+"</span> || Reward: <span class=\"cur_research\">"+rewardcalculatedvalue9+"</span>";
   
  $(".EnergyGoalLevel").html(EnergyGoalLevel);
   } 
@@ -1297,7 +1303,7 @@ function openTab(tabID,ID) {
 	 
 }
 //addTabClass CODE
-tabsName=["Home","Research","Energy Goals","Achievements","Unknown","Settings N' Stuff"];
+tabsName=["Home","Research","Bot Factory","Energy Goals","Achievements","Settings N' Stuff"];
 function fillTabsName(){
 	if(tabsunlocked[0]==1){$("#menuA").html(tabsName[0]);}else{$("#menuA").html("&#128274");}
 	if(tabsunlocked[1]==1){$("#menuB").html(tabsName[1]);}else{$("#menuB").html("&#128274");}
@@ -1351,8 +1357,8 @@ $( "#startgameButton" ).click(function() {
 	}
 });
 function checkGamestate(){
-	if(totalenergyed>=50&&gameState[0]==1){tabsunlocked[3]=1;gameState[0]=2;fillTabsName(); notify("Tab \""+tabsName[3]+"\" unlocked",1);}
-	if(totalenergyed>=750&&gameState[0]==2){tabsunlocked[2]=1;gameState[0]=3;fillTabsName(); notify("Tab \""+tabsName[2]+"\" unlocked",1);}
+	if(totalenergyed>=50&&gameState[0]==1){tabsunlocked[4]=1;gameState[0]=2;fillTabsName(); notify("Tab \""+tabsName[3]+"\" unlocked",1);}
+	if(totalenergyed>=750&&gameState[0]==2){tabsunlocked[3]=1;gameState[0]=3;fillTabsName(); notify("Tab \""+tabsName[2]+"\" unlocked",1);}
 	if(RealResearchPoints>=1&&gameState[0]==3){tabsunlocked[1]=1;gameState[0]=4;fillTabsName(); notify("Tab \""+tabsName[1]+"\" unlocked",1);}
 	
 	if(totalenergyed>=75&&gameState[1]==0){gameState[1]=1; notify("New buildings unlocked!",1); energybuildingsunlocked[1]=1; fillenergybuildings();}
@@ -1469,13 +1475,20 @@ stats();
 	createResearchIcons();
 	createResearchLinks();
 	linkIcon("unqID0000",2); 
+	linkIcon("unqID0020",2); 
 	autoResearchHighlights();
 	function createResearchIcons(){
 		for (i in researchData)
 		{	
-			drawIcon(researchData[i].xPos,researchData[i].yPos,50,50,40,40,researchData[i].imgURL,researchData[i].researchID,researchData[i].researchID+"cost",researchData[i].researchName,researchData[i].description,researchData[i].quote);
+			if(researchData[i].type==0){
+			drawIcon(researchData[i].chpt,researchData[i].type,researchData[i].xPos,researchData[i].yPos,50,50,40,40,researchData[i].imgURL,researchData[i].researchID,researchData[i].researchID+"cost",researchData[i].researchName,researchData[i].description,researchData[i].quote);
 			$("#"+researchData[i].researchID+"costE").text(formatNumber(researchData[i].Ecost));
 			$("#"+researchData[i].researchID+"costR").text(formatNumber(researchData[i].Rcost));
+			}else{
+			drawIconUnlock(researchData[i].chpt,researchData[i].type,researchData[i].xPos,researchData[i].yPos,50,50,40,40,researchData[i].imgURL,researchData[i].researchID,researchData[i].researchName,researchData[i].description,researchData[i].quote);
+			$("#"+researchData[i].researchID+"completion").text(researchData[i].customData.completion);
+			$("#"+researchData[i].researchID+"chapter").text(researchData[i].customData.chapter);
+			}
 		}
 	}
 	function createResearchLinks(){
@@ -1533,12 +1546,32 @@ stats();
 			}
 		}
 	}	
+	function calculatechaptercompletion(chapterid){
+		lvlcountinchpt=0;
+		lvlmaxcountinchpt=0;
+		for (i in researchData)
+		{	
+			if(researchData[i].chpt==chapterid){
+				lvlcountinchpt = lvlcountinchpt + researchData[i].curLvl;
+			}
+		}
+		for (i in researchData)
+		{	
+			if(researchData[i].chpt==chapterid){
+				lvlmaxcountinchpt = lvlmaxcountinchpt + researchData[i].MaxLvl;
+			}
+		} 
+		if(lvlmaxcountinchpt==0){lvlmaxcountinchpt=1;}
+		chaptercompletionpercentage = lvlcountinchpt/lvlmaxcountinchpt*100;
+		chaptercompletionpercentage = Math.round(chaptercompletionpercentage * 100) / 100;
+		return chaptercompletionpercentage;
+	}
 	function autoResearchHighlights(){
 		for (i in researchData)
 		{
 			if(researchData[i].curLvl<researchData[i].MaxLvl){
 				maxedparent=1;
-			for(researchparent in researchData[i].parent){
+			for(researchparent in researchData[i].parent){ //checking if parents are maxed
 				if(researchData[i].parent[researchparent]!=""){
 				if(lookIfIDMaxedLvl(researchData[i].parent[researchparent])==0){
 					maxedparent=0;
@@ -1571,42 +1604,59 @@ stats();
 			if(researchData[i].curLvl>=researchData[i].MaxLvl){
 				maxed="MAX";  
 			}  
+			if(researchData[i].type==1){ //if type is the unlock one, display it
+				linkIcon(researchData[i].researchID,2);
+			}
 			$("#"+researchData[i].researchID+"lvl").text(researchData[i].curLvl+ maxed);
 		}	
 	}
-	function researchClick(id){
-		for (i in researchData)
+	function researchClick(id,type){
+		for (iresearchClick in researchData)
 		{	
-			if(researchData[i].researchID==id){
+			if(researchData[iresearchClick].researchID==id){
 					maxedparent=1;
-			for(researchparent in researchData[i].parent){
-				if(researchData[i].parent[researchparent]!=""){
-				if(lookIfIDMaxedLvl(researchData[i].parent[researchparent])==0){
+			for(researchparent in researchData[iresearchClick].parent){
+				if(researchData[iresearchClick].parent[researchparent]!=""){
+				if(lookIfIDMaxedLvl(researchData[iresearchClick].parent[researchparent])==0){
 					maxedparent=0;
 				}
 				}	
 			}
 			if(maxedparent==1){//parents are maxed then unlock child
-				if(researchData[i].curLvl>=researchData[i].MaxLvl){
+				if(researchData[iresearchClick].curLvl>=researchData[iresearchClick].MaxLvl){
 					//bought already
-				}else if(researchData[i].curLvl>=0){
-					if(thetotal>=researchData[i].Ecost&&RealResearchPoints>=researchData[i].Rcost){
-					thetotal=thetotal-researchData[i].Ecost;
-					RealResearchPoints=RealResearchPoints-researchData[i].Rcost;
+				}else if(researchData[iresearchClick].curLvl>=0){
+					if(type==0){
+					if(thetotal>=researchData[iresearchClick].Ecost&&RealResearchPoints>=researchData[iresearchClick].Rcost){
+					thetotal=thetotal-researchData[iresearchClick].Ecost;
+					RealResearchPoints=RealResearchPoints-researchData[iresearchClick].Rcost;
 					//successfully purchased upgrade
-					researchData[i].curLvl=researchData[i].curLvl+1;
+					researchData[iresearchClick].curLvl=researchData[iresearchClick].curLvl+1;
 						autoResearchHighlights();
 						createResearchLvlSave();
+						updateresearchchaptercompletion();
 					}else{
 					//do not meet requirement
-					researchFail(researchData[i].researchID);	
+					researchFail(researchData[iresearchClick].researchID);	
+					}
+					}else if(type==1){
+						if(calculatechaptercompletion(researchData[iresearchClick].customData.chapter)>=researchData[iresearchClick].customData.completion){
+						//successfully purchased upgrade
+						researchData[iresearchClick].curLvl=researchData[iresearchClick].curLvl+1;
+						autoResearchHighlights();
+						createResearchLvlSave();	
+						updateresearchchaptercompletion();
+						}else{
+						//do not meet requirement
+						researchFail(researchData[iresearchClick].researchID); 
+						}
+					}
 				}
-			}
 			}
 		}	
 		}
 	}
-	function researchFail(id){
+	function researchFail(id){ 
 		$("#"+id).qaddclass("redborder").delay(1750).qremoveclass("redborder");
 	}
 	function createResearchLvlSave(){
@@ -1719,23 +1769,26 @@ stats();
 		 $("#"+upgradeID+"").text("Buy"); 
 		 }
 	}
- 
-	function drawIcon(x,y,boxw,boxh,imgw,imgh,url,unqID,costID,title,desc,caption){
+	function researchGrid(pos){
+		return pos*70;
+	}
+	function drawIcon(chpt,type,x,y,boxw,boxh,imgw,imgh,url,unqID,costID,title,desc,caption){
 		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\" class=\"cur_energy\"></span></b><b><span id=\""+costID+"R\" class=\"cur_research\"></span></b><p style=\"padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18px;\">\""+caption+"\"</p><div id=\""+unqID+"upgrade\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
-		//drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content);
-		drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content);
-		document.getElementById(unqID+"upgrade").addEventListener('click',function(){researchClick(unqID);},false);
+		drawImageBox(chpt,x,y,boxw,boxh,imgw,imgh,url,unqID,content);
+		document.getElementById(unqID+"upgrade").addEventListener('click',function(){researchClick(unqID, type);},false);
 	}
-	function drawIconRevokable(x,y,boxw,boxh,imgw,imgh,url,unqID,costID,title,desc,caption){
-		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Cost:&nbsp<b><span id=\""+costID+"E\" class=\"cur_energy\"></span></b><b><span id=\""+costID+"R\" class=\"cur_research\"></span></b><p>Canceling Cost:&nbsp<b><span id=\""+costID+"Cancel\"></span></b>&nbsp<span>Energy</span></p><p style=\"padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18	px;\">\""+caption+"\"</p><div id=\""+upgradeID+"\" class=\"upgradeBuy buyButton\"><b>Buy</b></div></p></div>"
-		drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content);
-		document.getElementById(unqID+"upgrade").addEventListener('click',function(){researchClick(unqID);},false);
+	function drawIconUnlock(chpt,type,x,y,boxw,boxh,imgw,imgh,url,unqID,title,desc,caption){
+		var content="<p style=\"font-size:26px;position: relative;\">"+title+"</p><p>Requires:&nbsp <b><span id=\""+unqID+"completion\"></span></b>% completion in chapter <b><span id=\""+unqID+"chapter\"></span></b><b><p style=\"padding-left:5px;padding-right:5px;\">"+desc+"</p><p style=\"color:#dedede; font-size:18px;\">\""+caption+"\"</p><div id=\""+unqID+"upgrade\" class=\"upgradeBuy buyButton\"><b>Unlock</b></div></p></div>"
+		drawImageBox(chpt,x,y,boxw,boxh,imgw,imgh,url,unqID,content);
+		document.getElementById(unqID+"upgrade").addEventListener('click',function(){researchClick(unqID, type);},false);
 	}
  
-	function drawImageBox(x,y,boxw,boxh,imgw,imgh,url,unqID,content){
+	function drawImageBox(chpt,x,y,boxw,boxh,imgw,imgh,url,unqID,content){
 		border = 6;
 		calc1 = ((boxw-imgw-border)/2);
 		calc2 = ((boxh-imgh-border)/2);	
+		x = researchGrid(x)+(chpt-1)*2000;
+		y = researchGrid(y);
 		
 		$( "#overlay2research" ).append( "<div class=\"upgradeIcon IconnotLinked hide\" id=\""+unqID+"\" style=\"position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding+xoffset)+"px;width:"+boxw+"px;height:"+boxh+"px;\"></div>" );	
 		$( "#"+unqID+"" ).append("<b><span class=\"upgradeLevel\" style=\"z-index: 1;\" id=\""+unqID+"lvl\"></span></b>");
@@ -1750,8 +1803,16 @@ stats();
 	function drawRect(x,y,linkw,linkh,unqIDRect){
 	   	$( "#overlay2research" ).append( "<div class=\"rect hide\" id=\""+unqIDRect+"\" style=\"background-color:transparent; border-width:2px; border-color:#FFFFFF; border-style:solid; position:absolute;top:"+(y+padding+yoffset)+"px;left:"+(x+padding)+"px;width:"+linkw+"px;height:"+linkh+"px;\"></div>" );	
 	}		
+	function updateresearchchaptercompletion(){
+		$("#researchprogressbar1").width( calculatechaptercompletion(1) + '%');
+		$("#researchprogressbar2").width( calculatechaptercompletion(2) + '%');
+		$("#researchprogressbar3").width( calculatechaptercompletion(3) + '%');
+		$("#researchprogressbar4").width( calculatechaptercompletion(4) + '%');
+		$("#researchprogressbar5").width( calculatechaptercompletion(5) + '%');
+	}
+	updateresearchchaptercompletion();
 
-   function bound(val,min,max){
+	function bound(val,min,max){
 	   if(val>max){
 		  val=max;
 	   }
@@ -1759,7 +1820,7 @@ stats();
 		  val=min;
 	   }
 	   return val;
-   };
+	};
     sliderrange1 = $('#range-slider__range1');
 	overlay2research=$('#overlay2research');
 	overlay2contents = $('#overlay2contents');
@@ -1782,16 +1843,34 @@ stats();
     clone.remove();
     return height;
 	}
+	//each chapter has a width of 1000
     initialx = realWidth($('#upgradeboxcontainer'))/2;
 	initialy = (realHeight($('#upgradeboxcontainer'))-200-realHeight($('#overlay')))/2;
 	$('#overlay2research').css('transform','translate(' + initialx + 'px, ' + initialy + 'px)');
 	$('#overlay2research').data('lastTransform', {dx: initialx, dy: initialy }); 
 	 
-	 
+	document.getElementById('overlay2leftarrow').addEventListener("click", function() {researchleftarrow();});
+	document.getElementById('overlay2rightarrow').addEventListener("click", function() {researchrightarrow();});
+	
+	function researchleftarrow(){
+		if(DisplayedResearchChpt>1){DisplayedResearchChpt=DisplayedResearchChpt-1;}
+		DisplayResearchChpt();
+	}
+	function researchrightarrow(){
+		if(DisplayedResearchChpt<5){DisplayedResearchChpt=DisplayedResearchChpt+1;}
+		DisplayResearchChpt();
+	}
+	function DisplayResearchChpt(){
+		newinitialx = initialx + (DisplayedResearchChpt-1)*(-2000);
+		document.getElementById("DisplayResearchChpt").innerHTML=DisplayedResearchChpt;
+		$('#overlay2research').qaddclass("transitionease").delay(500).qremoveclass("transitionease");
+		$('#overlay2research').css('transform','translate(' +newinitialx + 'px, ' + initialy + 'px)');
+		$('#overlay2research').data('lastTransform', {dx: newinitialx, dy: initialy }); 
+	}
+	DisplayResearchChpt();
 	overlay2contents.on("mousedown touchstart",function(me){
 		 if (me.target === this) {
     var move = $('#overlay2research');
-    
     var lastOffset = move.data('lastTransform');
     var lastOffsetX = lastOffset ? lastOffset.dx : 0,
         lastOffsetY = lastOffset ? lastOffset.dy : 0;
@@ -1814,15 +1893,15 @@ stats();
 			newDx = e.pageX- startX,
 			newDy = e.pageY- startY;
 		}
-		newDx = bound(newDx,0,1000);
-		newDy = bound(newDy,0,500);
+		newDy = bound(newDy,0,initialy*2);
+		newDx = bound(newDx,(DisplayedResearchChpt-1)*(-2000),initialx*2+(DisplayedResearchChpt-1)*(-2000));
         move.css('transform','translate(' + newDx + 'px, ' + newDy + 'px)');
-        
+ 
         // we need to save last made offset
         move.data('lastTransform', {dx: newDx, dy: newDy });
     });
 		 }
-});
+	});
 $(document).on("mouseup touchend",function(){
     $(this).off("mousemove touchmove");
 });
@@ -1834,9 +1913,6 @@ $(document).on("mouseup touchend",function(){
 		slidervalue1.html(zoom1+"%"); 
 		var scaling = "scale("+zoom1/100+","+zoom1/100+")";
 		var marginLeft=0;
-		//if(zoom1>100){
-		//	marginLeft=(zoom1-100)*overlay2zoom.width()/100/3;
-		//}
 		var marginLeftpx = ""+marginLeft+"px";
 		overlay2zoom.css("transform", scaling);
 		overlay2contents.css("marginLeft", marginLeftpx);
@@ -1845,14 +1921,14 @@ $(document).on("mouseup touchend",function(){
 		zoom1 = sliderrange1.val(); 
 		setZoom();
       });
-	  overlay2research.bind('wheel', function (e) {
+	  overlay2contents.bind('wheel', function (e) {
 		zoom1=zoom1/1;
 		if (e.originalEvent.deltaY > 0) {
 			zoom1=zoom1+10;
-			zoom1=bound(zoom1,25,200);
+			zoom1=bound(zoom1,70,200);
 		} else {
 			zoom1=zoom1-10;
-			zoom1=bound(zoom1,25,200);
+			zoom1=bound(zoom1,70,200);
 		}
 	  	setZoom();
 	  });
