@@ -752,12 +752,12 @@ function calcworkerbots(){
 	workerbotsrProd=workerbotsRESEARCHPRODUCTION*workerbotsmultiplier * (1+workerbotsRESEARCHPRODUCTION*workerbotBonus);
 	workerbotsrStore=workerbotsRESEARCHSTORAGE*workerbotsmultiplier * (1+workerbotsRESEARCHSTORAGE*workerbotBonus);
 	 
-	for(var i = 0; i < E_workerbotsINACTIVE.length; i++) {E_workerbotsINACTIVE[i].innerHTML=workerbotsINACTIVE;}
-	for(var i = 0; i < E_totalworkerbots.length; i++) {E_totalworkerbots[i].innerHTML=totalworkerbots;}
-	E_workerbotsT1.innerHTML=workerbotsENERGYPRODUCTION;
-	E_workerbotsT2.innerHTML=workerbotsENERGYSTORAGE;
-	E_workerbotsT3.innerHTML=workerbotsRESEARCHPRODUCTION;
-	E_workerbotsT4.innerHTML=workerbotsRESEARCHSTORAGE;
+	for(var i = 0; i < E_workerbotsINACTIVE.length; i++) {E_workerbotsINACTIVE[i].textContent=workerbotsINACTIVE;}
+	for(var i = 0; i < E_totalworkerbots.length; i++) {E_totalworkerbots[i].textContent=totalworkerbots;}
+	E_workerbotsT1.textContent=workerbotsENERGYPRODUCTION;
+	E_workerbotsT2.textContent=workerbotsENERGYSTORAGE;
+	E_workerbotsT3.textContent=workerbotsRESEARCHPRODUCTION;
+	E_workerbotsT4.textContent=workerbotsRESEARCHSTORAGE;
 }
 function calcrProd(){
 	rProdgain=((BuildingrProd[0][2]*BuildingrProd[0][0]))*rProdmultiplytotal*workerbotsrProd;
@@ -788,10 +788,10 @@ function calcestorebuildings(){
 	calcB3 = (BuildingEstoreOrginalValue0002*estoremultiply[2])*estoremultiplytotal*workerbotsStore;
 	calcB4 = (BuildingEstoreOrginalValue0003*estoremultiply[3])*estoremultiplytotal*workerbotsStore;
 	
-	E_estoreplus1.innerHTML=formatNumber(calcB1);
-	E_estoreplus2.innerHTML=formatNumber(calcB2);
-	E_estoreplus3.innerHTML=formatNumber(calcB3);
-	E_estoreplus3.innerHTML=formatNumber(calcB4);
+	E_estoreplus1.textContent=formatNumber(calcB1);
+	E_estoreplus2.textContent=formatNumber(calcB2);
+	E_estoreplus3.textContent=formatNumber(calcB3);
+	E_estoreplus4.textContent=formatNumber(calcB4);
  
 //////////////////////////////////////////////////////////////////////////////////////////////
 	estoretotal1 = (BuildingEstoreOrginalValue0000*BuildingEstoreNumber0000*estoremultiply[0])*estoremultiplytotal*workerbotsStore;
@@ -799,10 +799,10 @@ function calcestorebuildings(){
 	estoretotal3 = (BuildingEstoreOrginalValue0002*BuildingEstoreNumber0002*estoremultiply[2])*estoremultiplytotal*workerbotsStore;
 	estoretotal4 = (BuildingEstoreOrginalValue0003*BuildingEstoreNumber0003*estoremultiply[3])*estoremultiplytotal*workerbotsStore;
 	
-	E_estoretotal1.innerHTML=formatNumber(estoretotal1);
-	E_estoretotal2.innerHTML=formatNumber(estoretotal2);
-	E_estoretotal3.innerHTML=formatNumber(estoretotal3);
-	E_estoretotal4.innerHTML=formatNumber(estoretotal4);
+	E_estoretotal1.textContent=formatNumber(estoretotal1);
+	E_estoretotal2.textContent=formatNumber(estoretotal2);
+	E_estoretotal3.textContent=formatNumber(estoretotal3);
+	E_estoretotal4.textContent=formatNumber(estoretotal4);
 	/////
 	estoretotalgainfrombuildings = estoretotal1+estoretotal2+estoretotal3+estoretotal4;
 	estoretotalgainfrombuildings = Math.round(estoretotalgainfrombuildings * 1000) / 1000;
@@ -819,10 +819,10 @@ function calcestorebuildings(){
 	estorepercentage4 = (BuildingEstoreNumber0003 > 0 && estoretotalgainfrombuildings>0)?(estoretotal4/estoretotalgainfrombuildings)*100:0;
 	estorepercentage4 = Math.round(estorepercentage4 * 1000) / 1000;	
 	
-	E_estorepercentage1.innerHTML=estorepercentage1;
-	E_estorepercentage2.innerHTML=estorepercentage2;
-	E_estorepercentage3.innerHTML=estorepercentage3;
-	E_estorepercentage4.innerHTML=estorepercentage4;
+	E_estorepercentage1.textContent=estorepercentage1;
+	E_estorepercentage2.textContent=estorepercentage2;
+	E_estorepercentage3.textContent=estorepercentage3;
+	E_estorepercentage4.textContent=estorepercentage4;
   
 	/////	
 	energycap = estoretotalgainfrombuildings;
@@ -851,20 +851,20 @@ function calceprodbuildings(){
 	calcB3 = (BuildingAutoOrginalValue0002*egmultiply[2])*emultiplytotal*anotherMultipler*workerbotsEFF;
 	calcB4 = (BuildingAutoOrginalValue0003*egmultiply[3])*emultiplytotal*anotherMultipler*workerbotsEFF;
 	
-	E_epsplus1.innerHTML=formatNumber(calcB1);
-	E_epsplus2.innerHTML=formatNumber(calcB2);
-	E_epsplus3.innerHTML=formatNumber(calcB3);
-	E_epsplus4.innerHTML=formatNumber(calcB4);
+	E_epsplus1.textContent=formatNumber(calcB1);
+	E_epsplus2.textContent=formatNumber(calcB2);
+	E_epsplus3.textContent=formatNumber(calcB3);
+	E_epsplus4.textContent=formatNumber(calcB4);
 //////////////////////////////////////////////////////////////////////////////////////////////
 	epstotal1 = (BuildingAutoOrginalValue0000*BuildingAutoNumber0000*egmultiply[0])*emultiplytotal*anotherMultipler*workerbotsEFF;
 	epstotal2 = (BuildingAutoOrginalValue0001*BuildingAutoNumber0001*egmultiply[1])*emultiplytotal*anotherMultipler*workerbotsEFF;
 	epstotal3 = (BuildingAutoOrginalValue0002*BuildingAutoNumber0002*egmultiply[2])*emultiplytotal*anotherMultipler*workerbotsEFF;
 	epstotal4 = (BuildingAutoOrginalValue0003*BuildingAutoNumber0003*egmultiply[3])*emultiplytotal*anotherMultipler*workerbotsEFF;
 	
-	E_epstotal1.innerHTML=formatNumber(epstotal1);
-	E_epstotal2.innerHTML=formatNumber(epstotal2);
-	E_epstotal3.innerHTML=formatNumber(epstotal3);
-	E_epstotal4.innerHTML=formatNumber(epstotal4);
+	E_epstotal1.textContent=formatNumber(epstotal1);
+	E_epstotal2.textContent=formatNumber(epstotal2);
+	E_epstotal3.textContent=formatNumber(epstotal3);
+	E_epstotal4.textContent=formatNumber(epstotal4);
 	/////
 	epsgain = epstotal1 + epstotal2 + epstotal3 + epstotal4;
 	epsgain = Math.round(epsgain * 1000) / 1000; 
@@ -883,12 +883,13 @@ function calceprodbuildings(){
 	autopercentage4 = (BuildingAutoNumber0003> 0 && autototalgainfrombuildings>0)?(epstotal4/autototalgainfrombuildings)*100:0;
 	autopercentage4 = Math.round(autopercentage4 * 1000) / 1000;	
 	
-	E_autopercentage1.innerHTML=autopercentage1;
-	E_autopercentage2.innerHTML=autopercentage2;
-	E_autopercentage3.innerHTML=autopercentage3;
-	E_autopercentage4.innerHTML=autopercentage4;
+	E_autopercentage1.textContent=autopercentage1;
+	E_autopercentage2.textContent=autopercentage2;
+	E_autopercentage3.textContent=autopercentage3;
+	E_autopercentage4.textContent=autopercentage4;
 }
- 
+E_rProdpercentage1 = document.getElementById("rProdpercentage1");
+E_rStorepercentage1 = document.getElementById("rStorepercentage1");
 function researchpercentagetotal(){
 	rProdtotal1 = (BuildingrProd[0][2]*BuildingrProd[0][0]*rProdmultiply[0])*rProdmultiplytotal*workerbotsrProd;
 	
@@ -900,7 +901,7 @@ function researchpercentagetotal(){
 	rProdpercentage1 = (BuildingrProd[0][0] > 0 && rProdtotalgainfrombuildings>0)?(rProdtotal1/rProdtotalgainfrombuildings)*100:0;
 	rProdpercentage1 = Math.round(rProdpercentage1 * 1000) / 1000;
 
-	$("#rProdpercentage1").html(rProdpercentage1); 
+	E_rProdpercentage1.textContent=rProdpercentage1; 
 	///////
 	rStoretotal1 = (BuildingrStore[0][2]*BuildingrStore[0][0]*rStoremultiply[0])*rStoremultiplytotal*workerbotsrStore;
 	
@@ -912,7 +913,7 @@ function researchpercentagetotal(){
 	rStorepercentage1 = (BuildingrStore[0][0] > 0 && rStoretotalgainfrombuildings>0)?(rStoretotal1/rStoretotalgainfrombuildings)*100:0;
 	rStorepercentage1 = Math.round(rStorepercentage1 * 1000) / 1000;
 
-	$("#rStorepercentage1").html(rStorepercentage1); 
+	E_rStorepercentage1.textContent=rStorepercentage1; 
 	
 }
 
@@ -928,16 +929,16 @@ function calcresearchplustotal(){
 
 	rProdtotal1=((BuildingrProd[0][2]*BuildingrProd[0][0]))*rProdmultiplytotal*workerbotsrProd;
     rProdtotal1 = Math.round(rProdtotal1 * 1000) / 1000;
-	E_rProdplus1.innerHTML=formatNumber(rProdplus1);
-	E_rProdtotal1.innerHTML=formatNumber(rProdtotal1);
+	E_rProdplus1.textContent=formatNumber(rProdplus1);
+	E_rProdtotal1.textContent=formatNumber(rProdtotal1);
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 	rStoreplus1=((BuildingrStore[0][2]))*rStoremultiplytotal*workerbotsrStore;
     rStoreplus1 = Math.round(rStoreplus1 * 1000) / 1000;
 
 	rStoretotal1=((BuildingrStore[0][2]*BuildingrStore[0][0]))*rStoremultiplytotal*workerbotsrStore;
     rStoretotal1 = Math.round(rStoretotal1 * 1000) / 1000;
-	E_rStoreplus1.innerHTML=formatNumber(rStoreplus1);
-	E_rStoretotal1.innerHTML=formatNumber(rStoretotal1);	
+	E_rStoreplus1.textContent=formatNumber(rStoreplus1);
+	E_rStoretotal1.textContent=formatNumber(rStoretotal1);	
 }
  achievementBonusArray=[0,5,10,20,35,50];
  achievementTotalEmultiplyBonus=[0,15,20,40,80,160];
@@ -959,7 +960,8 @@ function calcstats(){
 	totalresearch = totalresearch+ResearchLvlSave[i];
 	 
 }
- function calcTotalmultiply(){
+E_TotalMultiplyBonus=document.getElementById("TotalMultiplyBonus");
+function calcTotalmultiply(){
 	TotalMultiply=0;
 	TotalMultiplyAchievement=0;
 	TotalMultiplyBonus=0;
@@ -978,7 +980,7 @@ function calcstats(){
 	TotalMultiply = TotalMultiplyAchievement*(100+TotalMultiplyBonus)/100;
 	TotalMultiply = Math.round(TotalMultiply * 1000) / 1000;
 	
-    $("#TotalMultiplyBonus").html(TotalMultiplyBonus);
+    E_TotalMultiplyBonus.textContent=TotalMultiplyBonus;
 	
 	estoremultiplytotal=(1+getlvl("unqID0001")*getcustomDataaddmultiplier("unqID0001")+getlvl("unqID0002")*getcustomDataaddmultiplier("unqID0002")+getlvl("unqID0003")*getcustomDataaddmultiplier("unqID0003")+getlvl("unqID0004")*getcustomDataaddmultiplier("unqID0004")+getlvl("unqID0005")*getcustomDataaddmultiplier("unqID0005"))*TotalMultiply;
 	emultiplytotal=(1+getlvl("unqID0001")*getcustomDataaddmultiplier("unqID0001")+getlvl("unqID0002")*getcustomDataaddmultiplier("unqID0002")+getlvl("unqID0003")*getcustomDataaddmultiplier("unqID0003")+getlvl("unqID0004")*getcustomDataaddmultiplier("unqID0004")+getlvl("unqID0005")*getcustomDataaddmultiplier("unqID0005"))*TotalMultiply;
@@ -989,28 +991,18 @@ function costAutofunctions(ID){
 	eval("BuildingAutoCostMultiplier"+ID+" = Math.pow(1.15, BuildingAutoNumber"+ID+");\
 	BuildingAutoCost"+ID+" = BuildingAutoOriginalCost"+ID+" * BuildingAutoCostMultiplier"+ID+"; \
 	BuildingAutoCost"+ID+"  = Math.round(BuildingAutoCost"+ID+" * 1000) / 1000;	\
-	$(\"#egcost"+ID+"\").html(formatNumber(BuildingAutoCost"+ID+"));\
+	document.getElementById(\"egcost"+ID+"\").textContent=formatNumber(BuildingAutoCost"+ID+");\
 	");
 }
 function costEstorefunctions(ID){
 	eval("BuildingEstoreCostMultiplier"+ID+" = Math.pow(1.15, BuildingEstoreNumber"+ID+");\
 	BuildingEstoreCost"+ID+" = BuildingEstoreOriginalCost"+ID+" * BuildingEstoreCostMultiplier"+ID+"; \
 	BuildingEstoreCost"+ID+"  = Math.round(BuildingEstoreCost"+ID+" * 1000) / 1000;	\
-	$(\"#Estorecost"+ID+"\").html(formatNumber(BuildingEstoreCost"+ID+"));\
+	document.getElementById(\"Estorecost"+ID+"\").textContent=formatNumber(BuildingEstoreCost"+ID+");\
 	");
 }
-function costrProdfunctions(ID){
-	var BuildingrProdCostMultiplier = Math.pow(5, BuildingrProd[ID][0]);
-    BuildingrProd[ID][3] = BuildingrProd[ID][1]*BuildingrProdCostMultiplier;
-	BuildingrProd[ID][3] = Math.round(BuildingrProd[ID][3]  * 1000) / 1000;	
-	$("#rProdcost000"+ID+"").html(formatNumber(BuildingrProd[ID][3]));
-}
-function costrStorefunctions(ID){
-	var BuildingrStoreCostMultiplier = Math.pow(5, BuildingrStore[ID][0]);
-    BuildingrStore[ID][3] = BuildingrProd[ID][1]*BuildingrStoreCostMultiplier;
-	BuildingrStore[ID][3] = Math.round(BuildingrStore[ID][3]  * 1000) / 1000;	
-	$("#rStorecost000"+ID+"").html(formatNumber(BuildingrStore[ID][3]));
-}
+E_workerbotsRcost0000 = document.getElementById("workerbotsRcost0000");
+E_workerbotsEcost0000 = document.getElementById("workerbotsEcost0000");
 function costworkerbotsfunctions(){
     var workerbotsRcost0000;
 	var workerbotsEcost0000;
@@ -1029,9 +1021,11 @@ function costworkerbotsfunctions(){
  
 	workerbotsRcost0000 = Math.round(workerbotsRcost0000  * 10000) / 10000;
 	workerbotsEcost0000 = Math.round(workerbotsEcost0000  * 10000) / 10000;	
-	$("#workerbotsRcost0000").html(formatNumber(workerbotsRcost0000));
-	$("#workerbotsEcost0000").html(formatNumber(workerbotsEcost0000));	
+	E_workerbotsRcost0000.textContent=formatNumber(workerbotsRcost0000);
+	E_workerbotsEcost0000.textContent=formatNumber(workerbotsEcost0000);	
 }
+E_rProdcost0000 = document.getElementById("rProdcost0000");
+E_rStorecost0000 = document.getElementById("rStorecost0000");
 function cost(){
 costAutofunctions("0000");
 costAutofunctions("0001");
@@ -1043,9 +1037,16 @@ costEstorefunctions("0001");
 costEstorefunctions("0002");
 costEstorefunctions("0003");
 
-costrProdfunctions(0);
-costrStorefunctions(0);
-
+var BuildingrProdCostMultiplier = Math.pow(5, BuildingrProd[0][0]);
+    BuildingrProd[0][3] = BuildingrProd[0][1]*BuildingrProdCostMultiplier;
+	BuildingrProd[0][3] = Math.round(BuildingrProd[0][3]  * 1000) / 1000;	
+	E_rProdcost0000.textContent=formatNumber(BuildingrProd[0][3]);
+	
+var BuildingrStoreCostMultiplier = Math.pow(5, BuildingrStore[0][0]);
+    BuildingrStore[0][3] = BuildingrProd[0][1]*BuildingrStoreCostMultiplier;
+	BuildingrStore[0][3] = Math.round(BuildingrStore[0][3]  * 1000) / 1000;	
+	E_rStorecost0000.textContent=formatNumber(BuildingrStore[0][3]);
+	
 costworkerbotsfunctions();
 } 
 
@@ -1063,18 +1064,18 @@ E_rProdnum0000 = document.getElementById("rProdnum0000");
 E_rStorenum0000 = document.getElementById("rStorenum0000");
 
 function acquried(){
-	E_egnum0000.innerHTML=BuildingAutoNumber0000;
-	E_egnum0001.innerHTML=BuildingAutoNumber0001;
-	E_egnum0002.innerHTML=BuildingAutoNumber0002;
-	E_egnum0003.innerHTML=BuildingAutoNumber0003;
+	E_egnum0000.textContent=BuildingAutoNumber0000;
+	E_egnum0001.textContent=BuildingAutoNumber0001;
+	E_egnum0002.textContent=BuildingAutoNumber0002;
+	E_egnum0003.textContent=BuildingAutoNumber0003;
 
-	Estorenum0000.innerHTML=BuildingEstoreNumber0000;
-	Estorenum0001.innerHTML=BuildingEstoreNumber0001;
-	Estorenum0002.innerHTML=BuildingEstoreNumber0002;
-	Estorenum0003.innerHTML=BuildingEstoreNumber0003;
+	Estorenum0000.textContent=BuildingEstoreNumber0000;
+	Estorenum0001.textContent=BuildingEstoreNumber0001;
+	Estorenum0002.textContent=BuildingEstoreNumber0002;
+	Estorenum0003.textContent=BuildingEstoreNumber0003;
 	
-	E_rProdnum0000.innerHTML=BuildingrProd[0][0];
-	E_rStorenum0000.innerHTML=BuildingrStore[0][0];
+	E_rProdnum0000.textContent=BuildingrProd[0][0];
+	E_rStorenum0000.textContent=BuildingrStore[0][0];
 }
 
 //BUY
@@ -1215,6 +1216,13 @@ function multiply(a,b){
 	var factor = 2.75;
 	return a*Math.pow(factor,b);  
 }
+E_nextEnergyGoal = document.getElementById("nextEnergyGoal");
+E_nextEnergyGoal1 = document.getElementById("nextEnergyGoal1");
+E_nextEnergyGoalLvl = document.getElementById("nextEnergyGoalLvl");
+E_nextEnergyGoalLvl1 = document.getElementById("nextEnergyGoalLvl1");
+E_nextEnergyGoalReward = document.getElementById("nextEnergyGoalReward");
+E_nextEnergyGoalReward1 = document.getElementById("nextEnergyGoalReward1");
+E_EnergyGoalLevel = document.getElementsByClassName("EnergyGoalLevel");
 function doEnergyGoals(){
 	rewardfactor1 = 0.5;
 	rewardcalculatedvalue1 = Math.ceil(Math.pow(rewardfactor1*((EnergyGoalLevel+1)/2),2));
@@ -1228,11 +1236,11 @@ function doEnergyGoals(){
 	calculatedvalue3percentage = limit(calculatedvalue3/energycap*100,100);
 	calculatedvalue4percentage = limit(calculatedvalue4/energycap*100,100);
 	calculatedvalue5percentage = limit(calculatedvalue5/energycap*100,100);
-	if(calculatedvalue1percentage<100){adjust_goal_target("goal0",1,calculatedvalue1percentage);}else{adjust_goal_target("goal0",0,0);}
-	if(calculatedvalue2percentage<100){adjust_goal_target("goal1",1,calculatedvalue2percentage);}else{adjust_goal_target("goal1",0,0);}
-	if(calculatedvalue3percentage<100){adjust_goal_target("goal2",1,calculatedvalue3percentage);}else{adjust_goal_target("goal2",0,0);}		
-	if(calculatedvalue4percentage<100){adjust_goal_target("goal3",1,calculatedvalue4percentage);}else{adjust_goal_target("goal3",0,0);}
-	if(calculatedvalue5percentage<100){adjust_goal_target("goal4",1,calculatedvalue5percentage);}else{adjust_goal_target("goal4",0,0);}
+	if(calculatedvalue1percentage<100){adjust_goal_target1(1,calculatedvalue1percentage);}else{adjust_goal_target1(0,0);}
+	if(calculatedvalue2percentage<100){adjust_goal_target2(1,calculatedvalue2percentage);}else{adjust_goal_target2(0,0);}
+	//if(calculatedvalue3percentage<100){adjust_goal_target("goal2",1,calculatedvalue3percentage);}else{adjust_goal_target("goal2",0,0);}		
+	//if(calculatedvalue4percentage<100){adjust_goal_target("goal3",1,calculatedvalue4percentage);}else{adjust_goal_target("goal3",0,0);}
+	//if(calculatedvalue5percentage<100){adjust_goal_target("goal4",1,calculatedvalue5percentage);}else{adjust_goal_target("goal4",0,0);}
 	if(thetotal>=calculatedvalue1){
 		EnergyGoalLevel = EnergyGoalLevel+1;
 		ResearchPoints = ResearchPoints+rewardcalculatedvalue1;
@@ -1243,25 +1251,36 @@ function doEnergyGoals(){
 	rewardcalculatedvalue1 = Math.ceil(Math.pow(rewardfactor1*((EnergyGoalLevel+1)/2),2));
 	rewardcalculatedvalue2 = Math.ceil(Math.pow(rewardfactor1*((EnergyGoalLevel+2)/2),2));
 	
-	$(".nextEnergyGoal").html(formatNumber(calculatedvalue1));
-	$(".nextEnergyGoal1").html(formatNumber(calculatedvalue2));
-	$(".nextEnergyGoalLvl").html(EnergyGoalLevel+1);
-	$(".nextEnergyGoalLvl1").html(EnergyGoalLevel+2);
-	$(".nextEnergyGoalReward").html(rewardcalculatedvalue1);
-	$(".nextEnergyGoalReward1").html(rewardcalculatedvalue2);
-	$(".EnergyGoalLevel").html(EnergyGoalLevel);
+	E_nextEnergyGoal.textContent=formatNumber(calculatedvalue1);
+	E_nextEnergyGoal1.textContent=formatNumber(calculatedvalue2);
+	E_nextEnergyGoalLvl.textContent=EnergyGoalLevel+1;
+	E_nextEnergyGoalLvl1.textContent=EnergyGoalLevel+2;
+	E_nextEnergyGoalReward.textContent=rewardcalculatedvalue1;
+	E_nextEnergyGoalReward1.textContent=rewardcalculatedvalue2;
+
+	for(var i = 0; i < E_EnergyGoalLevel.length; i++) {E_EnergyGoalLevel[i].textContent=EnergyGoalLevel;}
 	
 } 
 function generate_goal_target(goal_id){
 	goal_content="<div class=\"bar_goal\" id=\""+goal_id+"\"></div>";
 	$("#bar1container").append(goal_content);
 }
-function adjust_goal_target(goal_id,display,percentage){
-	$("#"+goal_id+"").css('left',""+percentage+"%");
+E_goal0 = document.getElementById("goal0");
+E_goal1 = document.getElementById("goal1");
+function adjust_goal_target1(display,percentage){
+	E_goal0.style.left=percentage+"%";
 	if(display==0){
-	$("#"+goal_id+"").css('display',"none");	
+	E_goal0.style.display="none";	
 	}else{
-	$("#"+goal_id+"").css('display',"block");	
+	E_goal0.style.display="block";	
+	}
+}
+function adjust_goal_target2(display,percentage){
+	E_goal1.style.left=percentage+"%";
+	if(display==0){
+	E_goal1.style.display="none";	
+	}else{
+	E_goal1.style.display="block";	
 	}
 }
 function calcspecialresearch(){
@@ -1274,6 +1293,17 @@ function calcspecialresearch(){
 		$(".lvl1researchbuildingtooltip").removeClass("hide");	
 	}
 }
+E_bar1 = document.getElementById("bar1");
+E_bar2 = document.getElementById("bar2");
+E_epsgain = document.getElementById("epsgain");
+E_rProdgain =  document.getElementById("rProdgain");
+
+E_energystatus = document.getElementsByClassName("energystatus");
+E_energycap = document.getElementsByClassName("energycap");
+E_thetotal = document.getElementsByClassName("energycap");	
+E_researchpoint = document.getElementsByClassName("researchpoint");	
+E_RealResearchPoints = document.getElementsByClassName("RealResearchPoints");	
+E_RealResearchPointscap = document.getElementsByClassName("RealResearchPointscap");	
 function calculateEverything(){
 	calcspecialresearch();
 	calcworkerbots();
@@ -1290,19 +1320,25 @@ function calculateEverything(){
  
     if(energycap>0){bar1width=bound((thetotal/energycap)*100,0,100);}else{bar1width=0;}
 	if(RealResearchPointscap>0){bar2width=bound((RealResearchPoints/RealResearchPointscap)*100,0,100);}else{bar2width=0;}
-	$("#bar1").width( bar1width + '%'); 
-	$("#bar2").width( bar2width + '%'); 
-	$(".energystatus").html(formatNumber(thetotal)+"/"+formatNumber(energycap));
-	$(".energycap").html(formatNumber(energycap));
-	$(".thetotal").html(formatNumber(thetotal));
-	$("#epsgain").html(formatNumber(epsgain));
-	$("#rProdgain").html(formatNumber(rProdgain));
-	$(".researchpoint").html(formatNumber(ResearchPoints));
-	$(".ResearchPoints").html(formatNumber(ResearchPoints));
-	$(".RealResearchPoints").html(formatNumber(RealResearchPoints));
-	$(".RealResearchPointscap").html(formatNumber(RealResearchPointscap));
+	E_bar1.style.width=bar1width + '%';
+	E_bar2.style.width=bar2width + '%';
+	E_epsgain.textContent=formatNumber(epsgain);
+	E_rProdgain.textContent=formatNumber(rProdgain);
+	
+	Val_energystatus=formatNumber(thetotal)+"/"+formatNumber(energycap);
+	for(var i = 0; i < E_energystatus.length; i++) {E_energystatus[i].textContent=Val_energystatus;}
+	Val_energycap=formatNumber(energycap);
+	for(var i = 0; i < E_energycap.length; i++) {E_energycap[i].textContent=Val_energystatus;}
+	Val_thetotal=formatNumber(thetotal);
+	for(var i = 0; i < E_thetotal.length; i++) {E_thetotal[i].textContent=Val_thetotal;}
+	Val_researchpoint=formatNumber(ResearchPoints);
+	for(var i = 0; i < E_researchpoint.length; i++) {E_researchpoint[i].textContent=Val_researchpoint;}
+	Val_RealResearchPoints=formatNumber(RealResearchPoints);
+	for(var i = 0; i < E_RealResearchPoints.length; i++) {E_RealResearchPoints[i].textContent=Val_RealResearchPoints;}
+	Val_RealResearchPointscap=formatNumber(RealResearchPointscap);
+	for(var i = 0; i < E_RealResearchPointscap.length; i++) {E_RealResearchPointscap[i].textContent=Val_RealResearchPointscap;}
+	
 	doEnergyGoals();
-	//if(thetotal >= 100000000000000){$( "#won" ).show();}
 }
 //DELETE SAVE
 	$( "#hardreset" ).click(function() {
@@ -1411,17 +1447,23 @@ function calculateEverything(){
   //end
  //STATS CODE
  
- setInterval(stats, 2000);
+setInterval(stats, 2000);
  
- function stats(){
-$("#createdenergy").html(formatNumber(totalenergyed)); 
-$("#totalachievements").html(totalachievements); 
-$("#totalbuildings").html(totalbuildings); 	  
-$("#totalresearch").html(totalresearch);
-$("#htmltotalworkerbots").html(totalworkerbots);
-$("#TotalMultiply").html("x" + TotalMultiply); 	
-$("#currentVersionSettings").html(" Current version: "+version);
-$("#version").html(version); 
+E_createdenergy=document.getElementById("createdenergy");
+E_totalachievements=document.getElementById("totalachievements");
+E_totalbuildings=document.getElementById("totalbuildings");
+E_totalresearch=document.getElementById("totalresearch");
+E_TotalMultiply=document.getElementById("TotalMultiply");
+E_currentVersionSettings=document.getElementById("currentVersionSettings");
+E_version=document.getElementById("version");
+function stats(){
+	E_createdenergy.textContent=formatNumber(totalenergyed); 
+	E_totalachievements.textContent=totalachievements;
+	E_totalbuildings.textContent=totalbuildings;
+	E_totalresearch.textContent=totalresearch;
+	E_TotalMultiply.textContent="x"+TotalMultiply;
+	E_currentVersionSettings.textContent="Current version: "+version;
+    E_version.textContent=version;
  }
  
   //TABS CODE
@@ -1448,7 +1490,7 @@ function openTab(tabID,ID) {
 	 
 }
 //addTabClass CODE
-//tabsName=["Home","Research","Bot Factory","Deals","Achievements"];
+tabsName=["Home","Research","Bot Factory","Deals","Achievements"];
 function fillTabsName(){
 	if(tabsunlocked[0]==1){menuA=$("#menuA"); menuA.addClass("tabUnlocked");}else{}
 	if(tabsunlocked[1]==1){menuB=$("#menuB"); menuB.addClass("tabUnlocked");}else{}
@@ -2103,7 +2145,19 @@ var loader = new THREE.TextureLoader();
 home_graphics = document.getElementById("home_graphics");
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.shadowMap.enabled = true;
+composer = new THREE.EffectComposer(renderer);
+renderPass = new THREE.RenderPass( scene, camera );
+composer.addPass(renderPass);
+outlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
+//outline settings
+outlinePass.edgeStrength = 5;
+outlinePass.edgeGlow = 0.1;
+outlinePass.edgeThickness = 2;
+composer.addPass(outlinePass);
 
+outputPass = new THREE.ShaderPass( THREE.CopyShader );
+outputPass.renderToScreen = true;
+composer.addPass( outputPass );
 home_graphics.appendChild( renderer.domElement );
 
 camera.position.set(0,200,0);
@@ -2113,74 +2167,146 @@ window.addEventListener('resize',function(){
 	width = window.innerWidth;
 	height = window.innerHeight;
 	renderer.setSize(width,height);
+	composer.setSize(width,height);
 	camera.aspect = width/height;
 	camera.updateProjectionMatrix();
 });
-gridHelper = new THREE.GridHelper( 1000, 10 );
-scene.add( gridHelper );
+//gridHelper = new THREE.GridHelper( 1000, 10 );
+//scene.add( gridHelper );
 
 createLights();
 function createLights() {
 	// A hemisphere light is a gradient colored light; 
 	// the first parameter is the sky color, the second parameter is the ground color, 
 	// the third parameter is the intensity of the light
-	hemisphereLight = new THREE.HemisphereLight(0xaaaaaa,0x000000, 0.1)
+	hemisphereLight = new THREE.HemisphereLight(0xaaaaaa,0x000000, 3)
 	
 	// A directional light shines from a specific direction. 
 	// It acts like the sun, that means that all the rays produced are parallel. 
-	shadowLight = new THREE.DirectionalLight(0xffffff, 4);
+	shadowLight = new THREE.DirectionalLight(0xffffff, 3);
 
 	// Set the direction of the light  
-	shadowLight.position.set(0, 500, 0);
+	shadowLight.position.set(-2000, 1000, 2000);
 	
 	// Allow shadow casting 
 	shadowLight.castShadow = true;
 
 	// define the visible area of the projected shadow
-	shadowLight.shadow.camera.left = -400;
-	shadowLight.shadow.camera.right = 400;
-	shadowLight.shadow.camera.top = 400;
-	shadowLight.shadow.camera.bottom = -400;
-	shadowLight.shadow.camera.near = 1;
-	shadowLight.shadow.camera.far = 10000;
+	shadowLight.shadow.camera.left = -2000;
+	shadowLight.shadow.camera.right = 4000;
+	shadowLight.shadow.camera.top = 300;
+	shadowLight.shadow.camera.bottom = -300;
+	shadowLight.shadow.camera.near = 10;
+	shadowLight.shadow.camera.far = 4000;
 
 	// define the resolution of the shadow; the higher the better, 
 	// but also the more expensive and less performance
-	shadowLight.shadow.mapSize.width = 2048;
-	shadowLight.shadow.mapSize.height = 2048;
+	shadowLight.shadow.mapSize.width = 1024;
+	shadowLight.shadow.mapSize.height = 1024;
 	
 	// to activate the lights, just add them to the scene
 	scene.add(hemisphereLight);  
 	scene.add(shadowLight);
 }
-geom_cube = new THREE.BoxGeometry( 50, 50, 50);
-mat_cube = new THREE.MeshPhongMaterial( { color: 0x00ee00} );
-cube = new THREE.Mesh( geom_cube, mat_cube );
-cube.receiveShadow = true; 
-cube.castShadow = true;
-cube.position.set(0,25,110);
-scene.add( cube );
 
+
+function initProton(){
+	proton = new Proton();
+        emitter1 = createEmitter({
+            p: {
+                x: 0,
+                y: 1,
+				z: 120
+            },
+            Body: createMesh("cube")
+        })
+		emitter1.stopEmit();
+        proton.addEmitter(emitter1);
+		emitter2=createProton();
+		proton.addEmitter(emitter2);	
+		//proton.addRender(new Proton.SpriteRender(scene));
+        proton.addRender(new Proton.MeshRender(scene));
+}
+
+initProton();
+function createMesh(geo) {
+        if (geo == "sphere") {
+            var geometry = new THREE.SphereGeometry(10, 8, 8);
+            var material = new THREE.MeshLambertMaterial({
+                color: "#454545"
+            });
+        } else {
+            var geometry = new THREE.BoxGeometry(10, 10, 10);
+            var material = new THREE.MeshLambertMaterial({
+                color: "#454545"
+            });
+        }
+        var mesh = new THREE.Mesh(geometry, material);
+        return mesh;
+    }
+function createEmitter(obj) {
+    var emitter = new Proton.Emitter();
+    emitter.rate = new Proton.Rate(1, 0.3);
+    emitter.addInitialize(new Proton.Mass(1));
+    emitter.addInitialize(new Proton.Radius(100));
+    emitter.addInitialize(new Proton.Life(0.5,1));
+    emitter.addInitialize(new Proton.Body(obj.Body));
+    emitter.addInitialize(new Proton.Velocity(400, new Proton.Vector3D(0, 1, 0), 50));
+    emitter.addBehaviour(new Proton.RandomDrift(50, 50, 50, .05));
+    emitter.addBehaviour(new Proton.Rotate("random", "random"));
+    emitter.addBehaviour(new Proton.Scale(new Proton.Span(0.8, 1.2)));
+    // emitter.addBehaviour(new Proton.Alpha(1, 0, Infinity, Proton.easeInQuart));
+    var zone = new Proton.BoxZone(0,150,100,300,300,300);
+    emitter.addBehaviour(new Proton.CrossZone(zone, "dead"));
+	emitter.addBehaviour(new Proton.Gravity(10));
+    emitter.p.x = obj.p.x;
+    emitter.p.y = obj.p.y;
+	emitter.p.z = obj.p.z;
+    return emitter;
+}
+    function createSprite() {
+        var map = new THREE.TextureLoader().load("./website/tools/particle.png");
+        var material = new THREE.SpriteMaterial({
+            map: map,
+            color: 0xff0000,
+            blending: THREE.AdditiveBlending,
+            fog: true
+        });
+        return new THREE.Sprite(material);
+    }
+    function createProton(image) {
+  emitter = new Proton.Emitter();
+        emitter.rate = new Proton.Rate(new Proton.Span(10, 15), new Proton.Span(.05, .1));
+        emitter.addInitialize(new Proton.Body(createSprite()));
+        emitter.addInitialize(new Proton.Mass(1));
+        emitter.addInitialize(new Proton.Life(0.5, 1));
+        emitter.addInitialize(new Proton.Position(new Proton.SphereZone(20)));
+        emitter.addInitialize(new Proton.V(new Proton.Span(20, 20), new Proton.Vector3D(0, 0.1, 0), 30));
+        emitter.addBehaviour(new Proton.RandomDrift(15, 15, 15, .01));
+        //emitter.addBehaviour(new Proton.Alpha(1, 0.1));
+        emitter.addBehaviour(new Proton.Scale(new Proton.Span(75, 100), 0));
+        emitter.addBehaviour(new Proton.G(-0.1));
+        emitter.addBehaviour(new Proton.Color('#FF0026', ['#ffff00', '#ffff11'], Infinity, Proton.easeOutSine));
+        emitter.p.x = 0;
+        emitter.p.y = 50;
+        emitter.p.z = 110;
+        return emitter;
+        }
 plane_length=3200;
-geom_plane = new THREE.BoxGeometry( 500, plane_length, 1);
-mat_plane = new THREE.MeshPhongMaterial( { color: 0x454545} );
+geom_plane = new THREE.BoxGeometry( 500, plane_length, 10);
+mat_plane = new THREE.MeshPhongMaterial( { color: 0x454545 ,flatShading:true} );
 plane = new THREE.Mesh( geom_plane, mat_plane );
-plane.castShadow = true;
+//plane.castShadow = true;
 plane.receiveShadow = true;
 plane.rotation.x = THREE.Math.degToRad(90);
-plane.position.set(0,-1,plane_length/2-plane_length*0.2);
+plane.position.set(0,-1,plane_length*0.46);
 loader.load("./website/tools/plane.png", function(texture) {
  mat_plane.map = texture;
  scene.add(plane);
 });
 
-//controls = new THREE.OrbitControls( camera );
-
 function set_plane_distance(percentage){
-	plane.position.z=plane_length/2-plane_length*0.24-plane_length*percentage/368;
-}
-function set_entity_distance(percentage){
-	cube.position.z=plane_length/2-plane_length*0.24-plane_length*percentage/368;
+	plane.position.z=plane_length*0.46-plane_length*percentage/386;
 }
 //t-time,b-initial,c-change,d-duration
 function easeInOutQuad(t, b, c, d) {
@@ -2192,24 +2318,151 @@ function easeInOutQuad(t, b, c, d) {
 function linearTween(t, b, c, d) {
 	return c*t/d + b;
 };
+function generateExplosion(explosion_x,explosion_y, explosion_z, explosion_strength){
+	emitter1.p.x=explosion_x;
+	emitter1.p.y=explosion_y;
+	emitter1.p.z=explosion_z;
+	emitter2.p.x=explosion_x;
+	emitter2.p.y=explosion_y;
+	emitter2.p.z=explosion_z;
+	emitter1.rate=new Proton.Rate(Math.ceil(Math.log(explosion_strength) / Math.log(1.5)), 0.3);
+	emitter1.emit("once");
+	emitter2.emit("once");	
+}
 counter=0;
 move=0;
 entity_move=0;
+attack_level=0;
+attack_level_counter=0;
+prev_attack_level_counter=0;
+level_movement_speed=33;
+function update_attack_level(attacklvl){
+	attack_level_counter=attacklvl*100;
+}
+
+function nearestCubeSide(mynumber){
+	cuberoot=Math.cbrt(mynumber);
+	cuberoot=Math.ceil(cuberoot);
+	return cuberoot;
+}	
+selectedObject = [];
+unitsize=10;
+BasicEntity = function(type){
+	this.mesh = new THREE.Object3D();
+	geom_BasicEntity = new THREE.BoxGeometry(unitsize,unitsize,unitsize);
+	mat_BasicEntity = new THREE.MeshLambertMaterial( { color: 0x454545, flatShading:true} );
+	//mat_BasicEntity.transparent = true;
+	base_generator_BasicEntity = new THREE.Mesh(geom_BasicEntity, mat_BasicEntity); 
+	base_generator_BasicEntity.castShadow = true;
+
+	//base_generator_BasicEntity.receiveShadow = true;
+	
+	geom_outline_BasicEntity = new THREE.EdgesGeometry2(geom_BasicEntity);
+	mat_outline_BasicEntity = new THREE.LineMaterial( { color:0xffffff, linewidth:2} );
+	mat_outline_BasicEntity.resolution.set( window.innerWidth, window.innerHeight );  
+	base_generator_outline_BasicEntity_mesh = new THREE.Wireframe( geom_outline_BasicEntity, mat_outline_BasicEntity); 
+	cuberoot = nearestCubeSide(type);
+	cubearea = cuberoot*cuberoot;
+	myheight = Math.ceil(type/cubearea)
+	for(var unityt=0; unityt<myheight;unityt++){
+		filledarea = 0;
+		if(unityt==myheight-1){
+			filledarea=type-cubearea*(myheight-1);
+		}else{
+			filledarea=cubearea;
+		}
+		filledx=Math.ceil(filledarea/cuberoot);
+		
+		for(var unitx=0; unitx<=filledx-1; unitx++){
+			filledz = 0;
+			if(unitx==filledx-1){
+				filledz=filledarea-cuberoot*(filledx-1);
+			}else{
+				filledz=cuberoot;
+			}
+			for(var unitz=0; unitz<filledz; unitz++){
+			generator_BasicEntity=base_generator_BasicEntity.clone();
+			generator_BasicEntity.position.set(unitx*(unitsize+2)-cuberoot*(unitsize+2)/2,unityt*(unitsize+2)+unitsize/2,unitz*(unitsize+2)-cuberoot*(unitsize+2)/2);
+			this.mesh.add(generator_BasicEntity);
+		
+			generator_outline_BasicEntity_mesh=base_generator_outline_BasicEntity_mesh.clone();
+			generator_outline_BasicEntity_mesh.position.set(unitx*(unitsize+2)-cuberoot*(unitsize+2)/2,unityt*(unitsize+2)+unitsize/2,unitz*(unitsize+2)-cuberoot*(unitsize+2)/2);
+			generator_outline_BasicEntity_mesh.computeLineDistances();
+
+			this.mesh.add(generator_outline_BasicEntity_mesh);
+			}
+		}
+	}
+} 
+BasicEntity.prototype.set_entity_distance = function(distance_percentage){
+	this.mesh.position.z=plane_length*0.46-plane_length*0.16-plane_length*distance_percentage/386;
+}
+BasicEntity.prototype.set_entity_x = function(x){
+	this.mesh.position.x=x;
+}
+//BasicEntity.prototype.opacity = function(myOpacity){
+//	for (var i=0; i<this.mesh.children.length; i+=1) {
+//            this.mesh.children[i].material.opacity = myOpacity;  
+//   }
+//}
+BasicEntity.prototype.wireframe_visibility = function(myVisibility){
+	for (var i=0; i<this.mesh.children.length; i+=1) {
+		if(i%2==1){
+            this.mesh.children[i].visible = myVisibility;  
+		}
+    }
+}
+BasicEntity.prototype.remove = function(){
+	for (var i=0; i<this.mesh.children.length; i+=1) {
+            this.mesh.children[i].geometry.dispose(); 
+			this.mesh.children[i].material.dispose(); 
+        }
+
+	scene.remove(this.mesh);
+}
+outlinePass.selectedObjects.push(plane);
+
+ //controls = new THREE.OrbitControls( camera );
+	entities1 = new BasicEntity(2);scene.add(entities1.mesh);
+	entities2 = new BasicEntity(50);scene.add(entities2.mesh);
+	entities3 = new BasicEntity(128);scene.add(entities3.mesh);
+	entities1.set_entity_x(-100);
+	entities2.set_entity_x(0);
+	entities3.set_entity_x(100);
+	counter2=0; 
 function animate(){
     requestAnimationFrame(animate);
     delta = clock.getDelta();
-	//controls.update();
 	counter+=delta*50;
-	if(counter<=100){move=0;}
-	if(counter>100){move=counter-100;}
-	if(counter>200){counter=0; move=0;}
-	if(counter<=50){entity_move=counter;}
-	if(counter>50){entity_move=100-counter;}
-	if(counter>100){entity_move=0;}
-	actual_move=easeInOutQuad(move,0,100,100);
+	counter2++;
+	//controls.update();
+	//attack_level_counter+=delta*50
+	if(attack_level_counter>prev_attack_level_counter){
+		prev_attack_level_counter=prev_attack_level_counter+level_movement_speed*delta;
+	}
+	if(attack_level_counter<prev_attack_level_counter){
+		prev_attack_level_counter=prev_attack_level_counter-level_movement_speed*delta;
+	}
+	if(attack_level_counter>prev_attack_level_counter-0.5&&attack_level_counter<prev_attack_level_counter+0.5){
+		prev_attack_level_counter=attack_level_counter; 
+	}
+	if(counter>100){counter=0;generateExplosion(0,50,110,64);} //generateExplosion(-100,50,110,2); generateExplosion(100,50,110,128); }
+	actual_move=easeInOutQuad(prev_attack_level_counter%100,0,100,100);
 	set_plane_distance(actual_move);
-	set_entity_distance(actual_move+entity_move*2);
-	renderer.render( scene, camera );
+ 
+	if(counter2%300==0){
+		update_attack_level(Math.ceil(counter2/300));
+	}
+	//entities = new BasicEntity(128);
+	//scene.add(entities.mesh); 
+	entities1.set_entity_distance(actual_move+counter);
+	entities2.set_entity_distance(actual_move+counter);
+	entities3.set_entity_distance(actual_move+counter);
+	//}else{
+	//entities.remove(); 
+	
+	proton.update();
+	composer.render();
 }
 animate();
 /*function loadImage(url, context, x, y, w, h) {

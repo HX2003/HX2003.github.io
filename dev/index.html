@@ -10,6 +10,21 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 <script src="js/three.min.js"></script>
 <script src="js/OrbitControls.js"></script>
+<script src="js/CopyShader.js"></script>
+<script src="js/EffectComposer.js"></script>
+<script src="js/RenderPass.js"></script>
+<script src="js/ShaderPass.js"></script>
+<script src="js/OutlinePass.js"></script>
+<script src='js/LineSegmentsGeometry.js'></script>
+<script src='js/LineGeometry.js'></script>
+<script src='js/WireframeGeometry2.js'></script>
+<script src='js/EdgesGeometry2.js'></script>
+<script src='js/LineMaterial.js'></script>
+<script src='js/LineSegments2.js'></script>
+<script src='js/Line2.js'></script>
+<script src='js/Wireframe.js'></script>
+<script src="js/three.proton.min.js"></script>
+
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 <style>
 @import url(https://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700);
@@ -1372,7 +1387,7 @@ Do you really want to delete this save?
 <div id="resourcebar">
 <b>
 <span><span class="energystatus cur_energy"></span><span style="font-size:17px;">(<span id="epsgain"></span>/s)</span></span>
-<span class="ResearchPoints cur_know_ess"></span> <span class="RealResearchPoints cur_research"></span>/<span class="RealResearchPointscap"></span><span style="font-size:17px">(<span id="rProdgain"></span>/s)</span></span>
+<span class="researchpoint cur_know_ess"></span> <span class="RealResearchPoints cur_research"></span>/<span class="RealResearchPointscap"></span><span style="font-size:17px">(<span id="rProdgain"></span>/s)</span></span>
 <span style="">Worker bots:<span class="workerbotsINACTIVE" style=""></span>/<span class="totalworkerbots" style=""></span>
 </b>
 </div>
@@ -1419,14 +1434,14 @@ Do you really want to delete this save?
 		<th>Rewards</th>
 	</tr>
 	<tr>
-		<th><span class=" nextEnergyGoalLvl"></span></th>
-		<th><span class="cur_energy nextEnergyGoal"></span></th>
-		<th><span class="cur_know_ess nextEnergyGoalReward"></span></th>
+		<th><span id="nextEnergyGoalLvl"></span></th>
+		<th><span class="cur_energy" id="nextEnergyGoal"></span></th>
+		<th><span class="cur_know_ess" id="nextEnergyGoalReward"></span></th>
 	</tr>
 	<tr>
-		<th><span class=" nextEnergyGoalLvl1"></span></th>
-		<th><span class="cur_energy nextEnergyGoal1"></span></th>
-		<th><span class="cur_know_ess nextEnergyGoalReward1"></span></th>
+		<th><span id="nextEnergyGoalLvl1"></span></th>
+		<th><span class="cur_energy" id="nextEnergyGoal1"></span></th>
+		<th><span class="cur_know_ess" id="nextEnergyGoalReward1"></span></th>
 	</tr>
 </table>
 </div>
