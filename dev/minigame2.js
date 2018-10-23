@@ -262,8 +262,10 @@ if(loadedVar1.version!=currentVersion){
 	}
 }
 function errorreset(){
-	var r2 = confirm("Would you like to reset the data and generate an error log?");
+	var r2 = confirm("Would you like to reset the data?");
 	if(r2==1){
+		var r3 = confirm("Would you like to download error log?");
+		if(r3==1){
 		errorlog = "Error Log\n\n";
 		errorlog += "Local Storage Availability:"+IsLocalStorageAvailable+"\n\n";
 		errorlog += "Cookie data\n"
@@ -320,7 +322,7 @@ function errorreset(){
 		}
 		errorlog += "\nEnd";
 		download("errorlog.txt", errorlog);
-		
+		}
 		setTimeout(function(){hardreset(); }, 1000)
 	}
 
@@ -1300,7 +1302,7 @@ E_rProdgain =  document.getElementById("rProdgain");
 
 E_energystatus = document.getElementsByClassName("energystatus");
 E_energycap = document.getElementsByClassName("energycap");
-E_thetotal = document.getElementsByClassName("energycap");	
+E_thetotal = document.getElementsByClassName("thetotal");	
 E_researchpoint = document.getElementsByClassName("researchpoint");	
 E_RealResearchPoints = document.getElementsByClassName("RealResearchPoints");	
 E_RealResearchPointscap = document.getElementsByClassName("RealResearchPointscap");	
@@ -1328,7 +1330,7 @@ function calculateEverything(){
 	Val_energystatus=formatNumber(thetotal)+"/"+formatNumber(energycap);
 	for(var i = 0; i < E_energystatus.length; i++) {E_energystatus[i].textContent=Val_energystatus;}
 	Val_energycap=formatNumber(energycap);
-	for(var i = 0; i < E_energycap.length; i++) {E_energycap[i].textContent=Val_energystatus;}
+	for(var i = 0; i < E_energycap.length; i++) {E_energycap[i].textContent=Val_energycap;}
 	Val_thetotal=formatNumber(thetotal);
 	for(var i = 0; i < E_thetotal.length; i++) {E_thetotal[i].textContent=Val_thetotal;}
 	Val_researchpoint=formatNumber(ResearchPoints);
@@ -2174,6 +2176,114 @@ window.addEventListener('resize',function(){
 //gridHelper = new THREE.GridHelper( 1000, 10 );
 //scene.add( gridHelper );
 
+THREE.ShaderLib.customDepthRGBA = { // this is a cut-and-paste of the depth shader -- modified to accommodate instancing for this app
+			uniforms: THREE.ShaderLib.depth.uniforms,
+			vertexShader:
+				`
+				// instanced
+				#ifdef INSTANCED
+					attribute vec3 instanceOffset;
+					attribute float instanceScale;
+				#endif
+				#include <common>
+				#include <uv_pars_vertex>
+				#include <displacementmap_pars_vertex>
+				#include <morphtarget_pars_vertex>
+				#include <skinning_pars_vertex>
+				#include <logdepthbuf_pars_vertex>
+				#include <clipping_planes_pars_vertex>
+				void main() {
+					#include <uv_vertex>
+					#include <skinbase_vertex>
+					#ifdef USE_DISPLACEMENTMAP
+						#include <beginnormal_vertex>
+						#include <morphnormal_vertex>
+						#include <skinnormal_vertex>
+					#endif
+					#include <begin_vertex>
+					// instanced
+					#ifdef INSTANCED
+						transformed *= instanceScale;
+						transformed = transformed + instanceOffset;
+					#endif
+					#include <morphtarget_vertex>
+					#include <skinning_vertex>
+					#include <displacementmap_vertex>
+					#include <project_vertex>
+					#include <logdepthbuf_vertex>
+					#include <clipping_planes_vertex>
+				}
+			`,
+			fragmentShader: THREE.ShaderChunk.depth_frag
+		};
+THREE.ShaderLib.lambert = { // this is a cut-and-paste of the lambert shader -- modified to accommodate instancing for this app
+			uniforms: THREE.ShaderLib.lambert.uniforms,
+			vertexShader:
+				`
+				#define LAMBERT
+				#ifdef INSTANCED
+					attribute vec3 instanceOffset;
+					attribute vec3 instanceColor;
+					attribute float instanceScale;
+				#endif
+				varying vec3 vLightFront;
+				#ifdef DOUBLE_SIDED
+					varying vec3 vLightBack;
+				#endif
+				#include <common>
+				#include <uv_pars_vertex>
+				#include <uv2_pars_vertex>
+				#include <envmap_pars_vertex>
+				#include <bsdfs>
+				#include <lights_pars_begin>
+				#include <color_pars_vertex>
+				#include <fog_pars_vertex>
+				#include <morphtarget_pars_vertex>
+				#include <skinning_pars_vertex>
+				#include <shadowmap_pars_vertex>
+				#include <logdepthbuf_pars_vertex>
+				#include <clipping_planes_pars_vertex>
+				void main() {
+					#include <uv_vertex>
+					#include <uv2_vertex>
+					#include <color_vertex>
+					// vertex colors instanced
+					#ifdef INSTANCED
+						#ifdef USE_COLOR
+							vColor.xyz = instanceColor.xyz;
+						#endif
+					#endif
+					#include <beginnormal_vertex>
+					#include <morphnormal_vertex>
+					#include <skinbase_vertex>
+					#include <skinnormal_vertex>
+					#include <defaultnormal_vertex>
+					#include <begin_vertex>
+					// position instanced
+					#ifdef INSTANCED
+						transformed *= instanceScale;
+						transformed = transformed + instanceOffset;
+					#endif
+					#include <morphtarget_vertex>
+					#include <skinning_vertex>
+					#include <project_vertex>
+					#include <logdepthbuf_vertex>
+					#include <clipping_planes_vertex>
+					#include <worldpos_vertex>
+					#include <envmap_vertex>
+					#include <lights_lambert_vertex>
+					#include <shadowmap_vertex>
+					#include <fog_vertex>
+				}
+				`,
+			fragmentShader: THREE.ShaderLib.lambert.fragmentShader
+		};
+
+var stats = new Stats();
+stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+stats_dom=document.getElementById("statistics");
+stats_dom.appendChild( stats.dom );
+
 createLights();
 function createLights() {
 	// A hemisphere light is a gradient colored light; 
@@ -2254,7 +2364,7 @@ function createEmitter(obj) {
     emitter.addInitialize(new Proton.Velocity(400, new Proton.Vector3D(0, 1, 0), 50));
     emitter.addBehaviour(new Proton.RandomDrift(50, 50, 50, .05));
     emitter.addBehaviour(new Proton.Rotate("random", "random"));
-    emitter.addBehaviour(new Proton.Scale(new Proton.Span(0.8, 1.2)));
+    emitter.addBehaviour(new Proton.Scale(new Proton.Span(0.8, 1.2),1));
     // emitter.addBehaviour(new Proton.Alpha(1, 0, Infinity, Proton.easeInQuart));
     var zone = new Proton.BoxZone(0,150,100,300,300,300);
     emitter.addBehaviour(new Proton.CrossZone(zone, "dead"));
@@ -2284,7 +2394,7 @@ function createEmitter(obj) {
         emitter.addInitialize(new Proton.V(new Proton.Span(20, 20), new Proton.Vector3D(0, 0.1, 0), 30));
         emitter.addBehaviour(new Proton.RandomDrift(15, 15, 15, .01));
         //emitter.addBehaviour(new Proton.Alpha(1, 0.1));
-        emitter.addBehaviour(new Proton.Scale(new Proton.Span(75, 100), 0));
+        emitter.addBehaviour(new Proton.Scale(new Proton.Span(75, 100),1));
         emitter.addBehaviour(new Proton.G(-0.1));
         emitter.addBehaviour(new Proton.Color('#FF0026', ['#ffff00', '#ffff11'], Infinity, Proton.easeOutSine));
         emitter.p.x = 0;
@@ -2325,7 +2435,7 @@ function generateExplosion(explosion_x,explosion_y, explosion_z, explosion_stren
 	emitter2.p.x=explosion_x;
 	emitter2.p.y=explosion_y;
 	emitter2.p.z=explosion_z;
-	emitter1.rate=new Proton.Rate(Math.ceil(Math.log(explosion_strength) / Math.log(1.5)), 0.3);
+	emitter1.rate=new Proton.Rate(Math.ceil(Math.log(explosion_strength) / Math.log(1.25)), 0.3);
 	emitter1.emit("once");
 	emitter2.emit("once");	
 }
@@ -2347,59 +2457,205 @@ function nearestCubeSide(mynumber){
 }	
 selectedObject = [];
 unitsize=10;
+thickness=1;
 BasicEntity = function(type){
-	this.mesh = new THREE.Object3D();
-	geom_BasicEntity = new THREE.BoxGeometry(unitsize,unitsize,unitsize);
-	mat_BasicEntity = new THREE.MeshLambertMaterial( { color: 0x454545, flatShading:true} );
-	//mat_BasicEntity.transparent = true;
-	base_generator_BasicEntity = new THREE.Mesh(geom_BasicEntity, mat_BasicEntity); 
-	base_generator_BasicEntity.castShadow = true;
-
-	//base_generator_BasicEntity.receiveShadow = true;
+	c_geometry = new THREE.InstancedBufferGeometry();
+	c_geometry.copy( new THREE.BoxBufferGeometry(unitsize,unitsize,unitsize));
 	
-	geom_outline_BasicEntity = new THREE.EdgesGeometry2(geom_BasicEntity);
-	mat_outline_BasicEntity = new THREE.LineMaterial( { color:0xffffff, linewidth:2} );
-	mat_outline_BasicEntity.resolution.set( window.innerWidth, window.innerHeight );  
-	base_generator_outline_BasicEntity_mesh = new THREE.Wireframe( geom_outline_BasicEntity, mat_outline_BasicEntity); 
+	w_geometry = new THREE.InstancedBufferGeometry();
+
+	mergedgeometry = new THREE.Geometry();
+ 
+	side_geom = new THREE.BoxGeometry(thickness,unitsize+thickness,thickness);
+	side_geom.translate(unitsize/2+thickness-1,0,unitsize/2+thickness-1);
+	mergedgeometry.merge(side_geom);
+	
+	side_geom = new THREE.BoxGeometry(thickness,unitsize+thickness,thickness);
+	side_geom.translate(-unitsize/2-thickness+1,0,-unitsize/2-thickness+1);
+	mergedgeometry.merge(side_geom);
+
+	side_geom = new THREE.BoxGeometry(thickness,unitsize+thickness,thickness);
+	side_geom.translate(unitsize/2+thickness-1,0,-unitsize/2-thickness+1);
+	mergedgeometry.merge(side_geom);
+	
+	side_geom = new THREE.BoxGeometry(thickness,unitsize+thickness,thickness);
+	side_geom.translate(-unitsize/2-thickness+1,0,unitsize/2+thickness-1);
+	mergedgeometry.merge(side_geom);
+	
+	side_geom = new THREE.BoxGeometry(unitsize+thickness,thickness,thickness);
+	side_geom.translate(0,unitsize/2+thickness-1,unitsize/2+thickness-1);
+	mergedgeometry.merge(side_geom);
+	
+	side_geom = new THREE.BoxGeometry(unitsize+thickness,thickness,thickness);
+	side_geom.translate(0,-unitsize/2-thickness+1,-unitsize/2-thickness+1);
+	mergedgeometry.merge(side_geom);
+	
+	side_geom = new THREE.BoxGeometry(unitsize+thickness,thickness,thickness);
+	side_geom.translate(0,-unitsize/2-thickness+1,unitsize/2+thickness-1);
+	mergedgeometry.merge(side_geom);
+	
+	side_geom = new THREE.BoxGeometry(unitsize+thickness,thickness,thickness);
+	side_geom.translate(0,unitsize/2+thickness-1,-unitsize/2-thickness+1);
+	mergedgeometry.merge(side_geom);
+
+	side_geom = new THREE.BoxGeometry(thickness,thickness,thickness+unitsize);
+	side_geom.translate(unitsize/2+thickness-1,-unitsize/2-thickness+1,0);
+	mergedgeometry.merge(side_geom);	
+
+	side_geom = new THREE.BoxGeometry(thickness,thickness,thickness+unitsize);
+	side_geom.translate(-unitsize/2-thickness+1,unitsize/2+thickness-1,0);
+	mergedgeometry.merge(side_geom);		
+	
+	side_geom = new THREE.BoxGeometry(thickness,thickness,thickness+unitsize);
+	side_geom.translate(-unitsize/2-thickness+1,-unitsize/2-thickness+1,0);
+	mergedgeometry.merge(side_geom);		
+	
+	side_geom = new THREE.BoxGeometry(thickness,thickness,thickness+unitsize);
+	side_geom.translate(unitsize/2+thickness-1,unitsize/2+thickness-1,0);
+	mergedgeometry.merge(side_geom);		
+	w_geometry.copy( new THREE.BufferGeometry().fromGeometry(mergedgeometry));
+	
+	c_offsets = new Float32Array(type*3); // xyz
+	c_colors = new Float32Array(type*3); // rgb
+	c_scales = new Float32Array(type); // s
+
+	w_offsets = new Float32Array(type*3); // xyz
+	w_colors = new Float32Array(type*3); // rgb
+	w_scales = new Float32Array(type); // s
+	
 	cuberoot = nearestCubeSide(type);
 	cubearea = cuberoot*cuberoot;
 	myheight = Math.ceil(type/cubearea)
+	index=0;
 	for(var unityt=0; unityt<myheight;unityt++){
-		filledarea = 0;
-		if(unityt==myheight-1){
-			filledarea=type-cubearea*(myheight-1);
-		}else{
-			filledarea=cubearea;
-		}
+		filledarea = (unityt==myheight-1)?(type-cubearea*(myheight-1)):cubearea;
 		filledx=Math.ceil(filledarea/cuberoot);
-		
 		for(var unitx=0; unitx<=filledx-1; unitx++){
-			filledz = 0;
-			if(unitx==filledx-1){
-				filledz=filledarea-cuberoot*(filledx-1);
-			}else{
-				filledz=cuberoot;
-			}
-			for(var unitz=0; unitz<filledz; unitz++){
-			generator_BasicEntity=base_generator_BasicEntity.clone();
-			generator_BasicEntity.position.set(unitx*(unitsize+2)-cuberoot*(unitsize+2)/2,unityt*(unitsize+2)+unitsize/2,unitz*(unitsize+2)-cuberoot*(unitsize+2)/2);
-			this.mesh.add(generator_BasicEntity);
-		
+			filledz = (unitx==filledx-1)?(filledarea-cuberoot*(filledx-1)):cuberoot;
+			for(var unitz=0; unitz<filledz; unitz++){	
+			/*
 			generator_outline_BasicEntity_mesh=base_generator_outline_BasicEntity_mesh.clone();
 			generator_outline_BasicEntity_mesh.position.set(unitx*(unitsize+2)-cuberoot*(unitsize+2)/2,unityt*(unitsize+2)+unitsize/2,unitz*(unitsize+2)-cuberoot*(unitsize+2)/2);
 			generator_outline_BasicEntity_mesh.computeLineDistances();
 
-			this.mesh.add(generator_outline_BasicEntity_mesh);
+			this.mesh.add(generator_outline_BasicEntity_mesh);*/
+			c_offsets[index*3]=unitx*(unitsize+2)-cuberoot*(unitsize+2)/2;
+			c_offsets[index*3+1]=unityt*(unitsize+2)-myheight*(unitsize+2)/2;
+			c_offsets[index*3+2]=unitz*(unitsize+2)-cuberoot*(unitsize+2)/2;
+			// per-instance color tint - optional
+			c_colors[index*3] = 1;
+			c_colors[index*3+1] = 1;
+			c_colors[index*3+2] = 1;
+			// per-instance scale variation
+			c_scales[index] = 1; //+ 0.5 * Math.sin( 32 * Math.PI * i / INSTANCES );
+			
+			w_offsets[index*3]=unitx*(unitsize+2)-cuberoot*(unitsize+2)/2;
+			w_offsets[index*3+1]=unityt*(unitsize+2)-myheight*(unitsize+2)/2;
+			w_offsets[index*3+2]=unitz*(unitsize+2)-cuberoot*(unitsize+2)/2;
+			// per-instance color tint - optional
+			w_colors[index*3] = 1;
+			w_colors[index*3+1] = 1;
+			w_colors[index*3+2] = 1;
+			// per-instance scale variation
+			w_scales[index] = 1; //+ 0.5 * Math.sin( 32 * Math.PI * i / INSTANCES );
+			
+			index++;
 			}
 		}
 	}
+	 
+	this.c_offsetAttribute = new THREE.InstancedBufferAttribute(c_offsets,3).setDynamic(true);
+	//this.c_Orientation = new THREE.InstancedBufferAttribute(this.c_Orientation,3).setDynamic(true);
+	c_geometry.addAttribute( 'instanceOffset', this.c_offsetAttribute);
+	//this.c_geometry.addAttribute( 'instanceOrientation', this.c_Orientation);
+	c_geometry.addAttribute( 'instanceColor', new THREE.InstancedBufferAttribute(c_colors,3));
+	c_geometry.addAttribute( 'instanceScale', new THREE.InstancedBufferAttribute(c_scales,1));
+
+	this.w_offsetAttribute = new THREE.InstancedBufferAttribute(w_offsets,3).setDynamic(true);
+	//this.c_Orientation = new THREE.InstancedBufferAttribute(this.c_Orientation,3).setDynamic(true);
+	w_geometry.addAttribute( 'instanceOffset', this.w_offsetAttribute);
+	//this.c_geometry.addAttribute( 'instanceOrientation', this.c_Orientation);
+	w_geometry.addAttribute( 'instanceColor', new THREE.InstancedBufferAttribute(w_colors,3));
+	w_geometry.addAttribute( 'instanceScale', new THREE.InstancedBufferAttribute(w_scales,1));
+
+	c_material = new THREE.MeshLambertMaterial( {
+				color: 0x454545,
+				combine: THREE.MultiplyOperation,
+				//reflectivity: 0.8,
+				vertexColors: THREE.VertexColors,
+				fog: true
+			} );
+	c_material.defines = c_material.defines || {};
+	c_material.defines[ 'INSTANCED'] = "";
+			// custom depth material - required for instanced shadows
+			var shader = THREE.ShaderLib[ 'customDepthRGBA' ];
+			var uniforms = THREE.UniformsUtils.clone( shader.uniforms );
+			var customDepthMaterial = new THREE.ShaderMaterial( {
+				defines: {
+					'INSTANCED': "",
+					'DEPTH_PACKING': THREE.RGBADepthPacking
+				},
+				uniforms: uniforms,
+				vertexShader: shader.vertexShader,
+				fragmentShader: shader.fragmentShader
+			} );
+			
+	this.c_mesh = new THREE.Mesh( c_geometry, c_material );
+	this.c_mesh.scale.set( 1, 1, 1 );
+	this.c_mesh.castShadow = true;
+	this.c_mesh.receiveShadow = false;
+	this.c_mesh.customDepthMaterial = customDepthMaterial;
+	this.c_mesh.frustumCulled = false;
+	
+	scene.add(this.c_mesh);
+	
+	w_material = new THREE.MeshLambertMaterial( {
+		color: 0xffffff,
+		combine: THREE.MultiplyOperation,
+		//reflectivity: 0.8,
+		vertexColors: THREE.VertexColors,
+		fog: true
+	} );
+	w_material.defines = w_material.defines || {};
+	w_material.defines[ 'INSTANCED'] = "";
+			// custom depth material - required for instanced shadows
+			var shader = THREE.ShaderLib[ 'customDepthRGBA' ];
+			var uniforms = THREE.UniformsUtils.clone( shader.uniforms );
+			var customDepthMaterial = new THREE.ShaderMaterial( {
+				defines: {
+					'INSTANCED': "",
+					'DEPTH_PACKING': THREE.RGBADepthPacking
+				},
+				uniforms: uniforms,
+				vertexShader: shader.vertexShader,
+				fragmentShader: shader.fragmentShader
+			} );
+			
+	this.w_mesh = new THREE.Mesh(w_geometry, w_material );
+	this.w_mesh.scale.set( 1, 1, 1 );
+	this.w_mesh.castShadow = false;
+	this.w_mesh.receiveShadow = false;
+	this.w_mesh.customDepthMaterial = customDepthMaterial;
+	this.w_mesh.frustumCulled = false;
+	
+	scene.add(this.w_mesh);
+
+	this.c_mesh.position.y=(myheight*(unitsize+2))/2+unitsize/2;
+	this.w_mesh.position.y=(myheight*(unitsize+2))/2+unitsize/2;
 } 
 BasicEntity.prototype.set_entity_distance = function(distance_percentage){
-	this.mesh.position.z=plane_length*0.46-plane_length*0.16-plane_length*distance_percentage/386;
+	this.c_mesh.position.z=plane_length*0.46-plane_length*0.16-plane_length*distance_percentage/386;
+	this.w_mesh.position.z=plane_length*0.46-plane_length*0.16-plane_length*distance_percentage/386;
 }
 BasicEntity.prototype.set_entity_x = function(x){
-	this.mesh.position.x=x;
+	this.c_mesh.position.x=x;
+	this.w_mesh.position.x=x;
 }
+BasicEntity.prototype.set_entity_y = function(y){
+	this.c_mesh.position.y=y;
+	this.w_mesh.position.y=y;
+}
+
 //BasicEntity.prototype.opacity = function(myOpacity){
 //	for (var i=0; i<this.mesh.children.length; i+=1) {
 //            this.mesh.children[i].material.opacity = myOpacity;  
@@ -2413,27 +2669,28 @@ BasicEntity.prototype.wireframe_visibility = function(myVisibility){
     }
 }
 BasicEntity.prototype.remove = function(){
-	for (var i=0; i<this.mesh.children.length; i+=1) {
-            this.mesh.children[i].geometry.dispose(); 
-			this.mesh.children[i].material.dispose(); 
-        }
-
-	scene.remove(this.mesh);
+    this.w_mesh.material.dispose(); 
+	this.w_mesh.geometry.dispose(); 
+	this.c_mesh.material.dispose(); 
+	this.c_mesh.geometry.dispose(); 
+	scene.remove(this.w_mesh);
+	scene.remove(this.c_mesh);
 }
 outlinePass.selectedObjects.push(plane);
 
- //controls = new THREE.OrbitControls( camera );
-	entities1 = new BasicEntity(2);scene.add(entities1.mesh);
-	entities2 = new BasicEntity(50);scene.add(entities2.mesh);
-	entities3 = new BasicEntity(128);scene.add(entities3.mesh);
-	entities1.set_entity_x(-100);
-	entities2.set_entity_x(0);
-	entities3.set_entity_x(100);
+//controls = new THREE.OrbitControls( camera );
+	entities1 = new BasicEntity(2);	entities1.set_entity_x(-100);
+	entities2 = new BasicEntity(50);	entities2.set_entity_x(100);
+	entities3 = new BasicEntity(1280);	entities3.set_entity_x(0);
+
 	counter2=0; 
+	temp_reset=0;
 function animate(){
-    requestAnimationFrame(animate);
     delta = clock.getDelta();
-	counter+=delta*50;
+	
+	stats.begin();
+	
+	counter+=delta*100;
 	counter2++;
 	//controls.update();
 	//attack_level_counter+=delta*50
@@ -2446,23 +2703,74 @@ function animate(){
 	if(attack_level_counter>prev_attack_level_counter-0.5&&attack_level_counter<prev_attack_level_counter+0.5){
 		prev_attack_level_counter=attack_level_counter; 
 	}
-	if(counter>100){counter=0;generateExplosion(0,50,110,64);} //generateExplosion(-100,50,110,2); generateExplosion(100,50,110,128); }
+	if(counter>50&&temp_reset==0){generateExplosion(0,50,110,512);temp_reset=1;entities3.remove();}
+	if(counter>100){counter=0;temp_reset=0;	entities3 = new BasicEntity(128);} //generateExplosion(-100,50,110,2); generateExplosion(100,50,110,128); }
 	actual_move=easeInOutQuad(prev_attack_level_counter%100,0,100,100);
 	set_plane_distance(actual_move);
  
 	if(counter2%300==0){
 		update_attack_level(Math.ceil(counter2/300));
 	}
-	//entities = new BasicEntity(128);
-	//scene.add(entities.mesh); 
-	entities1.set_entity_distance(actual_move+counter);
-	entities2.set_entity_distance(actual_move+counter);
-	entities3.set_entity_distance(actual_move+counter);
+
+	entities1.set_entity_distance(actual_move+counter/5*10);
+	entities2.set_entity_distance(actual_move+counter/5*10);
+	entities3.set_entity_distance(actual_move+counter/5*10);
+	//entities3.set_entity_y((myheight*(unitsize+2))/2+unitsize);
 	//}else{
-	//entities.remove(); 
+	//entities3.set_entity_y(myheight*(unitsize+2)/2-10*(counter-50));
+	//}
+	//}else{
+	 
+/*	
+for ( var i = 0; i<entities3.c_offsetAttribute.count*3; i=i+3 ) {
+	cur_x=entities3.c_offsetAttribute.array[i]+Math.random(2)-1;
+	cur_y=entities3.c_offsetAttribute.array[i+1]+Math.random(2)-1;
+	cur_z=entities3.c_offsetAttribute.array[i+2]+Math.random(2)-1;
+	//should be the same
+	expansion_factor=(Math.random()+1)/50; 
+	distancefromcentre=Math.sqrt(Math.pow(cur_y,2)+Math.pow(cur_x,2)+Math.pow(cur_z,2))
+	if(cur_x>=0){
+		entities3.c_offsetAttribute.array[i]=cur_x+distancefromcentre*expansion_factor;
+	}else{
+		entities3.c_offsetAttribute.array[i]=cur_x-distancefromcentre*expansion_factor;	
+	}
+	if(cur_y>=0){
+		entities3.c_offsetAttribute.array[i+1]=cur_y+distancefromcentre*expansion_factor;
+	}else{
+		entities3.c_offsetAttribute.array[i+1]=cur_y-distancefromcentre*expansion_factor;	
+	}
+	if(cur_z>=0){
+		entities3.c_offsetAttribute.array[i+2]=cur_z+distancefromcentre*expansion_factor;
+	}else{
+		entities3.c_offsetAttribute.array[i+2]=cur_z-distancefromcentre*expansion_factor;	
+	}
+	
+	if(cur_x>=0){
+		entities3.w_offsetAttribute.array[i]=cur_x+distancefromcentre*expansion_factor;
+	}else{
+		entities3.w_offsetAttribute.array[i]=cur_x-distancefromcentre*expansion_factor;	
+	}
+	if(cur_y>=0){
+		entities3.w_offsetAttribute.array[i+1]=cur_y+distancefromcentre*expansion_factor;
+	}else{
+		entities3.w_offsetAttribute.array[i+1]=cur_y-distancefromcentre*expansion_factor;	
+	}
+	if(cur_z>=0){
+		entities3.w_offsetAttribute.array[i+2]=cur_z+distancefromcentre*expansion_factor;
+	}else{
+		entities3.w_offsetAttribute.array[i+2]=cur_z-distancefromcentre*expansion_factor;	
+	}
+	
+}
+	entities3.c_offsetAttribute.needsUpdate = true;
+	entities3.w_offsetAttribute.needsUpdate = true;
+ */
+
 	
 	proton.update();
 	composer.render();
+	stats.end();
+	requestAnimationFrame(animate);
 }
 animate();
 /*function loadImage(url, context, x, y, w, h) {

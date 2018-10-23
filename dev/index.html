@@ -24,6 +24,7 @@
 <script src='js/Line2.js'></script>
 <script src='js/Wireframe.js'></script>
 <script src="js/three.proton.min.js"></script>
+<script src="js/stats.min.js"></script>
 
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 <style>
@@ -184,7 +185,7 @@ body {
 #energy_goal{
 	position:relative;
 	background-color:#ddd;
-	width:calc(50% - 3px);
+	width:calc(100% - 3px);
 	border-radius:3px;
 	float:left;
 }
@@ -197,7 +198,8 @@ body {
 	height:100px;
 }
 #energy_goal_display{
-	width:90%;
+	width:80%;
+	font-size:18px;
 	color:#000000;
 }
 /*Currency Icons*/
@@ -1238,7 +1240,7 @@ text-shadow: 0px 1px 0px #999,0px 0px 4px #000 !important;
 .tabbar p { 
 	color: black; 
 	display: block;
-	margin: 5px 5px;
+	margin: 0.4% 0.4%;
 	position: relative; 
 	text-decoration: none; 
 	transition: background-color 0.1s ease-in-out;
@@ -1445,9 +1447,6 @@ Do you really want to delete this save?
 	</tr>
 </table>
 </div>
-<div id="research_spawner">
-Natural Research Sources
-</div>
 <div class="clear"></div>
 <div id="buildingscontainer">
 <div id="energyproduction">
@@ -1522,7 +1521,7 @@ Natural Research Sources
 </span>
 </div>
 <p></p>
-<span class="details"><span id="egcost0003" class="cur_energy"></span><span id="autoerrorcost0003" class="errorcost">Insufficient items</span>
+<span class="details"><span id="egcost0003" class="cur_energy"></span><span id="autoerrorcost0003" class="errorcost">Insufficient items</span></span>
 </div>
 </div>
 <div id="energystorage">
@@ -1646,7 +1645,7 @@ Natural Research Sources
 </span>
 </div>
 <p></p>
-<span class="details"><span> </span><span id="rStorecost0000" class="cur_energy"></span><span id="rStoreerrorcost0000" class="errorcost">Insufficient items</span></span>
+<span class="details"><span id="rStorecost0000" class="cur_energy"></span><span id="rStoreerrorcost0000" class="errorcost">Insufficient items</span></span>
 
 <div class="clear"></div>
 </div>
@@ -1662,6 +1661,7 @@ Natural Research Sources
 <span class="details"><span> </span><span id="workerbotsEcost0000" class="cur_energy"></span> <span id="workerbotsRcost0000" class="cur_research"></span><span id="workerbotserrorcost0000" class="errorcost">Insufficient items</span><span> Acquired:</span><span class="totalworkerbots"></span></span>
 </div>
 <div class="clear"></div>
+<div id="statistics"></div>
 <div id="home_graphics"></div>
 </div>
 <div id="tabB" class="tabClass">
@@ -1743,7 +1743,7 @@ Natural Research Sources
 <div id="achievementTotalworkerbotsGRP" class="achievementGRP">Total Worker Bots</div> 
 <div class="clear"></div>
 <div id="achievementSpecialtyGRP" class="achievementGRP">Specialty</div> 
-<br></br>
+<br> 
 <div class="clear"></div>
  <h2>Additional Bonus</h2>
  <br>
@@ -1842,6 +1842,7 @@ Natural Research Sources
 <div class="clear"></div>
 <div id="bottomcontainer">
 <div id="centernotify"><div id="notifyTitle" style="font-size:24px;"></div></div>
+</div>
 </div>
 </body>
 </html>
