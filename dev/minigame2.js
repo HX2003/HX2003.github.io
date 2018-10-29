@@ -1531,7 +1531,7 @@ function gamestate0(){
 function gamestate1(){
 	workerbots[1]=1; //first workerbots
 	workerbots[2]=1; //first workerbots
-	$('.blackScreen').fadeOut(1000);
+	$('.blackScreen').fadeOut(1000); 
 	$('#startgameText1').fadeOut(1000);
 	$('#startgameText2').fadeOut(1000);
 	BuildingAutoNumber0000 = BuildingAutoNumber0000 + 1;
@@ -1542,11 +1542,12 @@ if(gameState[0]>=1){
    gamestate0();
 }
 $( "#startgameButton" ).click(function() {
-	if(gameState[0]==0){
+	if(gameState[0]==0){ 
 	gamestate1();
 	gameState[0]=1;
 	}
-});
+});	 
+
 function checkGamestate(){
 	if(totalenergyed>=50&&gameState[0]==1){tabsunlocked[4]=1;gameState[0]=2;fillTabsName(); notify("Tab \""+tabsName[4]+"\" unlocked",1);}
 	if(totalenergyed>=750&&gameState[0]==2){tabsunlocked[3]=1;gameState[0]=3;fillTabsName(); notify("Tab \""+tabsName[3]+"\" unlocked",1);}
@@ -2137,39 +2138,55 @@ $(document).on("mouseup touchend",function(){
 	  });
  
 //Main Graphics
+function webglAvailable() {
+    try {
+        var canvas = document.createElement("canvas");
+        return !!
+            window.WebGLRenderingContext && 
+            (canvas.getContext("webgl") || 
+                canvas.getContext("experimental-webgl"));
+    } catch(e) { 
+        return false;
+    } 
+}
 scene = new THREE.Scene();
+//camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 );
 camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 );
 camera.rotation.order = "YXZ";
-renderer = new THREE.WebGLRenderer();
+renderer = webglAvailable() ? new THREE.WebGLRenderer({antialias:false}) : new THREE.CanvasRenderer();
 clock = new THREE.Clock();
 clock.start();
-var loader = new THREE.TextureLoader();
 home_graphics = document.getElementById("home_graphics");
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.shadowMap.enabled = true;
-composer = new THREE.EffectComposer(renderer);
-renderPass = new THREE.RenderPass( scene, camera );
-composer.addPass(renderPass);
-outlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
+renderer.gammaOutput = true;
+fogColor = new THREE.Color(0xFFDAB9);
+scene.background = fogColor;
+scene.fog = new THREE.Fog(fogColor, 512, 8192);
+
+//composer = new THREE.EffectComposer(renderer);
+//renderPass = new THREE.RenderPass( scene, camera );
+//composer.addPass(renderPass);
+//outlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
 //outline settings
-outlinePass.edgeStrength = 5;
-outlinePass.edgeGlow = 0.1;
-outlinePass.edgeThickness = 2;
-composer.addPass(outlinePass);
+//outlinePass.edgeStrength = 5;
+//outlinePass.edgeGlow = 0.1;
+//outlinePass.edgeThickness = 2;
+//composer.addPass(outlinePass);
 
-outputPass = new THREE.ShaderPass( THREE.CopyShader );
-outputPass.renderToScreen = true;
-composer.addPass( outputPass );
+//outputPass = new THREE.ShaderPass( THREE.CopyShader );
+//outputPass.renderToScreen = true;
+//composer.addPass( outputPass );
 home_graphics.appendChild( renderer.domElement );
-
-camera.position.set(0,200,0);
-camera.rotation.x = THREE.Math.degToRad(-45);
+camera.setViewOffset(window.innerWidth, window.innerHeight,-window.innerWidth/5,0,window.innerWidth,window.innerHeight);
+camera.position.set(0,1100,0);
+camera.rotation.x = THREE.Math.degToRad(-60);
 camera.rotation.y = THREE.Math.degToRad(180);
 window.addEventListener('resize',function(){
 	width = window.innerWidth;
 	height = window.innerHeight;
 	renderer.setSize(width,height);
-	composer.setSize(width,height);
+	//composer.setSize(width,height);
 	camera.aspect = width/height;
 	camera.updateProjectionMatrix();
 });
@@ -2286,39 +2303,266 @@ stats_dom.appendChild( stats.dom );
 
 createLights();
 function createLights() {
-	// A hemisphere light is a gradient colored light; 
-	// the first parameter is the sky color, the second parameter is the ground color, 
-	// the third parameter is the intensity of the light
-	hemisphereLight = new THREE.HemisphereLight(0xaaaaaa,0x000000, 3)
+	hemisphereLight = new THREE.AmbientLight(0xffffff,0.2)
+	shadowLight = new THREE.DirectionalLight(0xffffff,1);
+	pointLight = new THREE.PointLight( 0x0000ff, 1);
 	
-	// A directional light shines from a specific direction. 
-	// It acts like the sun, that means that all the rays produced are parallel. 
-	shadowLight = new THREE.DirectionalLight(0xffffff, 3);
-
-	// Set the direction of the light  
-	shadowLight.position.set(-2000, 1000, 2000);
+	pointLight.position.set( 0, 200, 2000 );
 	
-	// Allow shadow casting 
+	shadowLight.position.set(0, 1500, 1000);
 	shadowLight.castShadow = true;
 
-	// define the visible area of the projected shadow
 	shadowLight.shadow.camera.left = -2000;
 	shadowLight.shadow.camera.right = 4000;
-	shadowLight.shadow.camera.top = 300;
-	shadowLight.shadow.camera.bottom = -300;
+	shadowLight.shadow.camera.top = 500;
+	shadowLight.shadow.camera.bottom = -500;
 	shadowLight.shadow.camera.near = 10;
-	shadowLight.shadow.camera.far = 4000;
+	shadowLight.shadow.camera.far = 32768;
 
-	// define the resolution of the shadow; the higher the better, 
-	// but also the more expensive and less performance
 	shadowLight.shadow.mapSize.width = 1024;
 	shadowLight.shadow.mapSize.height = 1024;
 	
-	// to activate the lights, just add them to the scene
 	scene.add(hemisphereLight);  
 	scene.add(shadowLight);
+	scene.add(pointLight);
+}
+matrix=[
+	[1,0,0,0,1],
+	[0,0,1,0,0],
+	[0,0,1,0,0],
+	[0,0,1,0,0],
+	[0,0,1,0,0],
+	[0,1,1,1,0],
+	[0,0,1,0,0],
+	[0,0,1,0,0],
+	[0,0,0,0,0],
+	[1,1,0,1,1]
+	];
+//load envmap
+var env_path = './models/';
+var format = '.png';
+envMap = new THREE.CubeTextureLoader().load( [
+	env_path + 'xp' + format, env_path + 'xn' + format,
+	env_path + 'yp' + format, env_path + 'yn' + format,
+	env_path + 'zp' + format, env_path + 'zn' + format
+]);	
+GltfModel = function(){}
+GltfModel.prototype.returnGltfModels = async function(no,path,scale_x,scale_y,scale_z,pos_x,pos_y,pos_z,rot_y,add){
+	let _this=this;
+	let loadedmodel=[];
+	let model_index= new Array(no);
+	_this.completed=false;
+	_this.len = no;
+	let promise_requestGltfModel= new Promise(function(resolve, reject) {
+	let model_loader = new THREE.GLTFLoader();
+	model_loader.load(path, function (model_gltf){
+		model_gltf.scene.traverse(function(model_child){
+			if(model_child.isMesh){
+				model_child.material.envMap = envMap;
+			}
+			resolve(model_gltf.scene);
+		});
+	}, undefined, function (e) {
+			console.error(e);
+			//reject(e);
+	}); 
+	});
+	await promise_requestGltfModel.then(function(result) {
+		loadedmodel=result; 
+	}, function(err) {
+		
+	});  
+	//model is loaded
+	_this.completed=true;
+	let boundingBox = new THREE.Box3().setFromObject(loadedmodel);
+	_this.size = boundingBox.getSize(new THREE.Vector3());
+	for (let i=0; i<no;i++){
+	model_index[i]=loadedmodel.clone();
+	model_index[i].scale.x=scale_x;
+	model_index[i].scale.y=scale_y;
+	model_index[i].scale.z=scale_z;
+	model_index[i].position.x=pos_x;
+	model_index[i].position.y=pos_y;
+	model_index[i].position.z=pos_z;
+	model_index[i].rotation.y=THREE.Math.degToRad(rot_y);
+	if(add=true){
+		scene.add(model_index[i]);
+	}
+	_this.model=model_index;
+	}
+}
+GltfModel.prototype.getLength = function(){
+	if(this.completed==true){
+		return(this.len)
+	}else{
+		return false;
+	}
 }
 
+GltfModel.prototype.setScale = function(index,x,y,z){
+	if(this.completed==true){
+		this.model[index].scale.x=x;
+		this.model[index].scale.y=y;
+		this.model[index].scale.z=z;
+		return true;
+	}else{
+		return false;
+	}
+}
+GltfModel.prototype.getRealSizeX = function(){
+	if(this.completed==true){
+		return(this.size.x*this.model[0].scale.x)
+	}else{
+		return false;
+	}
+}
+GltfModel.prototype.setPositionX = function(index,x){
+	if(this.completed==true){
+		this.model[index].position.x=x;
+		return true;
+	}else{
+		return false;
+	}
+}
+GltfModel.prototype.setPositionY = function(index,y){
+	if(this.completed==true){
+		this.model[index].position.y=y;
+		return true;
+	}else{
+		return false;
+	}
+}
+GltfModel.prototype.setPositionZ = function(index,z){
+	if(this.completed==true){
+		this.model[index].position.z=z;
+		return true;
+	}else{
+		return false;
+	}
+}
+GltfModel.prototype.setRotationX = function(index,x){
+	if(this.completed==true){
+		this.model[index].rotation.x=x;
+		return true;
+	}else{
+		return false;
+	}
+}
+GltfModel.prototype.remove = function(){
+	for (let i=0;i<this.getLength(); i++){
+		scene.remove(this.model[i]);
+	}
+}
+PlatformGrid = function(width,length){
+	this.generated=false;
+	this.width=width;
+	this.length=length;
+	this.platforms = new GltfModel();
+	this.platforms.returnGltfModels(width*length,"./models/robotfact.gltf",15,15,15,0,0,0,0,true);
+	this.spawner = new GltfModel();
+	this.spawner.returnGltfModels(1,"./models/spawner.gltf",15,15,15,-370,100,1500,0,true);
+}
+PlatformGrid.prototype.generatePath = function(){
+	let _grid = new PF.Grid(this.width,this.length+2,matrix); 
+	let	_finder = new PF.AStarFinder({allowDiagonal:false});
+	let _centre = (this.width+1)/2-1;//assuming odd width accounting for 0
+	let _path = _finder.findPath(_centre, 0, _centre, this.length+1, _grid);  
+	this.land_path = {};
+	this.land_path.path=_path;
+	this.land_path.len=_path.length;
+}
+PlatformGrid.prototype.position = function(){
+	if(this.generated==false&&this.platforms.completed==true){
+	my_platformsize=this.platforms.getRealSizeX();
+	let _this=this;
+	for(let i=0;i<this.platforms.getLength(); i++){   
+		_this.platforms.setPositionX(i,(i%_this.width)*(my_platformsize)-my_platformsize*_this.width/2+110);
+		_this.platforms.setPositionZ(i,(Math.floor(i/_this.width)%_this.length)*(my_platformsize)); 
+	}
+	for(let i=0; i<this.width;i++){
+		for(let i2=1; i2<this.length+1;i2++){ 
+			let my_index=i+(this.length-i2)*_this.width; 
+			if(matrix[i2][i]==1){
+				_this.platforms.setPositionY(my_index,-50);
+			}else{
+				_this.platforms.setPositionY(my_index,100);
+			}
+		}
+	}
+	this.generated=true;
+	}
+}
+PlatformGrid.prototype.remove = function(){
+	this.platforms.remove();
+}
+generate_terrain();
+
+function generate_terrain(){
+	var xS = 31, yS = 31;
+	terrainScene = THREE.Terrain({
+		easing: THREE.Terrain.Linear,
+		frequency: 2.5,
+		heightmap: THREE.Terrain.PerlinDiamond,
+		material: new THREE.MeshPhongMaterial({color: 0xF0E68C, flatShading:false, shininess:0.5}),
+		maxHeight: -100,
+		minHeight: -500,
+		amplitude: 15,
+		steps: 1,
+		useBufferGeometry: false,
+		xSegments: xS,
+		xSize: 16384,
+		ySegments: yS,
+		ySize: 16384,
+	});
+	// Assuming you already have your global scene, add the terrain to it
+	scene.add(terrainScene);
+
+	// Optional:
+	// Get the geometry of the terrain across which you want to scatter meshes
+	var geo = terrainScene.children[0].geometry;
+	// Add randomly distributed foliage
+
+	cactus_loader = new THREE.GLTFLoader();
+	cactus_loader.load( './models/cactus.gltf', function ( gltf ) {
+	gltf.scene.traverse( function ( child ) {
+		if ( child.isMesh ) {
+			child.material.envMap = envMap;
+			my_geom = new THREE.Geometry().fromBufferGeometry(child.geometry);
+			my_geom.scale(3,3,3);
+			decoScene = THREE.Terrain.ScatterMeshes(geo, {
+			mesh: new THREE.Mesh(my_geom,child.material),
+			w: xS,
+			h: yS,
+			spread: 0.02,
+			randomness: Math.random,
+			});
+			terrainScene.add(decoScene);
+			}
+		});
+	}, undefined, function (e){
+		console.error(e);
+	});
+	cactus_loader.load( './models/cactus2.gltf', function ( gltf ) {
+	gltf.scene.traverse( function ( child ) {
+		if ( child.isMesh ) {
+			child.material.envMap = envMap;
+			my_geom = new THREE.Geometry().fromBufferGeometry(child.geometry);
+			my_geom.scale(3,3,3);
+			//	child.scale.set(10,10,10);
+			decoScene = THREE.Terrain.ScatterMeshes(geo, {
+			mesh: new THREE.Mesh(my_geom,child.material),
+			w: xS,
+			h: yS,
+			spread: 0.02,
+			randomness: Math.random,
+			});
+			terrainScene.add(decoScene);
+			}
+		});
+	}, undefined, function (e){
+		console.error(e);
+	});
+}
 
 function initProton(){
 	proton = new Proton();
@@ -2343,12 +2587,12 @@ function createMesh(geo) {
         if (geo == "sphere") {
             var geometry = new THREE.SphereGeometry(10, 8, 8);
             var material = new THREE.MeshLambertMaterial({
-                color: "#454545"
+                color: "#999999"
             });
         } else {
             var geometry = new THREE.BoxGeometry(10, 10, 10);
             var material = new THREE.MeshLambertMaterial({
-                color: "#454545"
+                color: "#999999"
             });
         }
         var mesh = new THREE.Mesh(geometry, material);
@@ -2374,7 +2618,7 @@ function createEmitter(obj) {
 	emitter.p.z = obj.p.z;
     return emitter;
 }
-    function createSprite() {
+function createSprite() {
         var map = new THREE.TextureLoader().load("./website/tools/particle.png");
         var material = new THREE.SpriteMaterial({
             map: map,
@@ -2383,41 +2627,40 @@ function createEmitter(obj) {
             fog: true
         });
         return new THREE.Sprite(material);
-    }
-    function createProton(image) {
-  emitter = new Proton.Emitter();
-        emitter.rate = new Proton.Rate(new Proton.Span(10, 15), new Proton.Span(.05, .1));
-        emitter.addInitialize(new Proton.Body(createSprite()));
-        emitter.addInitialize(new Proton.Mass(1));
-        emitter.addInitialize(new Proton.Life(0.5, 1));
-        emitter.addInitialize(new Proton.Position(new Proton.SphereZone(20)));
-        emitter.addInitialize(new Proton.V(new Proton.Span(20, 20), new Proton.Vector3D(0, 0.1, 0), 30));
-        emitter.addBehaviour(new Proton.RandomDrift(15, 15, 15, .01));
-        //emitter.addBehaviour(new Proton.Alpha(1, 0.1));
-        emitter.addBehaviour(new Proton.Scale(new Proton.Span(75, 100),1));
-        emitter.addBehaviour(new Proton.G(-0.1));
-        emitter.addBehaviour(new Proton.Color('#FF0026', ['#ffff00', '#ffff11'], Infinity, Proton.easeOutSine));
-        emitter.p.x = 0;
-        emitter.p.y = 50;
-        emitter.p.z = 110;
-        return emitter;
-        }
-plane_length=3200;
-geom_plane = new THREE.BoxGeometry( 500, plane_length, 10);
-mat_plane = new THREE.MeshPhongMaterial( { color: 0x454545 ,flatShading:true} );
-plane = new THREE.Mesh( geom_plane, mat_plane );
-//plane.castShadow = true;
-plane.receiveShadow = true;
-plane.rotation.x = THREE.Math.degToRad(90);
-plane.position.set(0,-1,plane_length*0.46);
-loader.load("./website/tools/plane.png", function(texture) {
- mat_plane.map = texture;
- scene.add(plane);
-});
-
-function set_plane_distance(percentage){
-	plane.position.z=plane_length*0.46-plane_length*percentage/386;
 }
+function createProton(image) {
+	emitter = new Proton.Emitter();
+    emitter.rate = new Proton.Rate(new Proton.Span(10, 15), new Proton.Span(.05, .1));
+    emitter.addInitialize(new Proton.Body(createSprite()));
+    emitter.addInitialize(new Proton.Mass(1));
+    emitter.addInitialize(new Proton.Life(0.5, 1));
+    emitter.addInitialize(new Proton.Position(new Proton.SphereZone(20)));
+    emitter.addInitialize(new Proton.V(new Proton.Span(20, 20), new Proton.Vector3D(0, 0.1, 0), 30));
+    emitter.addBehaviour(new Proton.RandomDrift(15, 15, 15, .01));
+    //emitter.addBehaviour(new Proton.Alpha(1, 0.1));
+    emitter.addBehaviour(new Proton.Scale(new Proton.Span(75, 100),1));
+    emitter.addBehaviour(new Proton.G(-0.1));
+    emitter.addBehaviour(new Proton.Color('#FF0026', ['#ffff00', '#ffff11'], Infinity, Proton.easeOutSine));
+    emitter.p.x = 0;
+    emitter.p.y = 50;
+    emitter.p.z = 110;
+    return emitter;
+}
+plane_length=3200;
+//geom_plane = new THREE.BoxGeometry( 500, plane_length, 10);
+//mat_plane = new THREE.MeshPhongMaterial( { color: 0xffffff ,flatShading:true} );
+//plane = new THREE.Mesh( geom_plane, mat_plane );
+//plane.castShadow = true;
+//plane.receiveShadow = true;
+//plane.rotation.x = THREE.Math.degToRad(90);
+//plane.position.set(0,-1,plane_length*0.46);
+//loader.load("./website/tools/plane.png", function(texture) {
+// mat_plane.map = texture;
+// scene.add(plane);
+//});
+//function set_plane_distance(percentage){
+//	plane.position.z=plane_length*0.46-plane_length*percentage/386;
+//}
 //t-time,b-initial,c-change,d-duration
 function easeInOutQuad(t, b, c, d) {
 	t /= d/2;
@@ -2439,13 +2682,6 @@ function generateExplosion(explosion_x,explosion_y, explosion_z, explosion_stren
 	emitter1.emit("once");
 	emitter2.emit("once");	
 }
-counter=0;
-move=0;
-entity_move=0;
-attack_level=0;
-attack_level_counter=0;
-prev_attack_level_counter=0;
-level_movement_speed=33;
 function update_attack_level(attacklvl){
 	attack_level_counter=attacklvl*100;
 }
@@ -2456,9 +2692,9 @@ function nearestCubeSide(mynumber){
 	return cuberoot;
 }	
 selectedObject = [];
-unitsize=10;
+ 
 thickness=1;
-BasicEntity = function(type){
+BasicEntity = function(type,unitsize){
 	c_geometry = new THREE.InstancedBufferGeometry();
 	c_geometry.copy( new THREE.BoxBufferGeometry(unitsize,unitsize,unitsize));
 	
@@ -2523,15 +2759,16 @@ BasicEntity = function(type){
 	w_colors = new Float32Array(type*3); // rgb
 	w_scales = new Float32Array(type); // s
 	
-	cuberoot = nearestCubeSide(type);
-	cubearea = cuberoot*cuberoot;
-	myheight = Math.ceil(type/cubearea)
-	index=0;
-	for(var unityt=0; unityt<myheight;unityt++){
-		filledarea = (unityt==myheight-1)?(type-cubearea*(myheight-1)):cubearea;
-		filledx=Math.ceil(filledarea/cuberoot);
+	this.unitsize = unitsize;
+	this.cuberoot = nearestCubeSide(type);
+	this.cubearea = this.cuberoot*this.cuberoot;
+	this.myheight = Math.ceil(type/this.cubearea)
+	let index=0;
+	for(var unityt=0; unityt<this.myheight;unityt++){
+		filledarea = (unityt==this.myheight-1)?(type-this.cubearea*(this.myheight-1)):this.cubearea;
+		filledx=Math.ceil(filledarea/this.cuberoot);
 		for(var unitx=0; unitx<=filledx-1; unitx++){
-			filledz = (unitx==filledx-1)?(filledarea-cuberoot*(filledx-1)):cuberoot;
+			filledz = (unitx==filledx-1)?(filledarea-this.cuberoot*(filledx-1)):this.cuberoot;
 			for(var unitz=0; unitz<filledz; unitz++){	
 			/*
 			generator_outline_BasicEntity_mesh=base_generator_outline_BasicEntity_mesh.clone();
@@ -2539,9 +2776,9 @@ BasicEntity = function(type){
 			generator_outline_BasicEntity_mesh.computeLineDistances();
 
 			this.mesh.add(generator_outline_BasicEntity_mesh);*/
-			c_offsets[index*3]=unitx*(unitsize+2)-cuberoot*(unitsize+2)/2;
-			c_offsets[index*3+1]=unityt*(unitsize+2)-myheight*(unitsize+2)/2;
-			c_offsets[index*3+2]=unitz*(unitsize+2)-cuberoot*(unitsize+2)/2;
+			c_offsets[index*3]=unitx*(this.unitsize+2)-this.cuberoot*(this.unitsize+2)/2;
+			c_offsets[index*3+1]=unityt*(this.unitsize+2)-this.myheight*(this.unitsize+2)/2;
+			c_offsets[index*3+2]=unitz*(this.unitsize+2)-this.cuberoot*(this.unitsize+2)/2;
 			// per-instance color tint - optional
 			c_colors[index*3] = 1;
 			c_colors[index*3+1] = 1;
@@ -2549,9 +2786,9 @@ BasicEntity = function(type){
 			// per-instance scale variation
 			c_scales[index] = 1; //+ 0.5 * Math.sin( 32 * Math.PI * i / INSTANCES );
 			
-			w_offsets[index*3]=unitx*(unitsize+2)-cuberoot*(unitsize+2)/2;
-			w_offsets[index*3+1]=unityt*(unitsize+2)-myheight*(unitsize+2)/2;
-			w_offsets[index*3+2]=unitz*(unitsize+2)-cuberoot*(unitsize+2)/2;
+			w_offsets[index*3]=unitx*(this.unitsize+2)-this.cuberoot*(this.unitsize+2)/2;
+			w_offsets[index*3+1]=unityt*(this.unitsize+2)-this.myheight*(this.unitsize+2)/2;
+			w_offsets[index*3+2]=unitz*(this.unitsize+2)-this.cuberoot*(this.unitsize+2)/2;
 			// per-instance color tint - optional
 			w_colors[index*3] = 1;
 			w_colors[index*3+1] = 1;
@@ -2579,7 +2816,7 @@ BasicEntity = function(type){
 	w_geometry.addAttribute( 'instanceScale', new THREE.InstancedBufferAttribute(w_scales,1));
 
 	c_material = new THREE.MeshLambertMaterial( {
-				color: 0x454545,
+				color: 0x999999,
 				combine: THREE.MultiplyOperation,
 				//reflectivity: 0.8,
 				vertexColors: THREE.VertexColors,
@@ -2612,7 +2849,7 @@ BasicEntity = function(type){
 	w_material = new THREE.MeshLambertMaterial( {
 		color: 0xffffff,
 		combine: THREE.MultiplyOperation,
-		//reflectivity: 0.8,
+		//reflectivity: 1,
 		vertexColors: THREE.VertexColors,
 		fog: true
 	} );
@@ -2640,165 +2877,187 @@ BasicEntity = function(type){
 	
 	scene.add(this.w_mesh);
 
-	this.c_mesh.position.y=(myheight*(unitsize+2))/2+unitsize/2;
-	this.w_mesh.position.y=(myheight*(unitsize+2))/2+unitsize/2;
+	this.c_mesh.position.y=(this.myheight*(this.unitsize+2))/2+20+100;
+	this.w_mesh.position.y=(this.myheight*(this.unitsize+2))/2+20+100;
+	
+	health_box_geom = new THREE.BoxGeometry(unitx*(this.unitsize+2), 10, 10 );
+	health_box_mat = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+	this.health_box = new THREE.Mesh( health_box_geom, health_box_mat );
+	scene.add(this.health_box);
+	this.health_box.position.y=this.myheight*(this.unitsize+2)+20+100;
 } 
-BasicEntity.prototype.set_entity_distance = function(distance_percentage){
-	this.c_mesh.position.z=plane_length*0.46-plane_length*0.16-plane_length*distance_percentage/386;
-	this.w_mesh.position.z=plane_length*0.46-plane_length*0.16-plane_length*distance_percentage/386;
+BasicEntity.prototype.set_entity_z = function(my_z){
+	this.c_mesh.position.z=my_z;//plane_length*0.46-plane_length*0.16-plane_length*distance_percentage/386;
+	this.w_mesh.position.z=my_z;//plane_length*0.46-plane_length*0.16-plane_length*distance_percentage/386;
+	this.health_box.position.z=my_z-this.cuberoot*(this.unitsize+2)/2;
 }
-BasicEntity.prototype.set_entity_x = function(x){
-	this.c_mesh.position.x=x;
-	this.w_mesh.position.x=x;
+BasicEntity.prototype.set_entity_x = function(my_x){
+	this.c_mesh.position.x=my_x;
+	this.w_mesh.position.x=my_x;  
+	this.health_box.position.x=my_x-6;  
 }
-BasicEntity.prototype.set_entity_y = function(y){
-	this.c_mesh.position.y=y;
-	this.w_mesh.position.y=y;
+BasicEntity.prototype.set_entity_y = function(my_y){
+	this.c_mesh.position.y=my_y;
+	this.w_mesh.position.y=my_y;
+	this.health_box.position.y=my_y+this.myheight*(this.unitsize+2);  
 }
-
-//BasicEntity.prototype.opacity = function(myOpacity){
-//	for (var i=0; i<this.mesh.children.length; i+=1) {
-//            this.mesh.children[i].material.opacity = myOpacity;  
-//   }
-//}
-BasicEntity.prototype.wireframe_visibility = function(myVisibility){
-	for (var i=0; i<this.mesh.children.length; i+=1) {
-		if(i%2==1){
-            this.mesh.children[i].visible = myVisibility;  
+BasicEntity.prototype.setHealthBar = function(maxhealth){
+	this.maxhealth=maxhealth;
+	this.curhealth=maxhealth;
+}
+BasicEntity.prototype.setCurHealth = function(curhealth){
+	this.curhealth=curhealth;
+}
+BasicEntity.prototype.setHealthBarDisplay = function(maxhealth){
+	let healthratio=this.curhealth/this.maxhealth;
+	if(healthratio>0){
+	this.health_box.scale.x=healthratio;
+	}
+}
+BasicEntity.prototype.setSpeed = function(speed){
+	this.entityspeed=speed;
+}
+BasicEntity.prototype.setMoves = function(){
+	this.totalmoves=GameGrid.land_path.len;
+	this.currentmove=0;
+	this.startpos=[0,0];
+	this.endpos=[0,0];
+	this.distancebetweenmoves=0;
+	this.currentprogress=0;
+	this.set_entity_z(-1000);
+}
+BasicEntity.prototype.nextMove = function(timepast){
+	this.totalmoves=GameGrid.land_path.len-2;//start position is move 0
+	this.startpos=GameGrid.land_path.path[this.currentmove];
+	this.endpos=GameGrid.land_path.path[this.currentmove+1];
+	this.interpolatemove(timepast);
+	
+	if(this.currentprogress>1){ 
+		if(this.currentmove<this.totalmoves){
+			this.currentmove=this.currentmove+1;
 		}
-    }
+		this.currentprogress=0;
+	}
+}
+BasicEntity.prototype.interpolatemove = function(timepast){
+	this.distancebetweenmoves=GameGrid.platforms.getRealSizeX();
+	let myxpos=this.startpos[0]*this.distancebetweenmoves;  
+	let myzpos=this.startpos[1]*this.distancebetweenmoves; 
+	let basehitanimation=1;
+	if(this.currentmove==this.totalmoves){
+		basehitanimation=0.25;
+	}
+	this.currentprogress=this.currentprogress+this.entityspeed*timepast;
+	myxpos=myxpos+((this.endpos[0]-this.startpos[0])*this.distancebetweenmoves*this.currentprogress*basehitanimation);
+	myzpos=myzpos+((this.endpos[1]-this.startpos[1])*this.distancebetweenmoves*this.currentprogress*basehitanimation); 	
+	this.set_entity_x(myxpos-340); 
+	this.set_entity_z(this.distancebetweenmoves*GameGrid.length+30-myzpos); 
 }
 BasicEntity.prototype.remove = function(){
     this.w_mesh.material.dispose(); 
 	this.w_mesh.geometry.dispose(); 
 	this.c_mesh.material.dispose(); 
 	this.c_mesh.geometry.dispose(); 
+	this.health_box.material.dispose(); 
+	this.health_box.geometry.dispose(); 
 	scene.remove(this.w_mesh);
 	scene.remove(this.c_mesh);
+	scene.remove(this.health_box);
 }
-outlinePass.selectedObjects.push(plane);
+EntitiesLevel = function(mylevel){
+	this.entity_size=mylevel;
+	this.entity_spawninterval=10/Math.sqrt(mylevel);
+	this.spawnprogress=this.entity_spawninterval; //give it a headstart
+	this.max_entities=Math.ceil(mylevel/10);
+	let entitymaxhealth=Math.pow(1.5,mylevel)
+	let speed=Math.sqrt(mylevel);
+	this.entities=[]
+	for(let i=0; i<this.max_entities; i++){
+		this.entities[i]=new BasicEntity(this.entity_size,10)
+		this.entities[i].setMoves();
+		this.entities[i].setSpeed(speed);
+		this.entities[i].setHealthBar(entitymaxhealth);
+		this.entities[i].inUse=false;
+	} 
+}
+EntitiesLevel.prototype.run = function(timepast){
+	this.spawnprogress=this.spawnprogress+timepast;
+	if(this.spawnprogress>this.entity_spawninterval){
+		this.spawnprogress=0;
+		//try to spawn an entity
+		for(let i=0; i<this.max_entities; i++){ //iterate through array and see if there is any entity not in use
+			if(this.entities[i].inUse==false){
+				this.entities[i].inUse=true;
+				 
+				//end of for loop
+				i=this.max_entities;
+			}
+		} 
+	}
+	
+	for(let i=0; i<this.max_entities; i++){ //iterate through array and move spawned entities
+			if(this.entities[i].inUse==true){
+				this.entities[i].nextMove(timepast);  
+				this.entities[i].setHealthBarDisplay();
+				this.entities[i].setCurHealth(this.entities[i].curhealth-this.entities[i].maxhealth*0.1*timepast);
+				if(this.entities[i].curhealth<0){ //do death animation and set back to original state for reuse
+					generateExplosion(this.entities[i].c_mesh.position.x-this.entities[i].cuberoot*(this.entities[i].unitsize+2)/2,200,this.entities[i].c_mesh.position.z+this.entities[i].cuberoot*(this.entities[i].unitsize+2)/2,this.entity_size);
+					this.entities[i].setMoves();
+					this.entities[i].setHealthBar(this.entities[i].maxhealth);
+					this.entities[i].inUse=false;
+				}
+			}
+	} 
+}
+EntitiesLevel.prototype.remove = function(){	
+	for(let i=0; i<this.max_entities; i++){
+		this.entities[i].remove();
+	} 
+}
+/*
+GameLevel.remove();
+GameLevel=undefined;
+*/
+//sectors->levels->entities
+//outlinePass.selectedObjects.push(plane);
+	//controls = new THREE.OrbitControls( camera );
 
-//controls = new THREE.OrbitControls( camera );
-	entities1 = new BasicEntity(2);	entities1.set_entity_x(-100);
-	entities2 = new BasicEntity(50);	entities2.set_entity_x(100);
-	entities3 = new BasicEntity(1280);	entities3.set_entity_x(0);
-
-	counter2=0; 
-	temp_reset=0;
+	counter=0;
+GameGrid = new PlatformGrid(5,8);
+GameGrid.generatePath();
+let level=1;
+GameLevel = new EntitiesLevel(50);
 function animate(){
     delta = clock.getDelta();
-	
 	stats.begin();
-	
-	counter+=delta*100;
-	counter2++;
+	counter=counter+delta;
 	//controls.update();
-	//attack_level_counter+=delta*50
-	if(attack_level_counter>prev_attack_level_counter){
-		prev_attack_level_counter=prev_attack_level_counter+level_movement_speed*delta;
+	GameGrid.position();
+	GameLevel.run(delta);
+	
+	if(counter>.5){
+		//GameLevel.remove();
+		//level++;
+		//GameLevel = new EntitiesLevel(level);
+		counter=0;
 	}
-	if(attack_level_counter<prev_attack_level_counter){
-		prev_attack_level_counter=prev_attack_level_counter-level_movement_speed*delta;
-	}
-	if(attack_level_counter>prev_attack_level_counter-0.5&&attack_level_counter<prev_attack_level_counter+0.5){
-		prev_attack_level_counter=attack_level_counter; 
-	}
-	if(counter>50&&temp_reset==0){generateExplosion(0,50,110,512);temp_reset=1;entities3.remove();}
-	if(counter>100){counter=0;temp_reset=0;	entities3 = new BasicEntity(128);} //generateExplosion(-100,50,110,2); generateExplosion(100,50,110,128); }
-	actual_move=easeInOutQuad(prev_attack_level_counter%100,0,100,100);
-	set_plane_distance(actual_move);
- 
-	if(counter2%300==0){
-		update_attack_level(Math.ceil(counter2/300));
-	}
-
-	entities1.set_entity_distance(actual_move+counter/5*10);
-	entities2.set_entity_distance(actual_move+counter/5*10);
-	entities3.set_entity_distance(actual_move+counter/5*10);
-	//entities3.set_entity_y((myheight*(unitsize+2))/2+unitsize);
-	//}else{
-	//entities3.set_entity_y(myheight*(unitsize+2)/2-10*(counter-50));
-	//}
-	//}else{
 	 
 /*	
 for ( var i = 0; i<entities3.c_offsetAttribute.count*3; i=i+3 ) {
-	cur_x=entities3.c_offsetAttribute.array[i]+Math.random(2)-1;
-	cur_y=entities3.c_offsetAttribute.array[i+1]+Math.random(2)-1;
-	cur_z=entities3.c_offsetAttribute.array[i+2]+Math.random(2)-1;
-	//should be the same
-	expansion_factor=(Math.random()+1)/50; 
-	distancefromcentre=Math.sqrt(Math.pow(cur_y,2)+Math.pow(cur_x,2)+Math.pow(cur_z,2))
-	if(cur_x>=0){
-		entities3.c_offsetAttribute.array[i]=cur_x+distancefromcentre*expansion_factor;
-	}else{
-		entities3.c_offsetAttribute.array[i]=cur_x-distancefromcentre*expansion_factor;	
-	}
-	if(cur_y>=0){
-		entities3.c_offsetAttribute.array[i+1]=cur_y+distancefromcentre*expansion_factor;
-	}else{
-		entities3.c_offsetAttribute.array[i+1]=cur_y-distancefromcentre*expansion_factor;	
-	}
-	if(cur_z>=0){
-		entities3.c_offsetAttribute.array[i+2]=cur_z+distancefromcentre*expansion_factor;
-	}else{
-		entities3.c_offsetAttribute.array[i+2]=cur_z-distancefromcentre*expansion_factor;	
-	}
-	
-	if(cur_x>=0){
-		entities3.w_offsetAttribute.array[i]=cur_x+distancefromcentre*expansion_factor;
-	}else{
-		entities3.w_offsetAttribute.array[i]=cur_x-distancefromcentre*expansion_factor;	
-	}
-	if(cur_y>=0){
-		entities3.w_offsetAttribute.array[i+1]=cur_y+distancefromcentre*expansion_factor;
-	}else{
-		entities3.w_offsetAttribute.array[i+1]=cur_y-distancefromcentre*expansion_factor;	
-	}
-	if(cur_z>=0){
+
 		entities3.w_offsetAttribute.array[i+2]=cur_z+distancefromcentre*expansion_factor;
 	}else{
 		entities3.w_offsetAttribute.array[i+2]=cur_z-distancefromcentre*expansion_factor;	
-	}
 	
-}
 	entities3.c_offsetAttribute.needsUpdate = true;
 	entities3.w_offsetAttribute.needsUpdate = true;
  */
-
-	
 	proton.update();
-	composer.render();
+	//composer.render();
+	renderer.render( scene, camera );
 	stats.end();
 	requestAnimationFrame(animate);
 }
 animate();
-/*function loadImage(url, context, x, y, w, h) {
-   
-}
 
-count=0;
-var canvas = document.getElementById("mainCanvas");
-var ctx = canvas.getContext("2d");
-myimgs = {bot:"./website/tools/bot.png"}; //object
-loadedImgs={}; 
-loadCanavas(myimgs,startcanvas);
-function loadCanavas(imgs,action){
-	totalimg=0;
-	for (var i in imgs) {
-        loadedImgs[i] = new Image();
-        loadedImgs[i].onload =  function(){totalimg=totalimg+1; if(totalimg==Object.keys(imgs).length){action();}};
-        loadedImgs[i].src = imgs[i];
-    }
-}
-function startcanvas(){
-	window.requestAnimationFrame(render);
-}
-function render(){
-	ctx.clearRect(0,0,200,500);
-	ctx.drawImage(loadedImgs.bot,count,0,60,60)
-	count=count+1;
-	window.requestAnimationFrame(render);
-}  
-	 */
 });
