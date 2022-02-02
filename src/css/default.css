@@ -99,10 +99,6 @@ img {
   max-width: 100%;
 }
 
-section {
-  padding: 4.5rem 1rem 1rem;
-}
-
 .section-title {
   margin-bottom: 2.5rem;
   text-align: center;
@@ -274,10 +270,12 @@ nav {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  justify-content: center;
 }
 
 #home div {
-  flex-basis: 50%;
+  flex-basis: auto;
+  padding: 1rem;
 }
 
 /*===========CONTACT===========*/
@@ -316,6 +314,10 @@ nav {
 
   #home {
     flex-direction: row;
+  }
+  
+  #home div {
+    flex-basis: 50%;
   }
 }
 

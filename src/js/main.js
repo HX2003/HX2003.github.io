@@ -116,7 +116,7 @@ const sr = ScrollReveal({
 	distance: '20px'
 });
 
-sr.reveal(`#home, .section-title, .card-outer`);
+sr.reveal(`.section-title, .card-outer`);
 
 /*===========ENABLE TRANSITION===========*/
 let transition_duration = getComputedStyle(r).getPropertyValue('transition-duration-default');
