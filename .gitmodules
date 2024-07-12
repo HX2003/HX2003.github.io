@@ -1,0 +1,6 @@
+[submodule "Random-Equation-Generator"]
+	path = Random-Equation-Generator
+	url = https://github.com/HX2003/Random-Equation-Generator.git
+[submodule "Label-Generator"]
+	path = Label-Generator
+	url = https://github.com/HX2003/Label-Generator.git

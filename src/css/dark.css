@@ -1,0 +1,9 @@
+:root,
+::before,
+::after {
+  --color-background: #1a1929;
+  --color-surface: #2f2e3d;
+  --color-on-background: #eeeeee;
+  --color-on-background-variant: #eeeeee;
+  --color-on-surface: #eeeeee;
+}

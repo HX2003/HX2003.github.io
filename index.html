@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="src/css/default.css">
+    <link rel="stylesheet" href="src/css/dark.css" media="screen and (prefers-color-scheme: dark)">
+    <title>HX2003</title>
+  </head>
+  <body>
+    <!--===========HEADER===========-->
+    <header id="header">
+      <nav>
+        <h3>HX2003</h3>
+        <div id="nav-menu">
+          <ul id="nav-list">
+            <li class="nav-item">
+              <a href="#home" class="nav-link active-link">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="#creations" class="nav-link">Creations</a>
+            </li>
+            <!--<li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>!-->
+          </ul>
+          <div id="nav-close">
+            <i class="bx bx-x"></i>
+          </div>
+        </div>
+        <div id="nav-btns">
+          <i id="nav-toggle-theme" class="bx bx-moon change-theme"></i>
+          <i id="nav-toggle-menu" class="bx bx-grid-alt"></i>
+        </div>
+      </nav>
+    </header>
+    <!--===========MAIN===========-->
+    <main>
+      <!--===========HOME===========-->
+      <section id="home">
+        <div>
+          <h1>Hello!</h1>
+          <p>Feel free to explore around.</p>
+        </div>
+        <div>
+          <a href="https://github.com/HX2003" class="button-on-background">Github</a>
+        </div>
+      </section>
+      <!--===========CREATIONS===========-->
+      <section id="creations">
+        <h2 class="section-title">Creations</h2>
+        <div class="card-list">
+          <a id="creations-card-1" href="https://mods.paradoxplaza.com/mods/77260/Windows" class="card-outer">
+            <div class="card-inner">
+              <div class="card-img">
+                 <img src="src/img/watervisualtweaks.png">
+              </div>
+              <div class="card-disc">A mod for the game Cities Skylines 2 which allows users to customize the visual appearance of water material. It is widely used by many of the top content creators in this space.</div>
+            </div>
+          </a>
+          <a id="creations-card-2" href="https://hackaday.io/project/175668-reflow-oven" class="card-outer">
+            <div class="card-inner">
+              <div class="card-img">
+                <img src="src/img/reflowoven.png">
+              </div>
+              <div class="card-disc">A smart reflow oven made from retrofitted household oven, with a modern user interface (lvgl), running on an ESP32. It has a round IPS LCD, PID temperature control, automatic door control and more.</div>
+            </div>
+         </a>
+          <a id="creations-card-3" href="https://workspace.google.com/marketplace/app/word_counter_max_for_google_docs/364683295233" class="card-outer">
+            <div class="card-inner">
+              <div class="card-img">
+                <img src="src/img/wordcountermax.png">
+              </div>
+              <div class="card-disc">A Google Workspace Editor Addon. Obtain detailed word count with the possibility of omitting text between parenthesis, tables, certain text and even set targets for motivation.</div>
+            </div>
+          </a>
+          <a id="creations-card-4" href="https://github.com/HX2003/faze4_ros" class="card-outer">
+                <div class="card-inner">
+                  <div class="card-img">
+                    <img src="src/img/faze4_ros.png">
+                  </div>
+                  <div class="card-disc">The MoveIt Motion Planning Framework for ROS 2 successfully working with FAZE4 robotic arm by Petar Crnjak.</div>
+                </div>
+          </a>
+          <a id="creations-card-5" href="https://hx2003.github.io/Label-Generator" class="card-outer">
+            <div class="card-inner">
+              <div class="card-img">
+                <img src="src/img/labelgenerator.png">
+              </div>
+              <div class="card-disc">A web app to generate labels from html files. Manage different labels and create jpeg images for printing.</div>
+            </div>
+          </a>
+          <a id="creations-card-6" href="https://hx2003.github.io/Random-Equation-Generator" class="card-outer">
+            <div class="card-inner">
+              <div class="card-img">
+                <img src="src/img/randomequationgenerator.png">
+              </div>
+              <div class="card-disc">A little program I wrote to create simple equations that one must solve.</div>
+            </div>
+            </div>
+          </a>
+        </div>
+        </div>
+      </section>
+      <!--===========CONTACT===========-->
+      <!--
+      <section id="contact"><form action="" id="contact-form"><h2>Contact me</h2><input type="text" placeholder="Name" class="contact-form-input"><input type="email" placeholder="Your email" class="contact-form-input"><input type="text" placeholder="Write your message" class="contact-form-input"><button class="button-on-primary contact-form-send">Send Message</button></form></section>!-->
+    </main>
+    <a href="#" id="scroll-up">
+      <i id="scroll-up-icon" class="bx bx-up-arrow-alt"></i>
+    </a>
+    <script src="src/js/scrollreveal.min.js"></script>
+    <script src="src/js/main.js"></script>
+  </body>
+</html>
