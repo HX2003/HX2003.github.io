@@ -1,21 +1,10 @@
 ---
-title: Hextra Theme
-layout: hextra-home
+title: Projects
+toc: false
+layout: wide
 ---
 
-<div class="mt-6 mb-6">
-{{< hextra/hero-headline >}}
-  Hello there! &nbsp;<br class="sm:block hidden" />Welcome to my website
-{{< /hextra/hero-headline >}}
-</div>
-
-<div class="mb-10">
-{{< hextra/hero-subtitle >}}
-  Feel free to explore around...
-{{< /hextra/hero-subtitle >}}
-</div>
-
-<div class="mt-4 mb-4 w-full text-center text-4xl font-bold">Projects</div>
+<div class="mt-4"></div>
 
 {{< cards >}}
   {{< project-card
@@ -83,7 +72,3 @@ layout: hextra-home
         imageStyle="object-fit:cover; aspect-ratio:16/9;"
   >}}
 {{< /cards >}}
-
-<div class="mb-6 mt-6 w-full text-center">
-{{< hextra/hero-button text="View All" link="projects" >}}
-</div>
