@@ -1,0 +1,9 @@
+[submodule "themes/hextra"]
+	path = themes/hextra
+	url = https://github.com/imfing/hextra.git
+[submodule "static/Label-Generator"]
+	path = static/Label-Generator
+	url = https://github.com/HX2003/Label-Generator.git
+[submodule "static/Random-Equation-Generator"]
+	path = static/Random-Equation-Generator
+	url = https://github.com/HX2003/Random-Equation-Generator.git
