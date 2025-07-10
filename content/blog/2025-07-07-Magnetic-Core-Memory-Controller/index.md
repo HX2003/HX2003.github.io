@@ -8,7 +8,7 @@ authors:
 tags: []
 ---
 ![](MagneticCoreMemory16x32V3.jpg)
-In this article, I’ll share how I designed and built a 512-bit magnetic core memory system that runs at 250kHz. Through careful tuning of drive currents, several gigabytes of test data have been successfully read/written without a single error.
+In this article, I’ll share how I designed and built a 512-bit magnetic core memory system that runs at 200kHz. Through careful tuning of drive currents, several gigabytes of test data have been successfully read/written without a single error.
 
 ## Introduction
 Magnetic core memory was the primary random-access memory (RAM) technology from the 1950s-1970s, used in everything from simple calculators to supercomputers. Uniquely, it was non-volatile too, allowing computers to resume operation even after a power loss. Recently, there has been a resurgence in interest in this retro computing technology.
@@ -19,15 +19,15 @@ Magnetic core memory was the primary random-access memory (RAM) technology from 
 It turns out that if sufficient current is passed through a ferrite core, it can be magnetised in a certain direction. This magnetism can be retained even after the current has been turned off, allowing it to store a single bit of data.
 
 ![](MagneticCoreMemoryHysteresisCurve.svg)
-This behaviour can be demonstrated by the hysteresis curve (B-H curve) in the above figure. Let's suppose the core is unmagnetized at the start (point P), applying a sufficient current in the wire will generate a magnetic field \(\mathrm{H_{sat}}\) and thus we will reach point Q. Once the current is removed, the magnetic flux from the core settles at point R. We can arbitrarily define this state as a 'zero'\. Next, applying a sufficient current opposite to the previous direction in the wire will generate a magnetic field \(\mathrm{-H_{sat}}\) and thus we will reach point S. Once the current is removed, the magnetic flux from the core settles at point T. The core has now flipped from 'zero' to 'one'.
+This behaviour can be demonstrated by the hysteresis curve (B-H curve) in the above figure. Let's suppose the core is unmagnetized at the start (point P), applying a sufficient current in the wire will generate a magnetic field \(\mathrm{H_{sat}}\) and thus we will reach point Q. Once the current is removed, the magnetic flux from the core settles at point R. We can arbitrarily define this state as a '0'\. Next, applying a sufficient current opposite to the previous direction in the wire will generate a magnetic field \(\mathrm{-H_{sat}}\) and thus we will reach point S. Once the current is removed, the magnetic flux from the core settles at point T. The core has now flipped from '0' to '1'.
 
 ### Reading
 How can a core flip be detected? Well, an additional wire (called the sense wire) is wired through the core. When the core flips from one state to another, its quickly changing magnetic flux B will cause a detectable voltage pulse to appear across the sense wire. The polarity of the voltage pulse does not matter as we will use a sense detector that is sensitive to both positive and negative pulses.
 
 ![](MagneticCoreMemorySenseDriveWaveformAndSenseVoltage.svg)
-In the above figure, a test waveform of the sequence write 'zero', then write 'zero', then write 'one', then write 'one' is shown.
+In the above figure, a test waveform of the sequence write '0', then write '0', then write '1', then write '1' is shown.
 
-A read operation is done by writing a 'zero'. If the core was previously in a 'one' state, the core will flip to the 'zero' state and thus generate a large pulse on the sense wire. If the core was previously in a 'zero' state, minimal voltage is generated. As you noticed, the read operation is destructive, so a 'one' may have to be written afterwards to restore the value.
+A read operation is done by writing a '0'. If the core was previously in a '1' state, the core will flip to the '0' state and thus generate a large pulse on the sense wire. If the core was previously in a '0' state, minimal voltage is generated. As you noticed, the read operation is destructive, so a '1' may have to be written afterwards to restore the value.
 
 ## Scaling Up
 ### Coincident Current Scheme; 2D Addressing
@@ -51,12 +51,12 @@ In our first experiment, a full select current is sent in one direction, thereaf
 In the above figure, we see that a larger full select current increases the amplitude of the sense wire voltage, and ensures that the core completely flips.
 
 #### Experiment 2: Half Select Current Switching Test
-In our second experiment, a full select current is sent in one direction (lets say 'zero'). Next, a half select current is sent in the other direction ('one') 1024 times. Finally, a full select current is sent the original direction ('zero'). This experiment tests whether repeated half select current disturbs the original state.
+In our second experiment, a full select current is sent in one direction (lets say '0'). Next, a half select current is sent in the other direction ('1') 1024 times. Finally, a full select current is sent the original direction ('0'). This experiment tests whether repeated half select current disturbs the original state.
 
 ![](MagneticCoreMemorySenseHalfCurrent.svg)
-In the above figure, only the sense wire voltage during the final full select current has been captured to save space. When half select current is too large (360mA), the core slowly goes to the 'one' state. Hence, when the final full select current is sent to write a 'zero', the change from 'one' to 'zero' state causes a pulse to be seen. This is problematic, as reading or writing to a particular core could cause other cores in the matrix to flip even when we don't want to.
+In the above figure, only the sense wire voltage during the final full select current has been captured to save space. When half select current is too large (360mA), the core slowly goes to the '1' state. Hence, when the final full select current is sent to write a '0', the change from '1' to '0' state causes a pulse to be seen. This is problematic, as reading or writing to a particular core could cause other cores in the matrix to flip even when we don't want to.
 
-As described, there is a narrow sweet spot (within a few %) where the core memory works reliably. In my opinion, this is somewhat disappointing, as I thought it would be less finicky. Nevertheless, core memory when designed well has historically proven itself to be very reliable.
+As described, there is a sweet spot where the core memory works reliably. In my opinion, this is somewhat disappointing, as I thought it would be less finicky. Nevertheless, core memory when designed well has historically proven itself to be very reliable.
 
 ## Scaling Up Even More!
 ### Inhibit
@@ -78,15 +78,31 @@ I have threaded the sense wires in 3 different arrangements to demonstrate the e
 
 Both the "Optimized Rectangular" and "Diagonal" sense arrangements showed very clear spikes at 0us and 4us which correspond to a core flip. While the same spikes were observed for the "Unoptimized Rectangular" arrangement, coupled noise also generates unwanted spikes which make it difficult to differentiate a core flip.
 
+### Read and Writing with Inhibit
+A full write cycle now requires two steps: First, clear all bits at the target address by writing '0' to every group. Then, selectively write '1' only to the desired groups by inhibiting (nullifying) the groups that should remain '0'.
+
+A full read cycle now also requires two steps: First, clear all bits at the target address by writing '0' to every group. During this time, the sense wire detectors check whether a voltage pulse is generated for each group. Then, selectively write '1' only to the groups that registered pulses during reading by inhibiting (nullifying) the groups that should remain '0'.
+
 ## My 512-bit Core Memory System
-My memory is structured in 2 groups of 16x16 cores. The memory width is 2 bits, meaning 2 bits can be read or written at a time. The design is similar to "Driving Circuit for 2x8x8 Core Memory Matrix" figure earlier. By using several 1:16 decoders (constructed from 1:8 decoder), the desired location in the memory can be selected. Additional logic circuits were also used interface with the P and N Channel MOSFETS. Finally, a microcontroller (RP2040) was used to generate the waveforms to drive the memory and to perform tests.
+My memory is structured in 2 groups of 16x16 cores. The memory width is 2 bits, meaning 2 bits can be read or written at a time. The design is similar to "Driving Circuit for 2x8x8 Core Memory Matrix" figure earlier. By using several 4:16 decoders (constructed from 3:8 decoders), the desired location in the memory can be selected. Additional logic circuits were also used interface with the P and N Channel MOSFETS. Finally, a microcontroller (RP2040) was used to generate the waveforms to drive the memory and to perform tests.
 
 ### Memory Tests
-Several tests, including "GALPAT Test", "Half Select Current Switching Test", and "Image Writing and Reading Test" was run continously. With a supply voltage of 3.20V, no error was detected within a period of 24 hours. This amounts to several gigabytes of data being read/written. However, at 3.10V or 3.30V there were occasion data errors. As such I am weary about the reliability. Moreover, data retention remains unverified due to the test configuration since the entire matrix is refreshed at least every 1 million operations.
+Several tests, including "GALPAT Test", "Half Select Current Switching Test", and "Image Writing and Reading Test" was run continuously. With a supply voltage of 3.20V, no error was detected within a period of 24 hours. This amounts to several gigabytes of data being read/written. However, data retention remains unverified due to the test configuration since the entire matrix is refreshed at least every 1 million operations.
+
+Previously, errors occurred when running the system at 3.30V, though I am currently unable to reproduce the issue.
+
+Unsurprisingly, errors also arise when the wiring is jiggled, which is likely due to the loose connection between the microcontroller and the controller board.
+
+Given these reliability concerns, I recommend implementing some form of error detection and correction.
 
 ## Making Your Own Core Memory System
+For your reference, here's the link to the [Schematics & Source Code](https://github.com/HX2003/MagneticCoreMemoryController).
+
+### The Driver Board & The Core Memory Module Frame
+The complete PCB design files are provided as is. Your results may vary; modification of resistor values for the current limiting and sense detector, as well as improvements to the design may be required.
+
 ### Weaving Your Core Memory Module
-If you like to weave your own memory, I will provide some tips.
+If you like to weave your own memory from scratch, I will provide some tips.
 
 #### Simple & Small Module (64 bits or less)
 If you are building a small memory array like 8x8 matrix, all you need are:
@@ -110,8 +126,8 @@ If you are building a much bigger memory array like mine, you can take advantage
 - 0.13mm Diameter Enamelled Copper Wire
 - 0.2mm Solid 304 Stainless Steel Rod/Needle [Welded Needle Method]
 - Sandpaper [Welded Needle Method]
-- 470uF 50V Capacitor [Welded Needle Method]
-- Resistor [Welded Needle Method]
+- 3x 470uF 50V Capacitor [Welded Needle Method]
+- 680 Ohm Resistor [Welded Needle Method]
 - Cloth Tape [Adhesive Jig Method]
 - 3D Resin Printed Jig [Adhesive Jig Method]
 - Arcylic Sealer Spray/ Wood Lacquer Spray [Adhesive Jig Method]
@@ -121,9 +137,6 @@ If you are building a much bigger memory array like mine, you can take advantage
 - Tweezer
 - Soldering Iron
 - Adjustable DC Power Supply [Welded Needle Method]
-
-### The Driver Board
-For your reference, the complete PCB design files are provided as is. Your results may vary; modification of resistor values for the current limiting and sense detector may be required.
 
 ## Further Reading
 If you wish to explore in much more detail, here are some useful resources I found on the web:
