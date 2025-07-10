@@ -8,20 +8,35 @@ layout: wide
 
 {{< cards >}}
   {{< project-card
+        link="/blog/2025-07-07-magnetic-core-memory-controller/"
+        title="Magnetic Core Memory Controller"
+        subtitle="Designed a low-level controller for memory read/write operations, implementing custom logic and timing-critical electronics interfacing."
+        codeTags="C++"
+        otherTags="Digital Logic"
+        image="images/magneticcorememory16x32v3.jpg"
+        method="Resize"
+        options="1200x webp q80" 
+        imageStyle="object-fit:cover; aspect-ratio:16/9;"
+  >}}
+  
+  {{< project-card
         link=""
         title="Graphical User Interface for Remotely Piloted Robot"
-        subtitle="Teleoperation, LiDAR SLAM processing and visualization."
-        tags="Python, C++, Qt"
+        subtitle="Developed a Qt-based interface for real-time robot control, LiDAR SLAM processing and visualization."
+        codeTags="Python, C++"
+        otherTags="Qt"
         image="images/alexrobotgui.png"
         method="Resize"
         options="1200x webp q80" 
         imageStyle="object-fit:cover; aspect-ratio:16/9;"
   >}}
+
   {{< project-card
         link="https://mods.paradoxplaza.com/mods/77260/Windows"
         title="Water Visual Tweaks"
-        subtitle="A mod for the game Cities Skylines 2 which allows users to customize the visual appearance of water material. It is widely used by many of the top content creators in this space."
-        tags="C#, Unity"
+        subtitle="Reverse engineered water material system to enable dynamic customization of color, reflectivity and wave effects. Adopted by top creators in the community."
+        codeTags="C#"
+        otherTags="Unity"
         image="images/watervisualtweaks.png"
         method="Resize"
         options="1200x webp q80" 
@@ -31,8 +46,9 @@ layout: wide
   {{< project-card
         link="https://hackaday.io/project/175668-reflow-oven"
         title="Smart Reflow Oven"
-        subtitle="A retrofited a household oven, with modern user interface (LVGL) running on a ESP32 Microcontroller. It has a round IPS LCD, PID temperature control, automatical door control and more."
-        tags="C++"
+        subtitle="Retrofited a household oven, to imeplement modern user interface (LVGL) running on a ESP32 Microcontroller. It has a round IPS LCD, PID temperature control, automatical door control and more."
+        codeTags="C++"
+        otherTags="Embedded Systems"
         image="images/smartreflowoven.png"
         method="Resize"
         options="1200x webp q80" 
@@ -42,8 +58,9 @@ layout: wide
   {{< project-card
         link="/Label-Generator"
         title="Label Generator"
-        subtitle="A web app to generate labels for inventory. The templated labels are designed using HTML files. Manage different labels and create jpg images for printing."
-        tags="Javascript"
+        subtitle="Developed a web app to generate labels for inventory management. Manage different labels and create images for easy printing."
+        codeTags="Javascript"
+        otherTags=""
         image="images/labelgenerator.png"
         method="Resize"
         options="1200x webp q80" 
@@ -54,7 +71,8 @@ layout: wide
         link="https://workspace.google.com/marketplace/app/word_counter_max_for_google_docs/364683295233"
         title="Word Counter Max for Google Docs"
         subtitle="A Google Workspace Editor Addon. Obtain detailed word count with the possibility of omitting text between parenthesis, tables, certain text and even set targets for motivation."
-        tags="Javascript"
+        codeTags="Javascript"
+        otherTags=""
         image="images/wordcountermax.png"
         method="Resize"
         options="1200x webp q80" 
@@ -65,7 +83,8 @@ layout: wide
         link="/Random-Equation-Generator"
         title="Random Equation Generator"
         subtitle="A fun little program I wrote to create simple equations that one must solve."
-        tags="Javascript"
+        codeTags="Javascript"
+        otherTags=""
         image="images/randomequationgenerator.png"
         method="Resize"
         options="1200x webp q80" 
