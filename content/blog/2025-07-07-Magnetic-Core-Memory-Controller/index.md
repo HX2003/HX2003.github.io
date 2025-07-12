@@ -37,7 +37,7 @@ So far we have a single core. To scale up to \(n\) number of bits, once may naiv
 
 Instead of a single drive wire and a sense wire, we duplicate the drive wire. So now we have 3 wires threaded through each core: the X drive, Y drive and the sense wire.
 
-Now only half of the full current is sent through the X or Y wire. At each core, the vector sum of X and Y drive currents give the net current, so the possible currents are \(-\mathrm{I}\), \(\mathrm{-\frac{I}{2}}\), \(\mathrm{0}\), \(\mathrm{\frac{I}{2}}\) and \(\mathrm{I}\).
+Now only half of the full select current is sent through the X or Y wire. At each core, the vector sum of X and Y drive currents give the net current, so the possible currents are \(-\mathrm{I}\), \(\mathrm{-\frac{I}{2}}\), \(\mathrm{0}\), \(\mathrm{\frac{I}{2}}\) and \(\mathrm{I}\).
 
 ## Teething Problems
 ### Sensitivity of Current
@@ -64,14 +64,14 @@ One way to scale even further is to use multiple core groups, where XY drivers a
 
 ![](MagneticCoreMemory2x8x8Schematic.svg "Driving Circuit for 2x8x8 Core Memory Matrix")
 
-While some systems introduce an extra wire, for a total of 4 wires threaded through each core, it would make weaving by hand difficult. Instead, we can repurpose the sense wire as an inhibit wire. This is because the sense wire is only used for reading. During a write, we can send current through the sense wire for the inhibit function.
+While some systems introduce an extra wire, for a total of 4 wires threaded through each core, it would make weaving by hand difficult. Instead, we can repurpose the sense wire as an inhibit wire. This is because the sense wire is only used for reading. During a write, we can send a half select current through the sense wire for the inhibit function. This method requires the sense wire to be arranged in a very clever way. As an exercise, try enabling half select current through one of the Y drive wires and tracing the possible currents through the inhibit wire in the above figure. 
 
 ### Sense Wire Arrangements
 The way the sense wire is threaded through the cores greatly affects the measured signal. In general, the aim is to reduce noise pickup by making sure induced voltages from the wires cancel out as much as possible.
 
 ![](MagneticCoreMemorySenseCompared.jpg "Left [Optimized Rectangular Sense], Center [Diagonal Sense], Right [Unoptimized Rectangular Sense]")
 
-I have threaded the sense wires in 3 different arrangements to demonstrate the effect. In my experiment, I send a full current pulse in one direction at approximately 0us and 2us. Next, I send a full current pulse both in the opposite direction at approximately 4us and 6us.
+I have threaded the sense wires in 3 different arrangements to demonstrate the effect. In my experiment, I send a full select current pulse in one direction at approximately 0us and 2us. Next, I send a full select current pulse both in the opposite direction at approximately 4us and 6us.
 ![](MagneticCoreMemoryScopeTraceOptimizedRectangularSense.png "Sense Wire Response of Optimized Rectangular Sense")
 ![](MagneticCoreMemoryScopeTraceDiagonalSense.png "Sense Wire Response of Diagonal Sense")
 ![](MagneticCoreMemoryScopeTraceUnoptimizedRectangularSense.png "Sense Wire Response of Unoptimized Rectangular Sense")
