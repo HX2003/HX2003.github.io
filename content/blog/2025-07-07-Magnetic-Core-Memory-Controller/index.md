@@ -81,10 +81,12 @@ Both the "Optimized Rectangular" and "Diagonal" sense arrangements showed very c
 ### Read and Writing with Inhibit
 A full write cycle now requires two steps: First, clear all bits at the target address by writing '0' to every group. Then, selectively write '1' only to the desired groups by inhibiting (nullifying) the groups that should remain '0'.
 
-A full read cycle now also requires two steps: First, clear all bits at the target address by writing '0' to every group. During this time, the sense wire detectors check whether a voltage pulse is generated for each group. Then, selectively write '1' only to the groups that registered pulses during reading by inhibiting (nullifying) the groups that should remain '0'.
+A full read cycle also requires two steps: First, clear all bits at the target address by writing '0' to every group. During this time, the sense wire detectors check whether a voltage pulse is generated for each group. Then, selectively write '1' only to the groups that registered pulses during reading by inhibiting (nullifying) the groups that should remain '0'.
+
+Some systems also combined this into a read-modify-write cycle allowing for twice the performance in scenarios where consecutive memory accesses targeted the same word. For example, when incrementing the value of a word.
 
 ## My 512-bit Core Memory System
-My memory is structured in 2 groups of 16x16 cores. The memory width is 2 bits, meaning 2 bits can be read or written at a time. The design is similar to "Driving Circuit for 2x8x8 Core Memory Matrix" figure earlier. By using several 4:16 decoders (constructed from 3:8 decoders), the desired location in the memory can be selected. Additional logic circuits were also used interface with the P and N Channel MOSFETS. Finally, a microcontroller (RP2040) was used to generate the waveforms to drive the memory and to perform tests.
+My memory is structured in 2 groups of 16x16 cores. The memory word is 2 bits wide, meaning 2 bits can be read or written at a time. The design is similar to "Driving Circuit for 2x8x8 Core Memory Matrix" figure earlier. By using several 4:16 decoders (constructed from 3:8 decoders), the desired location in the memory can be selected. Additional logic circuits were also used interface with the P and N Channel MOSFETS. Finally, a microcontroller (RP2040) was used to generate the waveforms to drive the memory and to perform tests.
 
 ### Memory Tests
 Several tests, including "GALPAT Test", "Half Select Current Switching Test", and "Image Writing and Reading Test" was run continuously. With a supply voltage of 3.20V, no error was detected within a period of 24 hours. This amounts to several gigabytes of data being read/written. However, data retention remains unverified due to the test configuration since the entire matrix is refreshed at least every 1 million operations.
@@ -105,9 +107,9 @@ The complete PCB design files are provided as is. Your results may vary; modific
 If you like to weave your own memory from scratch, I will provide some tips.
 
 #### Simple & Small Module (64 bits or less)
-If you are building a small memory array like 8x8 matrix, all you need are:
+If you are building a small memory array like a 8x8 matrix, all you need are the following to get started:
 ##### Materials Required
-- 1.3mm Diameter Special Ferrite Core (regular ferrite will not work)
+- 1.3mm Diameter Special Ferrite Cores (regular ferrite will not work): [DDR RAW MAGNETIC FERRITE CORES 5221.3-2113.35](https://www.ebay.com/itm/354016007799)
 - 0.15mm Diameter Enamelled Copper Wire
 - Solder
 - Suitable PCB Frame
@@ -118,11 +120,11 @@ If you are building a small memory array like 8x8 matrix, all you need are:
 #### Larger Module (64 bits or more)
 If you are building a much bigger memory array like mine, you can take advantage of some techniques to make it easier.
 
-1. Technique 1 [Adhesive Jig Method]: First the ferrite cores are placed in jig, then an adhesive tape is used to pick up all the cores. Then, additional chemicals are sprayed to strengthen the adhesion.
-2. Technique 2 [Welded Needle Method]: The soft copper wire is fused to a more rigid stainless steel needle. As such, it is easier to thread the cores without the wire curling.
+1. Adhesive Jig Method: First, the ferrite cores are placed in jig, then an adhesive tape is used to pick up all the cores. Then, additional chemicals are sprayed to strengthen the adhesion.
+2. Welded Needle Method: A soft copper wire is fused to a more rigid stainless steel needle. As such, it is easier to thread the cores without the wire curling.
 
 ##### Materials Required
-- 1.3mm Diameter Special Ferrite Core (regular ferrite will not work)
+- 1.3mm Diameter Special Ferrite Cores (regular ferrite will not work): [DDR RAW MAGNETIC FERRITE CORES 5221.3-2113.35](https://www.ebay.com/itm/354016007799)
 - 0.13mm Diameter Enamelled Copper Wire
 - 0.2mm Solid 304 Stainless Steel Rod/Needle [Welded Needle Method]
 - Sandpaper [Welded Needle Method]
