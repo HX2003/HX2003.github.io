@@ -31,17 +31,29 @@ layout: hextra-home
   >}}
   
   {{< project-card
-        link=""
-        title="Graphical User Interface for Remotely Piloted Robot"
-        subtitle="Developed a Qt-based interface for real-time robot control, LiDAR SLAM processing and visualization."
+        link="/blog/2025-03-17-remote-piloting-system-for-lidar-equipped-robot"
+        title="Remote Piloting System for LiDAR Equipped Robot"
+        subtitle="Developed a Qt-based interface for real-time robot control over TLS, with LiDAR SLAM processing running in parallel via Python multiprocessing."
         codeTags="Python, C++"
         otherTags="Qt"
-        image="images/alexrobotgui.png"
+        image="images/remotepilotingsystem.png"
         method="Resize"
         options="1200x webp q80" 
         imageStyle="object-fit:cover; aspect-ratio:16/9;"
   >}}
   
+  {{< project-card
+        link="/blog/2025-07-23-waveseek"
+        title="Waveseek"
+        subtitle="Developed a GPU accelerated waveform viewer for oscilloscope traces that can be easily embedded into any web page using an `<iframe>`."
+        codeTags="Javascript"
+        otherTags="WebGPU"
+        image="images/waveseek.png"
+        method="Resize"
+        options="1200x webp q80" 
+        imageStyle="object-fit:cover; aspect-ratio:16/9;"
+  >}}
+
   {{< project-card
         link="https://mods.paradoxplaza.com/mods/77260/Windows"
         title="Water Visual Tweaks"
@@ -58,7 +70,7 @@ layout: hextra-home
         link="https://hackaday.io/project/175668-reflow-oven"
         title="Smart Reflow Oven"
         subtitle="Retrofited a household oven, to imeplement modern user interface (LVGL) running on a ESP32 Microcontroller. It has a round IPS LCD, PID temperature control, automatical door control and more."
-        codeTags="C++"
+        codeTags="C"
         otherTags="Embedded Systems"
         image="images/smartreflowoven.png"
         method="Resize"
@@ -73,18 +85,6 @@ layout: hextra-home
         codeTags="Javascript"
         otherTags=""
         image="images/labelgenerator.png"
-        method="Resize"
-        options="1200x webp q80" 
-        imageStyle="object-fit:cover; aspect-ratio:16/9;"
-  >}}
-
-  {{< project-card
-        link="https://workspace.google.com/marketplace/app/word_counter_max_for_google_docs/364683295233"
-        title="Word Counter Max for Google Docs"
-        subtitle="A Google Workspace Editor Addon. Obtain detailed word count with the possibility of omitting text between parenthesis, tables, certain text and even set targets for motivation."
-        codeTags="Javascript"
-        otherTags=""
-        image="images/wordcountermax.png"
         method="Resize"
         options="1200x webp q80" 
         imageStyle="object-fit:cover; aspect-ratio:16/9;"

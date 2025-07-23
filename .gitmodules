@@ -7,3 +7,6 @@
 [submodule "static/Random-Equation-Generator"]
 	path = static/Random-Equation-Generator
 	url = https://github.com/HX2003/Random-Equation-Generator.git
+[submodule "static/Waveseek"]
+	path = static/Waveseek
+	url = https://github.com/HX2003/Waveseek.git

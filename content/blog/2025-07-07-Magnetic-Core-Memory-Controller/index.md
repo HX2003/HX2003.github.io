@@ -5,7 +5,10 @@ authors:
   - name: HX2003
     link: https://github.com/HX2003
     image: https://github.com/HX2003.png
-tags: []
+tags:
+  - C++
+  - Digital Logic
+  - Retro Computing
 ---
 ![](MagneticCoreMemory16x32V3.jpg)
 In this article, I’ll share how I designed and built a 512-bit magnetic core memory system that runs at 200kHz. Through careful tuning of drive currents, several gigabytes of test data have been successfully read/written without a single error.
