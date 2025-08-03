@@ -111,7 +111,7 @@ menu:
 #      weight: 3
 
 params:
-  description: Modern, responsive, batteries-included Hugo theme for creating beautiful static websites.
+  description: My personal website for all things in computing and hardware.
 
   navbar:
     displayTitle: true
@@ -182,10 +182,10 @@ params:
 
     # https://giscus.app/
     giscus:
-      repo: imfing/hextra
-      repoId: R_kgDOJ9fJag
+      repo: HX2003/HX2003.github.io
+      repoId: 
       category: General
-      categoryId: DIC_kwDOJ9fJas4CY7gW
+      categoryId: 
       # mapping: pathname
       # strict: 0
       # reactionsEnabled: 1
