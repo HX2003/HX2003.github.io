@@ -39,10 +39,12 @@ build:
 module:
   hugoVersion:
     extended: true
-    min: "0.145.0"
+    min: "0.152.0"
 
   workspace: hugo.work
 
+  imports:
+    - path: github.com/imfing/hextra
 #
 # Extra config for Tailwind CSS
 #
@@ -52,8 +54,6 @@ module:
   - disableWatch: true
     source: hugo_stats.json
     target: assets/notwatching/hugo_stats.json
-
-theme: hextra
 
 markup:
   highlight:
@@ -166,6 +166,8 @@ params:
       # date | lastmod | publishDate | title | weight
       sortBy: date
       sortOrder: desc # or "asc"
+       # Pagination
+      pagerSize: 20
     
     article:
       displayPagination: true
