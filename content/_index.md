@@ -79,6 +79,18 @@ layout: hextra-home
   >}}
 
   {{< project-card
+        link="/blog/2025-12-22-rp2040-dsp-audio-amplifier"
+        title="Audio Amplifier with DSP co-processor"
+        subtitle="Implemented an infrared-controlled audio amplifier system featuring a DSP co-processor, with DSP firmware and audio parameters configured via I²C from the main RP2040 microcontroller."
+        codeTags="Python"
+        otherTags=""
+        image="images/rp2040audioamplifierdsp.jpg"
+        method="Resize"
+        options="1200x webp q80" 
+        imageStyle="object-fit:cover; aspect-ratio:16/9;"
+  >}}
+
+  {{< project-card
         link="https://hackaday.io/project/175668-reflow-oven"
         title="Smart Reflow Oven"
         subtitle="Retrofited household oven implementing modern user interface (LVGL) running on a ESP32 Microcontroller. It has a round IPS LCD, PID temperature control, automatic door control and more."

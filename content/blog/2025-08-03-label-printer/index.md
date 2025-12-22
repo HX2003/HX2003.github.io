@@ -16,6 +16,8 @@ description: An Android application for USB printing with the Brother PT-D600 la
 ![Physical Labels](labelprinterlabels.jpg)
 
 An Android application for USB printing with the Brother PT-D600 label printer.
+[Project Source Code](https://github.com/HX2003/LabelPrinter)
+
 ## Features
 ### Image Manipulation
 - Crop, rotate or flip images
