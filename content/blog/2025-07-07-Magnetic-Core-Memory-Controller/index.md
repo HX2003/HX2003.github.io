@@ -123,8 +123,8 @@ If you are building a small memory array like a 8x8 matrix, all you need are the
 #### Larger Module (64 bits or more)
 If you are building a much bigger memory array like mine, you can take advantage of some techniques to make it easier.
 
-1. Adhesive Jig Method: First, the ferrite cores are placed in jig, then an adhesive tape is used to pick up all the cores. Then, additional chemicals are sprayed to strengthen the adhesion.
-2. Welded Needle Method: A soft copper wire is fused to a more rigid stainless steel needle. As such, it is easier to thread the cores without the wire curling.
+- Adhesive Jig: First, the ferrite cores are placed in jig, then an adhesive tape is used to pick up all the cores. Afterwards, lacquer is sprayed over it to strengthen the adhesion.
+- Welded Needle: A soft copper wire is fused to a more rigid stainless steel needle. As such, it is easier to thread the cores without the wire curling.
 
 ##### Materials Required
 - 1.3mm Diameter Special Ferrite Cores (regular ferrite will not work): [DDR RAW MAGNETIC FERRITE CORES 5221.3-2113.35](https://www.ebay.com/itm/354016007799)
