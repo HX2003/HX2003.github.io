@@ -104,7 +104,7 @@ layout: hextra-home
 
   {{< project-card
         link="https://workspace.google.com/marketplace/app/word_counter_max_for_google_docs/364683295233"
-        title="Word Counter Max for Google Docs"
+        title="Word Counter Max for Google Docs™"
         subtitle="A Google Workspace Editor Addon. Obtain detailed word count with the possibility of omitting text between parenthesis, tables, certain text and even set targets for motivation."
         codeTags="Javascript"
         otherTags=""
