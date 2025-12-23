@@ -7,3 +7,6 @@
 [submodule "static/Waveseek"]
 	path = static/Waveseek
 	url = https://github.com/HX2003/Waveseek.git
+[submodule "static/Word-Counter-Max-for-Google-Docs"]
+	path = static/Word-Counter-Max-for-Google-Docs
+	url = https://github.com/HX2003/Word-Counter-Max-for-Google-Docs.git
